@@ -113,7 +113,23 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     {
-                        loader: 'ts-loader',
+                        loader: 'swc-loader',
+                        options: {
+                            jsc: {
+                                parser: {
+                                    syntax: 'typescript',
+                                    tsx: true,
+                                },
+                                transform: {
+                                    react: {
+                                        runtime: 'automatic',
+                                        development,
+                                    },
+                                },
+                                // OBS 33 docks run on Chromium 127
+                                target: 'es2022',
+                            },
+                        },
                     },
                 ],
             },
@@ -130,7 +146,6 @@ module.exports = {
             },
         ],
     },
-    // the dock loads from disk, download size does not matter
     performance: {
         hints: false,
     },

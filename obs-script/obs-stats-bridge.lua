@@ -1,23 +1,17 @@
--- obs-stats-bridge: tells stats-sorayuki-frog-widget where plugin outputs stream to.
---
 -- obs-websocket lists plugin outputs (obs-multi-rtmp names every target's output "multi-output")
 -- but not their servers, so the dock cannot tell a Twitch target from a YouTube one. This script
 -- looks the server up inside OBS (output -> service -> server URL) every few seconds and publishes
 -- only its scheme and host, never the stream key or the URL path, as the profile parameter
 -- [ObsStatsDock] PluginOutputs, which the dock reads with GetProfileParameter.
---
--- Add in OBS: Tools -> Scripts -> +.
 
 obs = obslua
 
 local SECTION = 'ObsStatsDock'
 local PARAM = 'PluginOutputs'
--- outputs to look up; obs-multi-rtmp gives every target's output this name
 local OUTPUT_NAMES = {'multi-output'}
 local INTERVAL_MS = 3000
 local SERVER_URL_INFO = 0 -- OBS_SERVICE_CONNECT_INFO_SERVER_URL
 
--- "rtmp://user:pass@host:1935/app/key" -> "rtmp://host:1935"
 local function server_origin(url)
     if url == nil then
         return nil
@@ -68,7 +62,7 @@ end
 local function collect()
     local items = {}
 
-    for _, name in ipairs(OUTPUT_NAMES) do
+    for _index, name in ipairs(OUTPUT_NAMES) do
         local server = output_server(name)
 
         if server ~= nil then
@@ -76,7 +70,6 @@ local function collect()
         end
     end
 
-    -- the dock ignores data older than a few intervals, e.g. after the script was removed
     return '{"updated":' .. os.time() .. ',"outputs":[' .. table.concat(items, ',') .. ']}'
 end
 

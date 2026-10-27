@@ -1,6 +1,9 @@
-import {PlatformRuleDto, TagDto} from './types';
+import {HealthLevelEnum} from '__types/HealthLevelEnum';
+import {OutputViewDto} from '__types/OutputViewDto';
+import {PlatformRuleDto} from '__types/PlatformRuleDto';
+import {SettingsDto} from '__types/SettingsDto';
 
-export const DEFAULT_OBS_WEBSOCKET_PORT = 4455;
+const DEFAULT_OBS_WEBSOCKET_PORT = 4455;
 export const OBS_WEBSOCKET_PROTOCOL = 'obswebsocket.json';
 export const OBS_RPC_VERSION = 1;
 export const AUTHENTICATION_FAILED_CLOSE_CODE = 4009;
@@ -10,19 +13,24 @@ export const REQUEST_TIMEOUT_MS = 5000;
 export const RECONNECT_INTERVAL_MS = 3000;
 export const GRAPH_SPAN_SEC = 120;
 export const RECENT_WINDOW_SEC = 60;
-// stream settings and the list of outputs are re-read every this many polls
 export const DISCOVERY_EVERY_POLLS = 5;
 
-// share of frames lost over the last minute that turns a platform red
 export const BAD_DROP_SHARE = 0.01;
 
 // kept from the first single-file version of the dock, so a password remembered there carries over
 export const PASSWORD_STORAGE_KEY = 'obs-stats-dock.password';
+export const SETTINGS_STORAGE_KEY = 'obs-stats-dock.settings';
+
+export const DEFAULT_SETTINGS: SettingsDto = {
+    port: DEFAULT_OBS_WEBSOCKET_PORT,
+    isShowGeneralCard: true,
+};
+
+export const CONNECTING_WORDING = 'Подключение к OBS...';
 
 export const MAIN_TARGET_KEY = 'main';
 // OBS's own stream output: "adv_stream" in Advanced output mode, "simple_stream" in Simple
 export const MAIN_OUTPUT_NAMES = ['adv_stream', 'simple_stream'];
-// names plugins give their stream outputs
 export const PLUGIN_OUTPUT_NAMES: Record<string, string> = {
     'multi-output': 'multi-rtmp',
 };
@@ -36,8 +44,9 @@ export const BRIDGE_PARAMETER = {
 export const BRIDGE_STALE_SEC = 15;
 
 export const UNKNOWN_PLATFORM_COLOR = '#9aa0ae';
+export const MAIN_FALLBACK_TITLE = 'Трансляция';
+export const UNKNOWN_PLATFORM_TITLE = 'Неизвестная площадка';
 
-// matched against the service name from Settings -> Stream ("YouTube - RTMPS") and the server host
 export const PLATFORM_RULES: PlatformRuleDto[] = [
     {
         title: 'YouTube',
@@ -90,12 +99,16 @@ export const PLATFORM_RULES: PlatformRuleDto[] = [
     },
 ];
 
-export const MAIN_TAG: TagDto = {
-    text: 'Основной',
-    hint: 'Площадка из Settings → Stream',
-    color: 'blue',
-};
-
-export const PLUGIN_TAG: TagDto = {
-    text: 'Плагин',
+export const OFF_OUTPUT_VIEW: OutputViewDto = {
+    isActive: false,
+    isReconnecting: false,
+    level: HealthLevelEnum.Off,
+    kbps: null,
+    timecode: '',
+    dropped: 0,
+    total: 0,
+    recentDropped: 0,
+    recentTotal: 0,
+    congestion: 0,
+    graph: [],
 };

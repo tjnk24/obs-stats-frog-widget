@@ -2,7 +2,9 @@
 
 OBS Custom Browser Dock with live stream stats for every output that streams, plus OBS-wide encoding
 and rendering lag. Numbers come from OBS's built-in obs-websocket (port 4455).
-Built with React and antd (dark compact theme in the chat widget's colors, `src/utils/theme.ts`).
+Built with React, antd (dark compact theme, `src/utils/theme.ts`), Redux Toolkit and react-router (hash routes,
+as the dock is opened from disk). Pages: statistics, settings (obs-websocket port, password reset, OBS card,
+reset of graphs) and the login form. Code layout rules are in `CLAUDE.md`.
 
 The cards follow OBS's settings by themselves:
 
@@ -31,4 +33,4 @@ npm run build:prod
 ## Development
 
 `npm run start:dev` serves the dock at http://localhost:3062 (port from `PORT` in `.env`).
-`?port=NNNN` in the URL connects to another obs-websocket port.
+`?port=NNNN` in the URL connects to another obs-websocket port and wins over the port from the settings.

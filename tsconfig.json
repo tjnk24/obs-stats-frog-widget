@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2018",
+        "target": "es2022",
         "declaration": false,
         "noImplicitAny": false,
         "noImplicitReturns": false,
@@ -8,7 +8,7 @@
         "resolveJsonModule": true,
         "strictNullChecks": false,
         "skipLibCheck": true,
-        "lib": ["dom", "es2018"],
+        "lib": ["dom", "es2022"],
         "strict": true,
         "outDir": "./build/",
         "sourceMap": true,
@@ -19,14 +19,25 @@
         "esModuleInterop": true,
         "baseUrl": ".",
         "paths": {
+            "__actions": ["./src/actions.ts"],
+            "__components/*": ["./src/components/*"],
             "__pages/*": ["./src/pages/*"],
-            "__utils/*": ["./src/utils/*"]
+            "__reducers": ["./src/reducers"],
+            "__reducers/*": ["./src/reducers/*"],
+            "__routes": ["./src/routes.ts"],
+            "__selectors/*": ["./src/selectors/*"],
+            "__services/*": ["./src/services/*"],
+            "__store": ["./src/store.ts"],
+            "__types/*": ["./src/types/*"],
+            "__utils/*": ["./src/utils/*"],
+            "infrastructure/*": ["./typings/infrastructure/*"]
         }
     },
     "include": [
         "src/**/*.ts",
         "src/**/*.tsx",
-        "src/typings/**/*.d.ts"
+        "src/typings/**/*.d.ts",
+        "typings/**/*.d.ts"
     ],
     "compileOnSave": false,
     "exclude": ["node_modules", "build"]

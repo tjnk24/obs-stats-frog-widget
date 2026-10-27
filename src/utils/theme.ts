@@ -1,8 +1,14 @@
 import {theme, ThemeConfig} from 'antd';
 
-// antd's dark theme in the colors of the chat widget; compact, as a dock is narrow
+// the class antd puts its CSS variables (--ant-*) on; set on <html> in index.tsx,
+// so the page's own styles can use them too, not only antd components and what is inside them
+export const THEME_CSS_VAR_KEY = 'css-var-app';
+
 export const THEME: ThemeConfig = {
     algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
+    cssVar: {
+        key: THEME_CSS_VAR_KEY,
+    },
     token: {
         colorPrimary: '#2689fb',
         colorInfo: '#2689fb',
@@ -10,6 +16,8 @@ export const THEME: ThemeConfig = {
         colorWarning: '#e2a63b',
         colorError: '#e5534b',
         colorBgBase: '#1D1F26',
+        // the dark algorithm would derive a slightly bluer page background from colorBgBase
+        colorBgLayout: '#1D1F26',
         colorBgContainer: '#272a33',
         colorBgElevated: '#30343e',
         colorBorder: '#3c404d',

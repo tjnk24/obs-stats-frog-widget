@@ -1,16 +1,29 @@
+/* eslint-disable no-restricted-imports */
 import {ConfigProvider} from 'antd';
 import ReactDOM from 'react-dom/client';
+import {Provider} from 'react-redux';
+import {createHashRouter, RouterProvider} from 'react-router';
 
-import {THEME} from '__utils/theme';
+import Core from '__pages/Core';
+import store from '__store';
+import {routerManager} from '__utils/infrastructure/routing/routeManager';
+import {THEME, THEME_CSS_VAR_KEY} from '__utils/theme';
 
 import './global.module.scss';
 
-import Core from './pages/Core';
+// hash routes: the dock is opened from disk, and a reload must find index.html again
+const router = createHashRouter(Core);
+
+routerManager.init(router.navigate);
+
+document.documentElement.classList.add(THEME_CSS_VAR_KEY);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-    <ConfigProvider theme={THEME}>
-        <Core/>
-    </ConfigProvider>,
+    <Provider store={store}>
+        <ConfigProvider theme={THEME}>
+            <RouterProvider router={router}/>
+        </ConfigProvider>
+    </Provider>,
 );

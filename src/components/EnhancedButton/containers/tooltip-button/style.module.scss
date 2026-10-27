@@ -1,0 +1,15 @@
+.trigger {
+    display: inline-block;
+}
+
+.disabledTrigger {
+    cursor: not-allowed;
+}
+
+.disabledButton {
+    pointer-events: none;
+}
+
+.hidden {
+    display: none;
+}

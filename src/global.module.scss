@@ -1,11 +1,10 @@
 // top level: inside :global it would compile to a selector-less rule that browsers drop
 @import 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
 
-// antd styles its components only; the page around them is set here in the same colors as THEME
 :global {
     html {
         scrollbar-width: thin;
-        scrollbar-color: #3c404d #272a33;
+        scrollbar-color: var(--ant-color-border) var(--ant-color-bg-container);
     }
 
     body {
@@ -14,19 +13,17 @@
         min-height: calc(100vh - 2px);
         display: flex;
         flex-direction: column;
-        border: 1px solid #3c404d;
+        border: 1px solid var(--ant-color-border);
         border-top: none;
-        font-family: Inter, Roboto, 'Helvetica Neue', Geneva, arial, Tahoma, verdana, sans-serif;
-        font-size: 14px;
+        font-family: var(--ant-font-family);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background-color: #1D1F26;
-        color: rgb(255 255 255 / 85%);
+        background-color: var(--ant-color-bg-layout);
+        color: var(--ant-color-text);
         margin: 1px;
         overflow-wrap: anywhere;
     }
 
-    // takes the whole height of body, so a page can center itself in the dock
     #root {
         flex: 1;
         display: flex;

@@ -1,0 +1,22 @@
+import {RouteObject} from 'react-router';
+
+import AppRoute from '__components/AppRoute';
+import {ROUTES} from '__routes';
+
+import Page from './containers/page';
+
+const routes: RouteObject[] = [
+    {
+        path: ROUTES.STATS.INDEX,
+        element: (
+            <AppRoute
+                title="Статистика эфира"
+                isAuthRequired
+            >
+                <Page/>
+            </AppRoute>
+        ),
+    },
+];
+
+export default routes;

@@ -1,0 +1,17 @@
+.page {
+    flex: 1;
+    padding: var(--ant-padding-xs);
+}
+
+.card {
+    width: 100%;
+    max-width: 320px;
+}
+
+.message {
+    margin-bottom: var(--ant-margin-sm);
+}
+
+.hint {
+    margin: var(--ant-margin-sm) 0 0;
+}

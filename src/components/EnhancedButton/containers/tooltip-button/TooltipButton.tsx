@@ -1,0 +1,53 @@
+import {Tooltip, TooltipProps} from 'antd';
+import cn from 'classnames';
+
+import CommonButton from '../common-button';
+
+import {Props} from './types';
+
+import style from './style.module.scss';
+
+const TooltipButton = ({
+    buttonProps,
+    tooltipProps,
+    children,
+    withSpinner,
+}: Props) => {
+    const {
+        className: tooltipClassName,
+        trigger = ['hover', 'click'],
+        ...tooltipPropsRest
+    }: TooltipProps = tooltipProps || {};
+
+    const {
+        className: buttonClassName,
+        disabled,
+        ...buttonPropsRest
+    } = buttonProps;
+
+    return (
+        <Tooltip
+            {...tooltipPropsRest}
+            trigger={trigger}
+        >
+            {/* a disabled button fires no mouse events, so the tooltip hangs on a wrapper */}
+            <span
+                className={cn(style.trigger, {
+                    [style.disabledTrigger]: disabled,
+                    [style.hidden]: buttonProps.hidden,
+                }, tooltipClassName)}
+            >
+                <CommonButton
+                    {...buttonPropsRest}
+                    className={cn({[style.disabledButton]: disabled}, buttonClassName)}
+                    withSpinner={withSpinner}
+                    disabled={disabled}
+                >
+                    {children}
+                </CommonButton>
+            </span>
+        </Tooltip>
+    );
+};
+
+export default TooltipButton;

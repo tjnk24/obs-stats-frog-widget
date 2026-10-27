@@ -1,0 +1,1 @@
+export {getAuthString} from './getAuthString';

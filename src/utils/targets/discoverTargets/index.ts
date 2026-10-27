@@ -1,0 +1,1 @@
+export {discoverTargets} from './discoverTargets';

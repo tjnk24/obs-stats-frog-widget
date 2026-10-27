@@ -156,7 +156,7 @@ export default [
             "no-restricted-imports": ["error", {
                 patterns: [{
                     group: ["__pages/*"],
-                    message: "Usage of import from __pages directory allowed only for appRoutes.ts, render.ts, static/client/index.tsx.",
+                    message: "Usage of import from __pages directory allowed only for appRoutes.tsx and index.tsx.",
                 }],
 
                 paths: [
