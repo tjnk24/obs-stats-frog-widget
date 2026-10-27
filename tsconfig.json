@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "target": "es2018",
+        "declaration": false,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "removeComments": false,
+        "resolveJsonModule": true,
+        "strictNullChecks": false,
+        "skipLibCheck": true,
+        "lib": ["dom", "es2018"],
+        "strict": true,
+        "outDir": "./build/",
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "jsx": "react-jsx",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "__pages/*": ["./src/pages/*"],
+            "__utils/*": ["./src/utils/*"]
+        }
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/typings/**/*.d.ts"
+    ],
+    "compileOnSave": false,
+    "exclude": ["node_modules", "build"]
+}
