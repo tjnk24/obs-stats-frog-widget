@@ -409,14 +409,127 @@ local function collect_hardware()
     return table.concat(parts)
 end
 
-local function collect()
-    local items = {}
+local stream_outputs = nil
+
+local function define_output_types()
+    pcall(ffi.cdef, [[
+        void obs_enum_outputs(bool (*enum_proc)(void *param, void *output), void *param);
+        const char *obs_output_get_name(const void *output);
+        void *obs_output_get_service(const void *output);
+        const char *obs_service_get_connect_info(const void *service, uint32_t type);
+        void *obs_service_get_settings(const void *service);
+        const char *obs_data_get_string(void *data, const char *name);
+        void obs_data_release(void *data);
+    ]])
+end
+
+local function native_service_server(libobs, service)
+    local server = libobs.obs_service_get_connect_info(service, SERVER_URL_INFO)
+
+    if server ~= nil and server[0] ~= 0 then
+        return ffi.string(server)
+    end
+
+    local settings = libobs.obs_service_get_settings(service)
+
+    if settings == nil then
+        return nil
+    end
+
+    local setting = libobs.obs_data_get_string(settings, 'server')
+    local result = setting ~= nil and ffi.string(setting) or nil
+
+    libobs.obs_data_release(settings)
+
+    return result
+end
+
+local function open_stream_outputs()
+    if not ffi_loaded then
+        return nil
+    end
+
+    define_output_types()
+
+    local libobs_loaded, libobs = pcall(ffi.load, 'obs')
+
+    if not libobs_loaded then
+        return nil
+    end
+
+    local found = {}
+
+    local visit = ffi.cast('bool (*)(void *, void *)', function(_param, output)
+        local service = libobs.obs_output_get_service(output)
+
+        if service ~= nil then
+            local name = libobs.obs_output_get_name(output)
+
+            if name ~= nil then
+                found[#found + 1] = {name = ffi.string(name), server = native_service_server(libobs, service)}
+            end
+        end
+
+        return true
+    end)
+
+    return {
+        libobs = libobs,
+        visit = visit,
+        found = found,
+    }
+end
+
+local function close_stream_outputs()
+    if stream_outputs ~= nil then
+        stream_outputs.visit:free()
+        stream_outputs = nil
+    end
+end
+
+local function read_stream_outputs()
+    if stream_outputs == nil then
+        return nil
+    end
+
+    local found = stream_outputs.found
+
+    for index = #found, 1, -1 do
+        found[index] = nil
+    end
+
+    stream_outputs.libobs.obs_enum_outputs(stream_outputs.visit, nil)
+
+    local outputs = {}
+
+    for _index, output in ipairs(found) do
+        outputs[#outputs + 1] = {name = output.name, server = server_origin(output.server)}
+    end
+
+    return outputs
+end
+
+local function read_named_outputs()
+    local outputs = {}
 
     for _index, name in ipairs(OUTPUT_NAMES) do
-        local server = output_server(name)
+        outputs[#outputs + 1] = {name = name, server = output_server(name)}
+    end
 
-        if server ~= nil then
-            items[#items + 1] = '{"name":' .. json_string(name) .. ',"server":' .. json_string(server) .. '}'
+    return outputs
+end
+
+local function collect()
+    local items = {}
+    local enumerated, outputs = pcall(read_stream_outputs)
+
+    if not enumerated or outputs == nil then
+        outputs = read_named_outputs()
+    end
+
+    for _index, output in ipairs(outputs) do
+        if output.server ~= nil then
+            items[#items + 1] = '{"name":' .. json_string(output.name) .. ',"server":' .. json_string(output.server) .. '}'
         end
     end
 
@@ -445,6 +558,7 @@ local function on_event(event)
 
         if event == obs.OBS_FRONTEND_EVENT_SCRIPTING_SHUTDOWN then
             close_hardware()
+            close_stream_outputs()
         end
     elseif event == obs.OBS_FRONTEND_EVENT_PROFILE_CHANGED then
         publish()
@@ -452,7 +566,7 @@ local function on_event(event)
 end
 
 function script_description()
-    return 'Сообщает панели stats-sorayuki-frog-widget, на какую площадку стримят выходы плагинов (obs-multi-rtmp), ' ..
+    return 'Сообщает панели obs-stats-frog-widget, на какую площадку стримят выходы плагинов (obs-multi-rtmp и любые другие), ' ..
         'загрузку видеокарты и занятую память системы. Передаёт только адрес сервера без пути и ключа.'
 end
 
@@ -460,6 +574,10 @@ function script_load(settings)
     local hardware_loaded, opened = pcall(open_hardware)
 
     hardware = hardware_loaded and opened or nil
+
+    local outputs_loaded, outputs_opened = pcall(open_stream_outputs)
+
+    stream_outputs = outputs_loaded and outputs_opened or nil
 
     obs.obs_frontend_add_event_callback(on_event)
     obs.timer_add(publish, INTERVAL_MS)
@@ -469,4 +587,5 @@ end
 function script_unload()
     obs.timer_remove(publish)
     close_hardware()
+    close_stream_outputs()
 end

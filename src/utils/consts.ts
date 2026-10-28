@@ -64,10 +64,16 @@ export const PLATFORM_RULES: PlatformRuleDto[] = [
         hosts: [/(^|\.)kick\.com$/, /^fa723fc1b171\.global-contribute\.live-video\.net$/],
     },
     {
+        title: 'VK Video Live',
+        color: '#0077ff',
+        services: /vk\s*(video\s*)?live|vk\s*play/i,
+        hosts: [/^rtmp\.vkvideo\.ru$/, /(^|\.)vk\.me$/],
+    },
+    {
         title: 'VK Видео',
         color: '#2787f5',
         services: /\bvk\b/i,
-        hosts: [/(^|\.)(vk\.com|vkvideo\.ru|okcdn\.ru)$/],
+        hosts: [/(^|\.)(vk\.com|vkvideo\.ru|okcdn\.ru|mycdn\.me)$/],
     },
     {
         title: 'Rutube',

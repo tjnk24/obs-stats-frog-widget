@@ -1,4 +1,4 @@
-# stats-sorayuki-frog-widget
+# obs-stats-frog-widget
 
 OBS Custom Browser Dock with live stream stats for every output that streams, plus OBS-wide encoding
 and rendering lag. Numbers come from OBS's built-in obs-websocket (port 4455).
