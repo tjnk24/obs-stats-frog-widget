@@ -19,3 +19,5 @@ const store = configureStore({
 export const getStore = () => store.getState();
 
 export default store;
+
+import.meta.webpackHot?.decline();

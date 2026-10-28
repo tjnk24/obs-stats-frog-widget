@@ -1,3 +1,4 @@
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const EslintWebpackPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -12,6 +13,8 @@ const globals = require('./config/globals.js');
 require('dotenv').config();
 
 const development = process.env.NODE_ENV !== 'production';
+
+const isDevServer = Boolean(process.env.WEBPACK_SERVE);
 
 const plugins = [
     new DefinePlugin(globals),
@@ -37,15 +40,23 @@ if (development) {
                 },
             },
         }),
-        new EslintWebpackPlugin({
-            files: 'src/**/*.{ts,tsx,js,jsx}',
-            emitError: true,
-            failOnError: false,
-            emitWarning: true,
-            failOnWarning: false,
-            cache: true,
-        }),
     );
+}
+
+// an eslint error fails the compilation, and the dev server then stops applying updates
+if (development && !isDevServer) {
+    plugins.push(new EslintWebpackPlugin({
+        files: 'src/**/*.{ts,tsx,js,jsx}',
+        emitError: true,
+        failOnError: false,
+        emitWarning: true,
+        failOnWarning: false,
+        cache: true,
+    }));
+}
+
+if (isDevServer) {
+    plugins.push(new ReactRefreshWebpackPlugin({overlay: false}));
 }
 
 const cssLoaders = [
@@ -77,12 +88,13 @@ module.exports = {
         static: {
             directory: 'build',
         },
-        liveReload: false,
+        // a change outside components (service, store) cannot be hot-applied and reloads the page
+        liveReload: true,
         open: ['/'],
         port: process.env.PORT || 3062,
         hot: true,
         client: {
-            logging: 'error',
+            logging: 'warn',
             overlay: false,
         },
     },
@@ -124,6 +136,7 @@ module.exports = {
                                     react: {
                                         runtime: 'automatic',
                                         development,
+                                        refresh: isDevServer,
                                     },
                                 },
                                 // OBS 33 docks run on Chromium 127

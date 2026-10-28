@@ -45,6 +45,7 @@ const PasswordCard = () => {
                 <Form.Item
                     name="password"
                     label="Пароль obs-websocket"
+                    extra="Tools → WebSocket Server Settings → Server Password"
                     rules={PASSWORD_RULES}
                 >
                     <Input.Password autoComplete="new-password"/>

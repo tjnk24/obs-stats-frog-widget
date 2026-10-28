@@ -55,5 +55,6 @@ OBS Custom Browser Dock: React 19, antd 6, Redux Toolkit, react-router 7, CSS-м
 
 - **Перед правкой описать, что собираешься менять.**
 - **Коммит и пуш - только по явной просьбе.**
+- **Разработка в браузере - `npm run start:dev`** (`http://localhost:3062`, панель ходит в настоящий OBS). Компоненты обновляются через React Fast Refresh без перезагрузки; модули-одиночки (`obsConnectionService`, `store`, `routerManager`) отказываются от горячей замены (`import.meta.webpackHot?.decline()`), и правка в них или в том, что они импортируют, перезагружает страницу. Eslint под dev-сервером не запускается: ошибка eslint ломает сборку, и dev-сервер перестаёт применять обновления. Dev-сервер очищает `build`, поэтому после него панель в OBS нужно пересобрать `npm run build:prod`.
 - **`npm run lint` (tsc, eslint, stylelint, knip) - не после каждой правки**, а перед коммитом и пушем или по просьбе. `npm run build:prod` - когда изменение нужно увидеть в браузере или в OBS; проверка на имитации obs-websocket - на ширине 300 и 670 px.
 - **`.env` не читать.**

@@ -303,3 +303,5 @@ class ObsConnectionService {
 }
 
 export const obsConnectionService = new ObsConnectionService();
+
+import.meta.webpackHot?.decline();
