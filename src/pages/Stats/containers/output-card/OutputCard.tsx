@@ -143,6 +143,7 @@ const OutputCard = ({target}: Props) => {
                 points={graph}
                 now={now}
                 color={color}
+                isActive={isActive}
             />
 
             <StatList items={items}/>

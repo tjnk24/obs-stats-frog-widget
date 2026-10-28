@@ -8,6 +8,7 @@ import {ObsStreamServiceDto} from '__types/ObsStreamServiceDto';
 import {OutputOriginEnum} from '__types/OutputOriginEnum';
 import {RequestResultPairDto} from '__types/RequestResultPairDto';
 import {StreamTargetDto} from '__types/StreamTargetDto';
+import {parseBridgeData} from '__utils/bridge/parseBridgeData';
 import {
     BRIDGE_SCRIPT_NAME,
     MAIN_FALLBACK_TITLE,
@@ -21,8 +22,6 @@ import {isRequestOfType} from '__utils/requests/isRequestOfType';
 
 import {detectPlatform} from '../detectPlatform';
 
-import {parseBridgeData} from './parseBridgeData';
-
 const {GetStreamServiceSettings, GetOutputList, GetProfileParameter} = ObsRequestTypeEnum;
 const {Main, Plugin} = OutputOriginEnum;
 
@@ -33,7 +32,8 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
 
     const service = findResultData<ObsStreamServiceDto>(pairs, isRequestOfType(GetStreamServiceSettings));
     const outputs = findResultData<{outputs: ObsOutputListItemDto[]}>(pairs, isRequestOfType(GetOutputList))?.outputs || [];
-    const bridge = parseBridgeData(findResultData<ObsProfileParameterDto>(pairs, isRequestOfType(GetProfileParameter)));
+    const bridgeData = parseBridgeData(findResultData<ObsProfileParameterDto>(pairs, isRequestOfType(GetProfileParameter)));
+    const bridge = bridgeData && new Map(bridgeData.outputs.map(({name, server}) => [name, server]));
 
     const {service: serviceName, server} = service?.streamServiceSettings || {};
 

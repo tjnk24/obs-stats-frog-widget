@@ -39,6 +39,7 @@ const Page = () => {
 
     return (
         <Flex
+            className={style.page}
             gap="small"
             vertical
         >

@@ -1,6 +1,15 @@
 .layout {
     flex: 1;
-    padding: var(--ant-padding-xs);
+    padding: 0 var(--ant-padding-xs) var(--ant-padding-xs);
+}
+
+// stays on top while a long dock scrolls; the background hides the cards passing under it
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: var(--ant-padding-xxs) var(--ant-padding-xs);
+    background-color: var(--ant-color-bg-layout);
 }
 
 .content {

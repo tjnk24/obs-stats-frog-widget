@@ -30,8 +30,17 @@ export const HINTS = {
 export const GROUP_SEPARATOR = ' ';
 
 export const CARD_STYLES: CardProps['styles'] = {
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
     title: {
         whiteSpace: 'normal',
+    },
+    body: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
     },
 };
 

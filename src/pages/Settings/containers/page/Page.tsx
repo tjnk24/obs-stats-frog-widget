@@ -110,28 +110,6 @@ const Page = () => {
                     />
                 </Flex>
             </Card>
-
-            <Card
-                size="small"
-                title="Статистика"
-            >
-                <Flex
-                    gap="small"
-                    vertical
-                >
-                    <Typography.Text type="secondary">
-                        Графики битрейта и потери «за минуту» начнутся заново. Общие счётчики берутся из OBS и не обнулятся.
-                    </Typography.Text>
-
-                    <EnhancedButton
-                        buttonProps={{
-                            onClick: obsConnectionService.resetStats,
-                        }}
-                    >
-                        Сбросить графики и счётчики
-                    </EnhancedButton>
-                </Flex>
-            </Card>
         </Flex>
     );
 };

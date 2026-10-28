@@ -4,7 +4,7 @@ import {BridgeDataDto} from '__types/BridgeDataDto';
 import {ObsProfileParameterDto} from '__types/ObsProfileParameterDto';
 import {BRIDGE_STALE_SEC} from '__utils/consts';
 
-export const parseBridgeData = (parameter: Nullable<ObsProfileParameterDto>): Nullable<Map<string, string>> => {
+export const parseBridgeData = (parameter: Nullable<ObsProfileParameterDto>): Nullable<BridgeDataDto> => {
     try {
         const data = JSON.parse(parameter?.parameterValue) as BridgeDataDto;
 
@@ -12,7 +12,7 @@ export const parseBridgeData = (parameter: Nullable<ObsProfileParameterDto>): Nu
             return null;
         }
 
-        return new Map(data.outputs.map(({name, server}) => [name, server]));
+        return data;
     } catch {
         return null;
     }

@@ -12,7 +12,9 @@ import {ObsMessageDto} from '__types/ObsMessageDto';
 import {ObsOpCodeEnum} from '__types/ObsOpCodeEnum';
 import {ObsRequestDto} from '__types/ObsRequestDto';
 import {ObsRequestResultDto} from '__types/ObsRequestResultDto';
+import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
 import {getAuthString} from '__utils/auth/getAuthString';
+import {getHardware} from '__utils/bridge/getHardware';
 import {
     AUTHENTICATION_FAILED_CLOSE_CODE,
     DISCOVERY_EVERY_POLLS,
@@ -23,6 +25,7 @@ import {
     REQUEST_TIMEOUT_MS,
 } from '__utils/consts';
 import {buildRequests} from '__utils/requests/buildRequests';
+import {isRequestOfType} from '__utils/requests/isRequestOfType';
 import {StatsTracker} from '__utils/stats/StatsTracker';
 import {loadPassword} from '__utils/storage/loadPassword';
 import {savePassword} from '__utils/storage/savePassword';
@@ -249,6 +252,10 @@ class ObsConnectionService {
 
         if (discovered && !isEqual(discovered, statsTargetsSelector(getStore()))) {
             commonActions.stats.setTargets(discovered);
+        }
+
+        if (pairs.some(({request}) => isRequestOfType(ObsRequestTypeEnum.GetProfileParameter)(request))) {
+            commonActions.stats.setHardware(getHardware(pairs));
         }
 
         commonActions.stats.setView(this.tracker.ingest(statsTargetsSelector(getStore()), pairs, performance.now()));

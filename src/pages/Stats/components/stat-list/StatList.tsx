@@ -4,10 +4,13 @@ import {DESCRIPTIONS_STYLES, LEVEL_TEXT_TYPES} from './consts';
 import {Props} from './types';
 import {renderLabel} from './utils/renderLabel';
 
-const StatList = ({items}: Props) => (
+import style from './style.module.scss';
+
+const StatList = ({items, column = 1}: Props) => (
     <Descriptions
+        className={style.list}
         size="small"
-        column={1}
+        column={column}
         colon={false}
         styles={DESCRIPTIONS_STYLES}
         items={items.map(item => ({

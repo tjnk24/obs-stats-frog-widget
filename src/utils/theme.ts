@@ -4,6 +4,13 @@ import {theme, ThemeConfig} from 'antd';
 // so the page's own styles can use them too, not only antd components and what is inside them
 export const THEME_CSS_VAR_KEY = 'css-var-app';
 
+// fields are lighter than the cards they sit on, otherwise they do not read as fields
+const FIELD_COLORS = {
+    colorBgContainer: '#363a46',
+    hoverBg: '#3b404d',
+    activeBg: '#3b404d',
+};
+
 export const THEME: ThemeConfig = {
     algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
     cssVar: {
@@ -29,10 +36,12 @@ export const THEME: ThemeConfig = {
     components: {
         Descriptions: {
             itemPaddingBottom: 2,
-            itemPaddingEnd: 0,
+            itemPaddingEnd: 24,
         },
         Statistic: {
             contentFontSize: 28,
         },
+        Input: FIELD_COLORS,
+        InputNumber: FIELD_COLORS,
     },
 };
