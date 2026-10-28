@@ -5,6 +5,6 @@ export const saveSettings = (settings: SettingsDto) => {
     try {
         localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
     } catch {
-        // without localStorage the settings last until the dock is reloaded
+        return;
     }
 };

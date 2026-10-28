@@ -64,7 +64,6 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
             });
         }
 
-        // obs-multi-rtmp names the outputs of all its targets alike, and obs-websocket finds outputs by name
         if (counts[outputName] > 1) {
             notes.push({
                 text: `Выходов с именем «${outputName}»: ${counts[outputName]}, статистика только по одному`,

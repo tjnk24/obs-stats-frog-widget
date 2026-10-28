@@ -1,4 +1,3 @@
-// top level: inside :global it would compile to a selector-less rule that browsers drop
 @import 'https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap';
 
 :global {
@@ -8,7 +7,6 @@
     }
 
     body {
-        // the frame reaches the bottom of the dock even when the cards are shorter; 2px are body's margins
         box-sizing: border-box;
         min-height: calc(100vh - 2px);
         display: flex;

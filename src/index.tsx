@@ -11,7 +11,6 @@ import {THEME, THEME_CSS_VAR_KEY} from '__utils/theme';
 
 import './global.module.scss';
 
-// hash routes: the dock is opened from disk, and a reload must find index.html again
 const router = createHashRouter(Core);
 
 routerManager.init(router.navigate);

@@ -30,7 +30,6 @@ const TooltipButton = ({
             {...tooltipPropsRest}
             trigger={trigger}
         >
-            {/* a disabled button fires no mouse events, so the tooltip hangs on a wrapper */}
             <span
                 className={cn(style.trigger, {
                     [style.disabledTrigger]: disabled,

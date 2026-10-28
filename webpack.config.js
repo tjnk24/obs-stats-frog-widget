@@ -43,7 +43,6 @@ if (development) {
     );
 }
 
-// an eslint error fails the compilation, and the dev server then stops applying updates
 if (development && !isDevServer) {
     plugins.push(new EslintWebpackPlugin({
         files: 'src/**/*.{ts,tsx,js,jsx}',
@@ -88,7 +87,6 @@ module.exports = {
         static: {
             directory: 'build',
         },
-        // a change outside components (service, store) cannot be hot-applied and reloads the page
         liveReload: true,
         open: ['/'],
         port: process.env.PORT || 3062,
@@ -106,7 +104,6 @@ module.exports = {
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js',
         path: path.resolve(__dirname, 'build'),
-        // relative paths, so the build opens from disk (file:///) as an OBS dock
         publicPath: '',
         pathinfo: false,
     },
@@ -139,7 +136,6 @@ module.exports = {
                                         refresh: isDevServer,
                                     },
                                 },
-                                // OBS 33 docks run on Chromium 127
                                 target: 'es2022',
                             },
                         },

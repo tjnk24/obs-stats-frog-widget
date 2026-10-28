@@ -53,9 +53,7 @@ export class StatsTracker {
             const output = this.outputs.get(key);
             const isStatusRequest = isStatusRequestOf(outputName);
 
-            // an output found by this very batch has no status in it yet
             if (pairs.some(({request}) => isStatusRequest(request))) {
-                // GetOutputStatus fails (code 600) when no output has this name
                 output.view = this.ingestOutput(output, findResultData<ObsOutputStatusDto>(pairs, isStatusRequest), now);
             }
 
@@ -93,10 +91,8 @@ export class StatsTracker {
         let kbps: number | null = null;
 
         if (previous && outputBytes >= previous.bytes && now > previous.time) {
-            // bytes per millisecond * 8 = kilobits per second
             kbps = ((outputBytes - previous.bytes) * 8) / (now - previous.time);
         } else if (previous) {
-            // the output restarted
             output.graph = [];
         }
 

@@ -9,7 +9,6 @@ export const HINTS = {
     gpuSharedMemory: 'У встроенной графики нет своей памяти, она берёт часть оперативной',
 };
 
-// breakpoints follow the dock width: CEF gives the dock its own window
 export const STAT_COLUMNS: DescriptionsProps['column'] = {
     xs: 1,
     sm: 2,

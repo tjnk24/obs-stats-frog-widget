@@ -17,7 +17,6 @@ const CongestionProgress = ({value}: Props) => {
     return (
         <Progress
             percent={Math.round(share * 100)}
-            // "normal" keeps the number at 100% instead of a check mark
             status="normal"
             size={PROGRESS_SIZE}
             strokeColor={strokeColor}

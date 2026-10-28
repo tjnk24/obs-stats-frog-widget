@@ -18,7 +18,6 @@ const CommonButton = (props: Props) => {
         ...buttonPropsRest
     } = props;
 
-    // a button without a type is outlined in the primary color
     const isDefault = !disabled && !danger && !type;
 
     return (

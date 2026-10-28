@@ -4,7 +4,6 @@ import TooltipButton from '../tooltip-button';
 
 import {Props} from './types';
 
-// with withSpinner (the default) the button spins while the promise its onClick returns is pending
 const EnhancedButton = ({
     buttonProps,
     popconfirmProps,

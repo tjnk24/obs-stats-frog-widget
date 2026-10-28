@@ -12,7 +12,6 @@ export class RecentCounter {
     add(time: number, count: number, total: number) {
         const last = this.samples[this.samples.length - 1];
 
-        // counters restarted, e.g. a new stream
         if (last && (count < last.count || total < last.total)) {
             this.samples = [];
         }

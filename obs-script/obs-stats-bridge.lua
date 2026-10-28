@@ -1,16 +1,10 @@
--- obs-websocket lists plugin outputs (obs-multi-rtmp names every target's output "multi-output")
--- but not their servers, so the dock cannot tell a Twitch target from a YouTube one. This script
--- looks the server up inside OBS (output -> service -> server URL) every few seconds and publishes
--- only its scheme and host, never the stream key or the URL path, as the profile parameter
--- [ObsStatsDock] PluginOutputs, which the dock reads with GetProfileParameter.
-
 obs = obslua
 
 local SECTION = 'ObsStatsDock'
 local PARAM = 'PluginOutputs'
 local OUTPUT_NAMES = {'multi-output'}
 local INTERVAL_MS = 3000
-local SERVER_URL_INFO = 0 -- OBS_SERVICE_CONNECT_INFO_SERVER_URL
+local SERVER_URL_INFO = 0
 
 local function server_origin(url)
     if url == nil then
@@ -59,21 +53,18 @@ local function json_string(value)
     return '"' .. escaped .. '"'
 end
 
--- the Windows counters Task Manager uses: they work for any GPU vendor whose driver provides them
 local ENGINE_COUNTER_PATH = '\\GPU Engine(*)\\Utilization Percentage'
 local DEDICATED_MEMORY_COUNTER_PATH = '\\GPU Adapter Memory(*)\\Dedicated Usage'
 local SHARED_MEMORY_COUNTER_PATH = '\\GPU Adapter Memory(*)\\Shared Usage'
-local PDH_FORMAT_DOUBLE_UNCAPPED = 0x8200 -- PDH_FMT_DOUBLE | PDH_FMT_NOCAP100
-local PDH_MORE_DATA = -2147481646 -- 0x800007D2 as a signed 32-bit status
+local PDH_FORMAT_DOUBLE_UNCAPPED = 0x8200
+local PDH_MORE_DATA = -2147481646
 local PDH_VALID_DATA_STATUSES = {[0] = true, [1] = true}
--- below this an adapter has no memory of its own: integrated graphics use shared system memory
 local DEDICATED_MEMORY_MIN_BYTES = 64 * 1024 * 1024
 
 local ffi_loaded, ffi = pcall(require, 'ffi')
 local hardware = nil
 
 local function define_native_types()
-    -- a reloaded script runs the cdef again; the types it redefines are already there
     pcall(ffi.cdef, [[
         typedef struct {
             uint32_t status;
@@ -112,7 +103,6 @@ local function define_native_types()
     ]])
 end
 
--- counter paths and instance names are ASCII
 local function to_wide_string(text)
     local buffer = ffi.new('uint16_t[?]', #text + 1)
 
@@ -164,9 +154,7 @@ local function define_adapter_types()
     ]])
 end
 
--- IID_IDXGIFactory1
 local FACTORY_INTERFACE_ID = {0x770aae78, 0xf26f, 0x4dba, {0xa8, 0x29, 0x25, 0x3c, 0x83, 0xd1, 0xb3, 0x87}}
--- positions in the COM vtables of IDXGIFactory1 and IDXGIAdapter1
 local RELEASE_METHOD = 2
 local ENUM_ADAPTERS1_METHOD = 12
 local GET_DESCRIPTION1_METHOD = 10
@@ -183,7 +171,6 @@ local function adapter_key(high_part, low_part)
     return string.format('0x%08x_0x%08x', bit.band(high_part, 0xffffffff), low_part)
 end
 
--- the counters only name adapters by LUID; DXGI gives the names for the same LUIDs
 local function read_adapter_names()
     define_adapter_types()
 
@@ -245,7 +232,6 @@ local function open_gpu_counters(pdh)
         counters[key] = counter
     end
 
-    -- utilization is a rate: the first value comes from the difference with this sample
     pdh.PdhCollectQueryData(query[0])
 
     return {pdh = pdh, query = query, counters = counters}
@@ -307,7 +293,6 @@ local function read_counter(gpu, counter)
     return values
 end
 
--- per adapter: the busiest 3D engine and the busiest encoder engine, summed over processes as Task Manager does
 local function read_adapter_loads(gpu)
     local engine_loads = {}
 
@@ -350,7 +335,6 @@ local function read_adapter_memory(gpu, adapters, counter, field)
     end
 end
 
--- the busiest adapter is the one OBS renders on; with no load yet, the one with the most memory of its own
 local function sample_gpu(gpu)
     if gpu.pdh.PdhCollectQueryData(gpu.query[0]) ~= 0 then
         return nil

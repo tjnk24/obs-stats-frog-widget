@@ -7,7 +7,6 @@ import {
     useState,
 } from 'react';
 
-// the button spins while the promise its handler returns is pending, and ignores clicks meanwhile
 export const useAsyncButtonClick = (onClick: MouseEventHandler<HTMLElement> | undefined) => {
     const isMountedRef = useRef(false);
     const isPendingRef = useRef(false);

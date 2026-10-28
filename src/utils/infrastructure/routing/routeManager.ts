@@ -6,7 +6,6 @@ import {NavigateDto} from '__types/NavigateDto';
 class RouterManager {
     private navigate: Nullable<NavigateDto> = null;
 
-    // the router is created in index.tsx, which imports the pages that use this manager
     init = (navigate: NavigateDto) => {
         this.navigate = navigate;
     };

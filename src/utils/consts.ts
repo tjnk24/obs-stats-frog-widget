@@ -17,7 +17,6 @@ export const DISCOVERY_EVERY_POLLS = 5;
 
 export const BAD_DROP_SHARE = 0.01;
 
-// kept from the first single-file version of the dock, so a password remembered there carries over
 export const PASSWORD_STORAGE_KEY = 'obs-stats-dock.password';
 export const SETTINGS_STORAGE_KEY = 'obs-stats-dock.settings';
 
@@ -29,7 +28,6 @@ export const DEFAULT_SETTINGS: SettingsDto = {
 export const CONNECTING_WORDING = 'Подключение к OBS...';
 
 export const MAIN_TARGET_KEY = 'main';
-// OBS's own stream output: "adv_stream" in Advanced output mode, "simple_stream" in Simple
 export const MAIN_OUTPUT_NAMES = ['adv_stream', 'simple_stream'];
 export const PLUGIN_OUTPUT_NAMES: Record<string, string> = {
     'multi-output': 'multi-rtmp',
@@ -40,7 +38,6 @@ export const BRIDGE_PARAMETER = {
     parameterCategory: 'ObsStatsDock',
     parameterName: 'PluginOutputs',
 };
-// the script refreshes its data every 3 s; older data means it is no longer running
 export const BRIDGE_STALE_SEC = 15;
 
 export const UNKNOWN_PLATFORM_COLOR = '#9aa0ae';
@@ -58,7 +55,6 @@ export const PLATFORM_RULES: PlatformRuleDto[] = [
         title: 'Twitch',
         color: '#a970ff',
         services: /twitch/i,
-        // Twitch ingests: ingest.global-contribute.live-video.net and regional ones like waw02.contribute.live-video.net
         hosts: [/(^|\.)twitch\.tv$/, /^ingest\.global-contribute\.live-video\.net$/, /^[a-z]{3}\d{2}\.contribute\.live-video\.net$/],
     },
     {

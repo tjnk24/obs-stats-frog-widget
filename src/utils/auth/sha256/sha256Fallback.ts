@@ -32,11 +32,9 @@ export const sha256Fallback = (bytes: Uint8Array) => {
             const olderMix = rotateRight(olderWord, 7) ^ rotateRight(olderWord, 18) ^ (olderWord >>> 3);
             const recentMix = rotateRight(recentWord, 17) ^ rotateRight(recentWord, 19) ^ (recentWord >>> 10);
 
-            // Int32Array wraps the sum to 32 bits
             schedule[wordIndex] = schedule[wordIndex - 16] + olderMix + schedule[wordIndex - 7] + recentMix;
         }
 
-        // the standard's working variables a..h
         const workingState = hash.slice();
 
         for (let round = 0; round < ROUND_COUNT; round++) {
@@ -50,8 +48,6 @@ export const sha256Fallback = (bytes: Uint8Array) => {
             const majority = (first & second) ^ (first & third) ^ (second & third);
             const secondSum = (firstMix + majority) | 0;
 
-            // every variable moves one place down; the new first one is both sums,
-            // the new fifth one is the old fourth plus the first sum
             workingState.pop();
             workingState.unshift((firstSum + secondSum) | 0);
             workingState[4] = (workingState[4] + firstSum) | 0;

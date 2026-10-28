@@ -6,7 +6,6 @@ import {
     UINT32_RANGE,
 } from './consts';
 
-// round constants and initial hash: fractional parts of the cube and square roots of the first primes
 export const getSha256Constants = (): Sha256ConstantsDto => {
     const roundConstants: number[] = [];
     const initialHash: number[] = [];

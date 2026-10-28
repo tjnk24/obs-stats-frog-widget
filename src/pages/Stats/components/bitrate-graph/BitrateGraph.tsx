@@ -31,7 +31,6 @@ const BitrateGraph = ({
 
     const [size, setSize] = useState({width: 0, height: 0});
 
-    // a line needs two points: the first one comes a poll after the stream starts
     const hasLine = points.length >= 2;
 
     useEffect(() => {

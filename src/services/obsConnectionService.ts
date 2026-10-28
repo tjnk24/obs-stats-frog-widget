@@ -82,7 +82,6 @@ class ObsConnectionService {
         this.reconnect();
     };
 
-    // the saved password stays in use until OBS accepts the new one
     changePassword = (password: string) => new Promise<PasswordChangeResultEnum>(resolve => {
         this.passwordChange = {password, resolve};
 
@@ -107,7 +106,6 @@ class ObsConnectionService {
     private connect = () => {
         this.clearReconnectTimer();
 
-        // retries keep showing "no connection" instead of flickering between it and "connecting"
         connectionStatusSelector(getStore()) !== Closed && commonActions.connection.setStatus(Connecting);
 
         const socket = new WebSocket(`ws://127.0.0.1:${obsWebSocketPortSelector(getStore())}`, OBS_WEBSOCKET_PROTOCOL);
@@ -197,7 +195,6 @@ class ObsConnectionService {
                     identify.authentication = await getAuthString(password, data.authentication.salt, data.authentication.challenge);
                 }
 
-                // the socket may have been replaced while the hash was computed
                 socket === this.socket && socket.send(JSON.stringify({op: Identify, d: identify}));
                 break;
             }
@@ -214,7 +211,6 @@ class ObsConnectionService {
             case RequestBatchResponse: {
                 const {inFlight} = this;
 
-                // an answer to a batch given up on after REQUEST_TIMEOUT_MS is dropped
                 if (inFlight?.id === data.requestId) {
                     this.inFlight = null;
                     this.onBatchResults(inFlight.requests, data.results);

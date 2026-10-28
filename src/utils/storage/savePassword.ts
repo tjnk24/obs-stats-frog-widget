@@ -10,6 +10,6 @@ export const savePassword = (password: Nullable<string>) => {
             localStorage.setItem(PASSWORD_STORAGE_KEY, password);
         }
     } catch {
-        // without localStorage the password is asked again next time
+        return;
     }
 };

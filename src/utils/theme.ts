@@ -1,6 +1,5 @@
 import {theme, ThemeConfig} from 'antd';
 
-// set on <html> in index.tsx, so the --ant-* variables reach the page's own styles too
 export const THEME_CSS_VAR_KEY = 'css-var-app';
 
 const FIELD_COLORS = {
@@ -21,7 +20,6 @@ export const THEME: ThemeConfig = {
         colorWarning: '#e2a63b',
         colorError: '#e5534b',
         colorBgBase: '#1D1F26',
-        // the dark algorithm would derive a slightly bluer page background from colorBgBase
         colorBgLayout: '#1D1F26',
         colorBgContainer: '#272a33',
         colorBgElevated: '#30343e',
