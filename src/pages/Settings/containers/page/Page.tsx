@@ -1,9 +1,7 @@
 import {
-    Alert,
     Card,
     Flex,
     Form,
-    InputNumber,
     Switch,
     Typography,
 } from 'antd';
@@ -11,21 +9,25 @@ import {useSelector} from 'react-redux';
 
 import {commonActions} from '__actions';
 import EnhancedButton from '__components/EnhancedButton';
+import PortField from '__components/PortField';
 import {settingsIsShowGeneralCardSelector, settingsPortSelector} from '__selectors/settingsSelectors';
 import {obsConnectionService} from '__services/obsConnectionService';
-import {getObsWebSocketPort} from '__utils/getObsWebSocketPort';
-import {routerManager} from '__utils/infrastructure/routing/routeManager';
 
-import {PORT_RULES} from './consts';
+import PasswordCard from '../password-card';
+
 import {PortFormDto} from './types';
-
-import style from './style.module.scss';
 
 const Page = () => {
     const port = useSelector(settingsPortSelector);
     const isShowGeneralCard = useSelector(settingsIsShowGeneralCardSelector);
 
-    const portOverride = getObsWebSocketPort();
+    const [form] = Form.useForm<PortFormDto>();
+
+    const onSubmit = async () => {
+        const values = await form.validateFields();
+
+        obsConnectionService.setPort(values.port);
+    };
 
     return (
         <Flex
@@ -34,62 +36,28 @@ const Page = () => {
         >
             <Card
                 size="small"
-                title="Подключение"
+                title="Порт"
             >
                 <Form<PortFormDto>
+                    form={form}
                     layout="vertical"
                     initialValues={{port}}
-                    onFinish={values => obsConnectionService.setPort(values.port)}
                 >
-                    <Form.Item
-                        name="port"
-                        label="Порт obs-websocket"
-                        extra="Tools → WebSocket Server Settings → Server Port"
-                        rules={PORT_RULES}
+                    <PortField extra="Tools → WebSocket Server Settings → Server Port"/>
+
+                    <EnhancedButton
+                        buttonProps={{
+                            type: 'primary',
+                            htmlType: 'submit',
+                            onClick: onSubmit,
+                        }}
                     >
-                        <InputNumber
-                            className={style.portInput}
-                            min={1}
-                            max={65535}
-                            precision={0}
-                        />
-                    </Form.Item>
-
-                    {portOverride !== null && (
-                        <Alert
-                            className={style.alert}
-                            type="info"
-                            title={`Сейчас порт ${portOverride} задан в адресе панели (?port=) и важнее этой настройки.`}
-                            showIcon
-                        />
-                    )}
-
-                    <Flex
-                        gap="small"
-                        wrap
-                    >
-                        <EnhancedButton
-                            buttonProps={{
-                                type: 'primary',
-                                htmlType: 'submit',
-                            }}
-                        >
-                            Сохранить и переподключиться
-                        </EnhancedButton>
-
-                        <EnhancedButton
-                            buttonProps={{
-                                onClick: () => {
-                                    obsConnectionService.resetPassword();
-                                    routerManager.goToLogin();
-                                },
-                            }}
-                        >
-                            Сменить пароль
-                        </EnhancedButton>
-                    </Flex>
+                        Сохранить и переподключиться
+                    </EnhancedButton>
                 </Form>
             </Card>
+
+            <PasswordCard/>
 
             <Card
                 size="small"

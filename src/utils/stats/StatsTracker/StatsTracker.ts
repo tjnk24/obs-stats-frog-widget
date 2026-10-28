@@ -25,7 +25,9 @@ const {GetStats} = ObsRequestTypeEnum;
 
 export class StatsTracker {
     private outputs = new Map<string, OutputStateDto>();
+
     private readonly encoding = new RecentCounter(RECENT_WINDOW_SEC);
+
     private readonly rendering = new RecentCounter(RECENT_WINDOW_SEC);
 
     reset(): StatsViewDto {

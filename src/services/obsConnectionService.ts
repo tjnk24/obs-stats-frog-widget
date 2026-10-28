@@ -13,6 +13,8 @@ import {ObsOpCodeEnum} from '__types/ObsOpCodeEnum';
 import {ObsRequestDto} from '__types/ObsRequestDto';
 import {ObsRequestResultDto} from '__types/ObsRequestResultDto';
 import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
+import {PasswordChangeDto} from '__types/PasswordChangeDto';
+import {PasswordChangeResultEnum} from '__types/PasswordChangeResultEnum';
 import {getAuthString} from '__utils/auth/getAuthString';
 import {getHardware} from '__utils/bridge/getHardware';
 import {
@@ -48,13 +50,21 @@ const {
 
 class ObsConnectionService {
     private socket: Nullable<WebSocket> = null;
+
     private reconnectTimer: Nullable<number> = null;
+
     private pollTimer: Nullable<number> = null;
+
     private inFlight: Nullable<InFlightBatchDto> = null;
+
     private requestId = 0;
+
     private pollIndex = 0;
+
     private password = loadPassword();
-    private isRememberPassword = true;
+
+    private passwordChange: Nullable<PasswordChangeDto> = null;
+
     private readonly tracker = new StatsTracker();
 
     start = () => {
@@ -65,21 +75,19 @@ class ObsConnectionService {
         this.disconnect();
     };
 
-    submitPassword = (password: string, isRemember: boolean) => {
+    logIn = (port: number, password: string) => {
+        commonActions.settings.setPort(port);
         this.password = password;
-        this.isRememberPassword = isRemember;
-
-        !isRemember && savePassword(null);
 
         this.reconnect();
     };
 
-    resetPassword = () => {
-        savePassword(null);
-        this.password = null;
+    // the saved password stays in use until OBS accepts the new one
+    changePassword = (password: string) => new Promise<PasswordChangeResultEnum>(resolve => {
+        this.passwordChange = {password, resolve};
 
         this.reconnect();
-    };
+    });
 
     setPort = (port: number) => {
         commonActions.settings.setPort(port);
@@ -144,6 +152,15 @@ class ObsConnectionService {
         this.socket = null;
         this.onDisconnected();
 
+        if (code === AUTHENTICATION_FAILED_CLOSE_CODE && this.passwordChange) {
+            this.finishPasswordChange(PasswordChangeResultEnum.Rejected);
+            this.connect();
+
+            return;
+        }
+
+        this.passwordChange && this.finishPasswordChange(PasswordChangeResultEnum.NoConnection);
+
         if (code === AUTHENTICATION_FAILED_CLOSE_CODE) {
             savePassword(null);
             this.password = null;
@@ -166,8 +183,10 @@ class ObsConnectionService {
                     eventSubscriptions: 0,
                 };
 
+                const password = this.passwordChange?.password ?? this.password;
+
                 if (data.authentication) {
-                    if (!this.password) {
+                    if (!password) {
                         this.disconnect();
 
                         commonActions.connection.setStatus(NeedPassword);
@@ -175,7 +194,7 @@ class ObsConnectionService {
                         return;
                     }
 
-                    identify.authentication = await getAuthString(this.password, data.authentication.salt, data.authentication.challenge);
+                    identify.authentication = await getAuthString(password, data.authentication.salt, data.authentication.challenge);
                 }
 
                 // the socket may have been replaced while the hash was computed
@@ -184,7 +203,8 @@ class ObsConnectionService {
             }
 
             case Identified:
-                this.isRememberPassword && this.password && savePassword(this.password);
+                this.passwordChange && this.finishPasswordChange(PasswordChangeResultEnum.Accepted);
+                this.password && savePassword(this.password);
 
                 commonActions.connection.setStatus(ConnectionStatusEnum.Identified);
 
@@ -258,6 +278,22 @@ class ObsConnectionService {
         }
 
         commonActions.stats.setView(this.tracker.ingest(statsTargetsSelector(getStore()), pairs, performance.now()));
+    };
+
+    private finishPasswordChange = (result: PasswordChangeResultEnum) => {
+        const {passwordChange} = this;
+
+        if (!passwordChange) {
+            return;
+        }
+
+        this.passwordChange = null;
+
+        if (result === PasswordChangeResultEnum.Accepted) {
+            this.password = passwordChange.password;
+        }
+
+        passwordChange.resolve(result);
     };
 
     private clearReconnectTimer = () => {

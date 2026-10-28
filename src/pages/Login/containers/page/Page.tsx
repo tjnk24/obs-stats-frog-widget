@@ -1,7 +1,6 @@
 import {
     Alert,
     Card,
-    Checkbox,
     Flex,
     Form,
     Input,
@@ -12,15 +11,14 @@ import {useEffect, useRef} from 'react';
 import {useSelector} from 'react-redux';
 
 import EnhancedButton from '__components/EnhancedButton';
+import PortField from '__components/PortField';
 import {connectionStatusSelector} from '__selectors/connectionSelectors';
+import {settingsPortSelector} from '__selectors/settingsSelectors';
 import {obsConnectionService} from '__services/obsConnectionService';
-import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
 
 import {
-    CONNECT_INFO_HINT,
-    INITIAL_VALUES,
+    ERROR_STATUSES,
     LOGIN_MESSAGES,
-    PASSWORD_PLACEHOLDER,
     PASSWORD_RULES,
 } from './consts';
 import {LoginFormDto} from './types';
@@ -29,11 +27,11 @@ import style from './style.module.scss';
 
 const Page = () => {
     const status = useSelector(connectionStatusSelector);
+    const port = useSelector(settingsPortSelector);
 
     const [form] = Form.useForm<LoginFormDto>();
 
-    const message = LOGIN_MESSAGES[status] || LOGIN_MESSAGES[ConnectionStatusEnum.NeedPassword];
-    const isError = status === ConnectionStatusEnum.WrongPassword;
+    const message = LOGIN_MESSAGES[status];
 
     const inputRef = useRef<InputRef>(null);
 
@@ -41,10 +39,10 @@ const Page = () => {
         inputRef.current?.focus();
     }, [message]);
 
-    const onFinish = ({password, isRemember}: LoginFormDto) => {
-        obsConnectionService.submitPassword(password, isRemember);
+    const onSubmit = async () => {
+        const values = await form.validateFields();
 
-        form.resetFields(['password']);
+        obsConnectionService.logIn(values.port, values.password);
     };
 
     return (
@@ -58,38 +56,31 @@ const Page = () => {
                 size="small"
                 title="Подключение к OBS"
             >
-                <Alert
-                    className={style.message}
-                    type={isError ? 'error' : 'info'}
-                    title={message}
-                    showIcon
-                />
+                {message && (
+                    <Alert
+                        className={style.message}
+                        type={ERROR_STATUSES.includes(status) ? 'error' : 'info'}
+                        title={message}
+                        showIcon
+                    />
+                )}
 
-                <Form
+                <Form<LoginFormDto>
                     form={form}
                     layout="vertical"
-                    initialValues={INITIAL_VALUES}
-                    onFinish={onFinish}
+                    initialValues={{port}}
                 >
+                    <PortField/>
+
                     <Form.Item
                         name="password"
+                        label="Пароль obs-websocket"
                         rules={PASSWORD_RULES}
                     >
                         <Input.Password
                             ref={inputRef}
                             autoComplete="current-password"
-                            placeholder={PASSWORD_PLACEHOLDER}
-                            aria-label={PASSWORD_PLACEHOLDER}
                         />
-                    </Form.Item>
-
-                    <Form.Item
-                        name="isRemember"
-                        valuePropName="checked"
-                    >
-                        <Checkbox>
-                            Запомнить
-                        </Checkbox>
                     </Form.Item>
 
                     <EnhancedButton
@@ -97,6 +88,7 @@ const Page = () => {
                             type: 'primary',
                             htmlType: 'submit',
                             block: true,
+                            onClick: onSubmit,
                         }}
                     >
                         Подключиться
@@ -107,7 +99,7 @@ const Page = () => {
                     className={style.hint}
                     type="secondary"
                 >
-                    {CONNECT_INFO_HINT}
+                    Порт и пароль: Tools → WebSocket Server Settings → Show Connect Info.
                 </Typography.Paragraph>
             </Card>
         </Flex>
