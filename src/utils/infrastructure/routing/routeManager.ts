@@ -26,5 +26,4 @@ class RouterManager {
 
 export const routerManager = new RouterManager();
 
-// a hot update would run this module again and create a second instance next to the running one, so the page reloads instead
 import.meta.webpackHot?.decline();
