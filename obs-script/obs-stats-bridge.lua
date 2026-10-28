@@ -59,8 +59,7 @@ local function json_string(value)
     return '"' .. escaped .. '"'
 end
 
--- GPU load comes from the Windows performance counters Task Manager uses, so it works for any vendor
--- whose driver provides them (NVIDIA, AMD, Intel); without them the dock simply shows no GPU rows
+-- the Windows counters Task Manager uses: they work for any GPU vendor whose driver provides them
 local ENGINE_COUNTER_PATH = '\\GPU Engine(*)\\Utilization Percentage'
 local DEDICATED_MEMORY_COUNTER_PATH = '\\GPU Adapter Memory(*)\\Dedicated Usage'
 local SHARED_MEMORY_COUNTER_PATH = '\\GPU Adapter Memory(*)\\Shared Usage'
@@ -165,7 +164,7 @@ local function define_adapter_types()
     ]])
 end
 
--- {770aae78-f26f-4dba-a829-253c83d1b387}
+-- IID_IDXGIFactory1
 local FACTORY_INTERFACE_ID = {0x770aae78, 0xf26f, 0x4dba, {0xa8, 0x29, 0x25, 0x3c, 0x83, 0xd1, 0xb3, 0x87}}
 -- positions in the COM vtables of IDXGIFactory1 and IDXGIAdapter1
 local RELEASE_METHOD = 2
@@ -381,7 +380,7 @@ local function sample_gpu(gpu)
     local is_shared_memory = busiest.dedicated < DEDICATED_MEMORY_MIN_BYTES
 
     return string.format(
-        '{"name":%s,"usage":%.1f,"encoder":%.1f,"memory":%.0f,"isSharedMemory":%s}',
+        '{"name":%s,"usage":%.1f,"encoder":%.1f,"memoryInBytes":%.0f,"isSharedMemory":%s}',
         busiest.name ~= nil and json_string(busiest.name) or 'null',
         math.min(busiest.usage, 100),
         math.min(busiest.encoder, 100),

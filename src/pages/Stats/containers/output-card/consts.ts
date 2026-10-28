@@ -1,4 +1,4 @@
-import {CardProps, TagProps} from 'antd';
+import {TagProps} from 'antd';
 
 import {HealthLevelEnum} from '__types/HealthLevelEnum';
 import {RECENT_WINDOW_SEC} from '__utils/consts';
@@ -28,21 +28,6 @@ export const HINTS = {
 };
 
 export const GROUP_SEPARATOR = ' ';
-
-export const CARD_STYLES: CardProps['styles'] = {
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    title: {
-        whiteSpace: 'normal',
-    },
-    body: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-    },
-};
 
 export const MAIN_TAG: TagDto = {
     text: 'Основной',

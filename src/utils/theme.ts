@@ -1,10 +1,8 @@
 import {theme, ThemeConfig} from 'antd';
 
-// the class antd puts its CSS variables (--ant-*) on; set on <html> in index.tsx,
-// so the page's own styles can use them too, not only antd components and what is inside them
+// set on <html> in index.tsx, so the --ant-* variables reach the page's own styles too
 export const THEME_CSS_VAR_KEY = 'css-var-app';
 
-// fields are lighter than the cards they sit on, otherwise they do not read as fields
 const FIELD_COLORS = {
     colorBgContainer: '#363a46',
     hoverBg: '#3b404d',

@@ -140,7 +140,7 @@ export class StatsTracker {
             fps: stats.activeFps,
             frameTime: stats.averageFrameRenderTime,
             cpu: stats.cpuUsage,
-            memory: stats.memoryUsage,
+            memoryInMb: stats.memoryUsage,
             encoding: {
                 skipped: outputSkippedFrames,
                 total: outputTotalFrames,

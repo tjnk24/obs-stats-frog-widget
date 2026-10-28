@@ -13,7 +13,6 @@ import {
 
 import {GRAPH_SPAN_SEC} from '__utils/consts';
 
-import {GRAPH_MIN_HEIGHT} from './consts';
 import {Props} from './types';
 import {drawGraph} from './utils/drawGraph';
 
@@ -64,7 +63,6 @@ const BitrateGraph = ({
         <div
             ref={containerRef}
             className={style.graph}
-            style={{minHeight: GRAPH_MIN_HEIGHT}}
         >
             <Tooltip title={hasLine ? `Битрейт за последние ${GRAPH_SPAN_SEC / 60} мин` : null}>
                 <canvas

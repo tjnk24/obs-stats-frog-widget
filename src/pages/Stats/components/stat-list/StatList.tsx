@@ -1,6 +1,6 @@
 import {Descriptions, Typography} from 'antd';
 
-import {DESCRIPTIONS_STYLES, LEVEL_TEXT_TYPES} from './consts';
+import {LEVEL_TEXT_TYPES} from './consts';
 import {Props} from './types';
 import {renderLabel} from './utils/renderLabel';
 
@@ -12,7 +12,10 @@ const StatList = ({items, column = 1}: Props) => (
         size="small"
         column={column}
         colon={false}
-        styles={DESCRIPTIONS_STYLES}
+        classNames={{
+            label: style.itemLabel,
+            content: style.itemContent,
+        }}
         items={items.map(item => ({
             key: item.key,
             label: renderLabel(item),

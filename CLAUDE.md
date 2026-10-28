@@ -36,9 +36,10 @@ OBS Custom Browser Dock: React 19, antd 6, Redux Toolkit, react-router 7, CSS-м
 
 - **CSS-модули (`.module.scss`)**, без БЭМ-функций и less.
 - **Кнопки - только `EnhancedButton`** из `__components/EnhancedButton`, antd `Button` напрямую не используем. Пропсы кнопки - в `buttonProps`, подсказка - `tooltipProps`, подтверждение - `popconfirmProps`. Спиннер включён по умолчанию (`withSpinner`): чтобы он крутился, `onClick` должен вернуть промис; выключается `withSpinner={false}`. Кнопка без `type` рисуется в основном цвете с обводкой.
-- **Сначала возможности antd, потом свой CSS**: отступы - `Flex`/`Space` с `gap`, коробка - `Card`, текст - `Typography` с пропсами (`type`, `strong`), правки компонентов - их пропы `styles`/`classNames`. Свой CSS - для раскладки.
-- **Цвета и отступы - CSS-переменными темы antd** (`var(--ant-color-border)`, `var(--ant-padding-xs)`, `var(--ant-margin-sm)`). Они доступны везде: класс `css-var-app` висит на `<html>`. Новые хексы в SCSS не пишем, тема - одна, в `utils/theme.ts`. В TypeScript (canvas графика, цвет прогресса) - `theme.useToken()`.
-- **Шрифты в SCSS не трогаем** - ни `font-size`, ни `font-weight`.
+- **Сначала возможности antd, потом свой CSS**: отступы - `Flex`/`Space` с `gap`, коробка - `Card`, текст - `Typography` с пропсами (`type`, `strong`). Свой CSS - для раскладки.
+- **Инлайн-стилей нет никогда**: ни `style`, ни `styles` у компонентов antd, ни объектов `CSSProperties` в `consts.ts`. Внутренние части antd (`title`, `body`, `label`, `content`, `suffix`) правим через проп `classNames` классами из `style.module.scss`; чтобы перебить вложенные селекторы antd, класс части пишем внутри класса корня (`.card .title`, `.list .itemLabel`). Стиль по условию - условный класс (`content: isActive ? undefined : style.inactiveBitrate`), цвет из темы - CSS-переменной, а не `theme.useToken()`.
+- **Цвета и отступы - CSS-переменными темы antd** (`var(--ant-color-border)`, `var(--ant-padding-xs)`, `var(--ant-margin-sm)`). Они доступны везде: класс `css-var-app` висит на `<html>`. Новые хексы в SCSS не пишем, тема - одна, в `utils/theme.ts`. `theme.useToken()` - только там, где CSS не достаёт: рисование на canvas и пропсы-цвета antd (`strokeColor` у `Progress`).
+- **Своих размеров шрифта не задаём**: `font-size` и `font-weight` в SCSS - только переменными темы (`var(--ant-font-size)`), когда нужно вернуть части antd обычный размер.
 - **Цвета площадок** (`PLATFORM_RULES`) - фирменные цвета, это данные, а не тема.
 
 ## Безопасность

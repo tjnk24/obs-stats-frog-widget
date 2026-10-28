@@ -113,7 +113,6 @@ class ObsConnectionService {
         this.socket = socket;
     };
 
-    // closes the socket without the reconnect that a close by OBS leads to
     private disconnect = () => {
         this.clearReconnectTimer();
 

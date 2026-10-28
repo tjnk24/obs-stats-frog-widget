@@ -5,7 +5,6 @@ import {
     Flex,
     Statistic,
     Tag,
-    theme,
     Tooltip,
 } from 'antd';
 import {useSelector} from 'react-redux';
@@ -22,7 +21,6 @@ import {formatPercent} from '../../utils/formatPercent';
 import {formatTimecode} from '../../utils/formatTimecode';
 
 import {
-    CARD_STYLES,
     HEALTH_TAGS,
     GROUP_SEPARATOR,
     HINTS,
@@ -37,8 +35,6 @@ import style from './style.module.scss';
 const {Off, Warn} = HealthLevelEnum;
 
 const OutputCard = ({target}: Props) => {
-    const {token} = theme.useToken();
-
     const {outputs, now} = useSelector(statsViewSelector);
 
     const view = outputs[target.key] || OFF_OUTPUT_VIEW;
@@ -97,7 +93,11 @@ const OutputCard = ({target}: Props) => {
     return (
         <Card
             size="small"
-            styles={CARD_STYLES}
+            classNames={{
+                root: style.card,
+                title: style.title,
+                body: style.body,
+            }}
             title={(
                 <Flex
                     wrap
@@ -133,9 +133,10 @@ const OutputCard = ({target}: Props) => {
                 loading={isActive && kbps === null}
                 groupSeparator={GROUP_SEPARATOR}
                 suffix="кбит/с"
-                styles={{
-                    content: {color: isActive ? undefined : token.colorTextTertiary},
-                    suffix: {fontSize: token.fontSize, color: token.colorTextTertiary},
+                classNames={{
+                    root: style.bitrate,
+                    content: isActive ? undefined : style.inactiveBitrate,
+                    suffix: style.bitrateUnit,
                 }}
             />
 

@@ -5,11 +5,9 @@ import {
     Typography,
 } from 'antd';
 
-import {LABEL_TEXT_STYLE} from '../consts';
 import style from '../style.module.scss';
 import {StatItemDto} from '../types';
 
-// a label too long for the dock, e.g. with a GPU name, is cut with an ellipsis and shown whole on hover
 export const renderLabel = ({label, hint}: StatItemDto) => (
     <Flex
         className={style.label}
@@ -17,7 +15,7 @@ export const renderLabel = ({label, hint}: StatItemDto) => (
         gap={4}
     >
         <Typography.Text
-            style={LABEL_TEXT_STYLE}
+            className={style.labelText}
             ellipsis={{tooltip: label}}
         >
             {label}
