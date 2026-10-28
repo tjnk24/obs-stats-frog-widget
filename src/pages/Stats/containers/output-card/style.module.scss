@@ -13,11 +13,30 @@
     flex-direction: column;
 }
 
+.bitrateRow {
+    flex: 1;
+    align-self: stretch;
+    margin-bottom: 6px;
+}
+
+.bitrate {
+    flex: none;
+}
+
+.bitrate .bitrateValue {
+    display: flex;
+    flex-direction: column;
+    min-width: 6ch;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+}
+
 .bitrate .inactiveBitrate {
     color: var(--ant-color-text-tertiary);
 }
 
-.bitrate .bitrateUnit {
+.bitrate .bitrateValue .bitrateUnit {
+    margin-inline-start: 0;
     font-size: var(--ant-font-size);
     color: var(--ant-color-text-tertiary);
 }

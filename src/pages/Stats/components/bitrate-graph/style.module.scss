@@ -1,8 +1,8 @@
 .graph {
     position: relative;
     flex: 1;
+    align-self: stretch;
     min-height: 36px;
-    margin-bottom: 6px;
 }
 
 .canvas {

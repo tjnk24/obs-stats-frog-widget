@@ -35,6 +35,13 @@ export const MAIN_TAG: TagDto = {
     color: 'blue',
 };
 
+export const PLATFORM_MARKS: Partial<Record<string, TagDto>> = {
+    'VK Video Live': {
+        text: '💩',
+        hint: 'Платформа гавна',
+    },
+};
+
 export const PLUGIN_TAG: TagDto = {
     text: 'Плагин',
 };

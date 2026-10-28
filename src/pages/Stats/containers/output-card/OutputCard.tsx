@@ -7,6 +7,7 @@ import {
     Tag,
     Tooltip,
 } from 'antd';
+import cn from 'classnames';
 import {useSelector} from 'react-redux';
 
 import {statsViewSelector} from '__selectors/statsSelectors';
@@ -22,6 +23,7 @@ import {formatTimecode} from '../../utils/formatTimecode';
 
 import {
     HEALTH_TAGS,
+    PLATFORM_MARKS,
     GROUP_SEPARATOR,
     HINTS,
     RECONNECTING_WORDING,
@@ -109,6 +111,12 @@ const OutputCard = ({target}: Props) => {
                         text={title}
                     />
 
+                    {PLATFORM_MARKS[title] && (
+                        <Tooltip title={PLATFORM_MARKS[title].hint}>
+                            <span>{PLATFORM_MARKS[title].text}</span>
+                        </Tooltip>
+                    )}
+
                     <Tooltip title={originTag.hint}>
                         <Tag
                             color={originTag.color}
@@ -128,24 +136,30 @@ const OutputCard = ({target}: Props) => {
                 </Tag>
             )}
         >
-            <Statistic
-                value={isActive && kbps !== null ? Math.round(kbps) : '—'}
-                loading={isActive && kbps === null}
-                groupSeparator={GROUP_SEPARATOR}
-                suffix="кбит/с"
-                classNames={{
-                    root: style.bitrate,
-                    content: isActive ? undefined : style.inactiveBitrate,
-                    suffix: style.bitrateUnit,
-                }}
-            />
+            <Flex
+                className={style.bitrateRow}
+                align="center"
+                gap="middle"
+            >
+                <Statistic
+                    value={isActive && kbps !== null ? Math.round(kbps) : '—'}
+                    loading={isActive && kbps === null}
+                    groupSeparator={GROUP_SEPARATOR}
+                    suffix="кбит/с"
+                    classNames={{
+                        root: style.bitrate,
+                        content: cn(style.bitrateValue, {[style.inactiveBitrate]: !isActive}),
+                        suffix: style.bitrateUnit,
+                    }}
+                />
 
-            <BitrateGraph
-                points={graph}
-                now={now}
-                color={color}
-                isActive={isActive}
-            />
+                <BitrateGraph
+                    points={graph}
+                    now={now}
+                    color={color}
+                    isActive={isActive}
+                />
+            </Flex>
 
             <StatList items={items}/>
 
