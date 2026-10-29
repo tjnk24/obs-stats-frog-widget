@@ -13,11 +13,10 @@ import {
 } from 'react';
 
 import EnhancedButton from '__components/EnhancedButton';
+import {reportService} from '__services/reportService';
 import {CopyResultEnum} from '__types/CopyResultEnum';
-import {copyText} from '__utils/clipboard/copyText';
 
 import {Props, State} from './types';
-import {buildErrorReport} from './utils/buildErrorReport';
 
 import style from './style.module.scss';
 
@@ -35,11 +34,11 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-        this.setState({report: buildErrorReport(error, errorInfo.componentStack)});
+        this.setState({report: reportService.buildErrorReport(error, errorInfo.componentStack)});
     }
 
     private copyReport = async () => {
-        const isCopied = await copyText(this.state.report ?? '');
+        const isCopied = await reportService.copy(this.state.report ?? '');
 
         if (!isCopied) {
             this.reportRef.current?.focus({cursor: 'all'});

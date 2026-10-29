@@ -15,9 +15,8 @@ import {
 import {useTranslation} from 'react-i18next';
 
 import EnhancedButton from '__components/EnhancedButton';
+import {reportService} from '__services/reportService';
 import {CopyResultEnum} from '__types/CopyResultEnum';
-import {copyText} from '__utils/clipboard/copyText';
-import {buildDiagnostics} from '__utils/diagnostics/buildDiagnostics';
 
 import style from './style.module.scss';
 
@@ -34,8 +33,8 @@ const DiagnosticsCard = () => {
     }, [fallbackText]);
 
     const onCopy = async () => {
-        const diagnostics = buildDiagnostics();
-        const isCopied = await copyText(diagnostics);
+        const diagnostics = reportService.buildDiagnostics();
+        const isCopied = await reportService.copy(diagnostics);
 
         setFallbackText(isCopied ? null : diagnostics);
         setCopyResult(isCopied ? CopyResultEnum.Copied : CopyResultEnum.Selected);
