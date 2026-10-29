@@ -125,6 +125,15 @@ export const ru: TranslationDto = {
         gigabytes: '{{value}} ГБ',
         gigabytesOf: '{{used}} из {{total}} ГБ',
     },
+    errorBoundary: {
+        title: 'Что-то пошло не так',
+        description: 'В панели произошла ошибка. Перезагрузите её, а если ошибка повторится, скопируйте отчёт и приложите его к issue на GitHub.',
+        reload: 'Перезагрузить',
+        copyReport: 'Скопировать отчёт об ошибке',
+        copied: 'Скопировано',
+        selected: 'Отчёт выделен, нажмите Ctrl+C',
+        reportLabel: 'Отчёт об ошибке',
+    },
     popconfirm: {
         title: 'Вы уверены?',
         ok: 'Да',

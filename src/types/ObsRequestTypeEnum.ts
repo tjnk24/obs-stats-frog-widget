@@ -5,4 +5,5 @@ export enum ObsRequestTypeEnum {
     GetStreamServiceSettings = 'GetStreamServiceSettings',
     GetOutputList = 'GetOutputList',
     GetProfileParameter = 'GetProfileParameter',
+    GetVersion = 'GetVersion',
 }

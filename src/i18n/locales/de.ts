@@ -125,6 +125,15 @@ export const de: TranslationDto = {
         gigabytes: '{{value}} GB',
         gigabytesOf: '{{used}} von {{total}} GB',
     },
+    errorBoundary: {
+        title: 'Etwas ist schiefgelaufen',
+        description: 'Im Dock ist ein Fehler aufgetreten. Lade es neu und kopiere den Bericht in ein Issue auf GitHub, falls es erneut passiert.',
+        reload: 'Neu laden',
+        copyReport: 'Fehlerbericht kopieren',
+        copied: 'Kopiert',
+        selected: 'Markiert, drücke Strg+C',
+        reportLabel: 'Fehlerbericht',
+    },
     popconfirm: {
         title: 'Bist du sicher?',
         ok: 'Ja',

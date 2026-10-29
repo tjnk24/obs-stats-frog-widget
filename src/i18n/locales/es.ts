@@ -125,6 +125,15 @@ export const es: TranslationDto = {
         gigabytes: '{{value}} GB',
         gigabytesOf: '{{used}} de {{total}} GB',
     },
+    errorBoundary: {
+        title: 'Algo salió mal',
+        description: 'El panel ha tenido un error. Recárgalo y, si vuelve a ocurrir, copia el informe y adjúntalo a un issue en GitHub.',
+        reload: 'Recargar',
+        copyReport: 'Copiar informe de error',
+        copied: 'Copiado',
+        selected: 'Seleccionado, pulsa Ctrl+C',
+        reportLabel: 'Informe de error',
+    },
     popconfirm: {
         title: '¿Seguro?',
         ok: 'Sí',

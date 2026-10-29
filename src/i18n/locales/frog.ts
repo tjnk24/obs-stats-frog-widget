@@ -83,6 +83,15 @@ export const frog: DeepPartial<TranslationDto> = {
             gpuSharedMemory: 'У встроенной квидеокарты нет своего пруда, она отпивает из оперативной памяти',
         },
     },
+    errorBoundary: {
+        title: 'Болото забурлило',
+        description: 'В панели что-то квакнуло не так. Перезагрузите её, а если снова забурлит, скопируйте отчёт и приложите его к issue на GitHub.',
+        reload: 'Перепрыгнуть заново',
+        copyReport: 'Скопировать отчёт о бульке',
+        copied: 'Скопировано',
+        selected: 'Отчёт выделен, квакните Ctrl+C',
+        reportLabel: 'Отчёт о бульке',
+    },
     popconfirm: {
         title: 'Точно квакнуть?',
         ok: 'Ква',

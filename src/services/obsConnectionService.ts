@@ -2,7 +2,7 @@ import type {Nullable} from 'infrastructure/common';
 import isEqual from 'lodash/isEqual';
 
 import {commonActions} from '__actions';
-import {connectionStatusSelector} from '__selectors/connectionSelectors';
+import {connectionObsVersionSelector, connectionStatusSelector} from '__selectors/connectionSelectors';
 import {obsWebSocketPortSelector} from '__selectors/settingsSelectors';
 import {statsTargetsSelector} from '__selectors/statsSelectors';
 import {getStore} from '__store';
@@ -28,6 +28,7 @@ import {
 } from '__utils/consts';
 import {fetchDevObsConnection} from '__utils/dev/fetchDevObsConnection';
 import {buildRequests} from '__utils/requests/buildRequests';
+import {getObsVersion} from '__utils/requests/getObsVersion';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
 import {StatsTracker} from '__utils/stats/StatsTracker';
 import {loadPassword} from '__utils/storage/loadPassword';
@@ -285,6 +286,12 @@ class ObsConnectionService {
 
         if (pairs.some(({request}) => isRequestOfType(ObsRequestTypeEnum.GetProfileParameter)(request))) {
             commonActions.stats.setHardware(getHardware(pairs));
+        }
+
+        const obsVersion = getObsVersion(pairs);
+
+        if (obsVersion && !isEqual(obsVersion, connectionObsVersionSelector(getStore()))) {
+            commonActions.connection.setObsVersion(obsVersion);
         }
 
         commonActions.stats.setView(this.tracker.ingest(statsTargetsSelector(getStore()), pairs, performance.now()));

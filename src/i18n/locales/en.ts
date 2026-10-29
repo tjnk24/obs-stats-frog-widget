@@ -123,6 +123,15 @@ export const en = {
         gigabytes: '{{value}} GB',
         gigabytesOf: '{{used}} of {{total}} GB',
     },
+    errorBoundary: {
+        title: 'Something went wrong',
+        description: 'The dock hit an error. Reload it, and if it happens again, copy the report and attach it to an issue on GitHub.',
+        reload: 'Reload',
+        copyReport: 'Copy error report',
+        copied: 'Copied',
+        selected: 'Selected, press Ctrl+C',
+        reportLabel: 'Error report',
+    },
     popconfirm: {
         title: 'Are you sure?',
         ok: 'Yes',

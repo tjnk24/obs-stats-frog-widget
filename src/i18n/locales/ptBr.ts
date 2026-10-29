@@ -125,6 +125,15 @@ export const ptBr: TranslationDto = {
         gigabytes: '{{value}} GB',
         gigabytesOf: '{{used}} de {{total}} GB',
     },
+    errorBoundary: {
+        title: 'Algo deu errado',
+        description: 'O painel encontrou um erro. Recarregue-o e, se acontecer de novo, copie o relatório e anexe-o a uma issue no GitHub.',
+        reload: 'Recarregar',
+        copyReport: 'Copiar relatório de erro',
+        copied: 'Copiado',
+        selected: 'Selecionado, pressione Ctrl+C',
+        reportLabel: 'Relatório de erro',
+    },
     popconfirm: {
         title: 'Tem certeza?',
         ok: 'Sim',
