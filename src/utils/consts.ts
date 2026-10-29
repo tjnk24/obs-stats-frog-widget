@@ -30,6 +30,7 @@ export const DEFAULT_SETTINGS: SettingsDto = {
     port: DEFAULT_OBS_WEBSOCKET_PORT,
     isShowGeneralCard: true,
     language: null,
+    isMockEnabled: false,
 };
 
 export const OBS_LANGUAGE_PREFIXES: ObsLanguagePrefixDto[] = [

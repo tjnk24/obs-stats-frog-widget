@@ -46,6 +46,7 @@ export const ru: TranslationDto = {
         passwordNoConnection: 'Нет связи с OBS, пароль не сменён',
         displayTitle: 'Отображение',
         generalCard: 'Карточка OBS (FPS, лаги, CPU)',
+        mockMode: 'Включить моки (для разработчиков)',
         diagnosticsTitle: 'Диагностика',
         diagnosticsDescription: 'Версии, видеокарта и найденные выходы. Приложите это, когда пишете о проблеме на GitHub. Ключей и паролей тут нет.',
         copyDiagnostics: 'Скопировать диагностику',
@@ -134,6 +135,10 @@ export const ru: TranslationDto = {
         reload: 'Перезагрузить',
         copyReport: 'Скопировать отчёт об ошибке',
         reportLabel: 'Отчёт об ошибке',
+    },
+    mock: {
+        banner: 'Включены моки: статистика ненастоящая',
+        disable: 'Выключить',
     },
     clipboard: {
         copied: 'Скопировано',

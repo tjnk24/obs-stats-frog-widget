@@ -90,6 +90,10 @@ export const frog: DeepPartial<TranslationDto> = {
         copyReport: 'Скопировать отчёт о бульке',
         reportLabel: 'Отчёт о бульке',
     },
+    mock: {
+        banner: 'Болото поддельное: статистика ненастоящая',
+        disable: 'Осушить',
+    },
     popconfirm: {
         title: 'Точно квакнуть?',
         ok: 'Ква',

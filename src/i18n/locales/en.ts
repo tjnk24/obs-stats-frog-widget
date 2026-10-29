@@ -44,6 +44,7 @@ export const en = {
         passwordNoConnection: 'No connection to OBS, the password was not changed',
         displayTitle: 'Display',
         generalCard: 'OBS card (FPS, lags, CPU)',
+        mockMode: 'Enable mocks (for developers)',
         diagnosticsTitle: 'Diagnostics',
         diagnosticsDescription: 'Versions, the GPU and the outputs the dock found. Attach this when you report a problem on GitHub. Keys and passwords are not included.',
         copyDiagnostics: 'Copy diagnostics',
@@ -132,6 +133,10 @@ export const en = {
         reload: 'Reload',
         copyReport: 'Copy error report',
         reportLabel: 'Error report',
+    },
+    mock: {
+        banner: 'Mocks are on: the stats are not real',
+        disable: 'Turn off',
     },
     clipboard: {
         copied: 'Copied',

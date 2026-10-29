@@ -15,6 +15,7 @@ import {commonActions} from '__actions';
 import EnhancedButton from '__components/EnhancedButton';
 import PortField from '__components/PortField';
 import {
+    settingsIsMockEnabledSelector,
     settingsIsShowGeneralCardSelector,
     settingsLanguageSelector,
     settingsPortSelector,
@@ -37,6 +38,7 @@ const Page = () => {
     const port = useSelector(settingsPortSelector);
     const isShowGeneralCard = useSelector(settingsIsShowGeneralCardSelector);
     const language = useSelector(settingsLanguageSelector);
+    const isMockEnabled = useSelector(settingsIsMockEnabledSelector);
 
     const [form] = Form.useForm<PortFormDto>();
 
@@ -122,6 +124,21 @@ const Page = () => {
                         <Switch
                             checked={isShowGeneralCard}
                             onChange={commonActions.settings.setIsShowGeneralCard}
+                        />
+                    </Flex>
+
+                    <Flex
+                        align="center"
+                        justify="space-between"
+                        gap="small"
+                    >
+                        <Typography.Text>
+                            {t('settings.mockMode')}
+                        </Typography.Text>
+
+                        <Switch
+                            checked={isMockEnabled}
+                            onChange={obsConnectionService.setMockEnabled}
                         />
                     </Flex>
                 </Flex>

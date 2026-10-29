@@ -46,6 +46,7 @@ export const de: TranslationDto = {
         passwordNoConnection: 'Keine Verbindung zu OBS, das Passwort wurde nicht geändert',
         displayTitle: 'Anzeige',
         generalCard: 'OBS-Karte (FPS, Verzögerungen, CPU)',
+        mockMode: 'Testdaten aktivieren (für Entwickler)',
         diagnosticsTitle: 'Diagnose',
         diagnosticsDescription: 'Versionen, Grafikkarte und die gefundenen Ausgaben. Füge das bei, wenn du ein Problem auf GitHub meldest. Schlüssel und Passwörter sind nicht enthalten.',
         copyDiagnostics: 'Diagnose kopieren',
@@ -134,6 +135,10 @@ export const de: TranslationDto = {
         reload: 'Neu laden',
         copyReport: 'Fehlerbericht kopieren',
         reportLabel: 'Fehlerbericht',
+    },
+    mock: {
+        banner: 'Testdaten aktiv: die Statistik ist nicht echt',
+        disable: 'Ausschalten',
     },
     clipboard: {
         copied: 'Kopiert',

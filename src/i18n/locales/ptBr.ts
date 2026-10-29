@@ -46,6 +46,7 @@ export const ptBr: TranslationDto = {
         passwordNoConnection: 'Sem conexão com o OBS, a senha não foi alterada',
         displayTitle: 'Exibição',
         generalCard: 'Cartão do OBS (FPS, atrasos, CPU)',
+        mockMode: 'Ativar dados simulados (para desenvolvedores)',
         diagnosticsTitle: 'Diagnóstico',
         diagnosticsDescription: 'Versões, placa de vídeo e as saídas que o painel encontrou. Anexe isto ao relatar um problema no GitHub. Chaves e senhas não são incluídas.',
         copyDiagnostics: 'Copiar diagnóstico',
@@ -134,6 +135,10 @@ export const ptBr: TranslationDto = {
         reload: 'Recarregar',
         copyReport: 'Copiar relatório de erro',
         reportLabel: 'Relatório de erro',
+    },
+    mock: {
+        banner: 'Dados simulados ativados: as estatísticas não são reais',
+        disable: 'Desativar',
     },
     clipboard: {
         copied: 'Copiado',

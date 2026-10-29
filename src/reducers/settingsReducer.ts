@@ -21,6 +21,9 @@ const slice = createSlice({
         setLanguage: (state, {payload}: PayloadAction<LanguageEnum>) => {
             state.language = payload;
         },
+        setIsMockEnabled: (state, {payload}: PayloadAction<boolean>) => {
+            state.isMockEnabled = payload;
+        },
     },
 });
 

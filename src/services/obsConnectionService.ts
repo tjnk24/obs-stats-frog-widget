@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual';
 
 import {commonActions} from '__actions';
 import {connectionObsVersionSelector, connectionStatusSelector} from '__selectors/connectionSelectors';
-import {obsWebSocketPortSelector} from '__selectors/settingsSelectors';
+import {obsWebSocketPortSelector, settingsIsMockEnabledSelector} from '__selectors/settingsSelectors';
 import {statsTargetsSelector} from '__selectors/statsSelectors';
 import {getStore} from '__store';
 import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
@@ -27,6 +27,7 @@ import {
     REQUEST_TIMEOUT_MS,
 } from '__utils/consts';
 import {fetchDevObsConnection} from '__utils/dev/fetchDevObsConnection';
+import {MockObsSimulator} from '__utils/mock/MockObsSimulator';
 import {buildRequests} from '__utils/requests/buildRequests';
 import {getObsVersion} from '__utils/requests/getObsVersion';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
@@ -67,6 +68,8 @@ class ObsConnectionService {
 
     private passwordChange: Nullable<PasswordChangeDto> = null;
 
+    private simulator: Nullable<MockObsSimulator> = null;
+
     private readonly tracker = new StatsTracker();
 
     start = async () => {
@@ -93,6 +96,12 @@ class ObsConnectionService {
 
         this.reconnect();
     });
+
+    setMockEnabled = (isEnabled: boolean) => {
+        commonActions.settings.setIsMockEnabled(isEnabled);
+
+        this.reconnect();
+    };
 
     setPort = (port: number) => {
         commonActions.settings.setPort(port);
@@ -121,6 +130,16 @@ class ObsConnectionService {
     private connect = () => {
         this.clearReconnectTimer();
 
+        if (settingsIsMockEnabledSelector(getStore())) {
+            this.simulator = new MockObsSimulator();
+
+            commonActions.connection.setStatus(ConnectionStatusEnum.Identified);
+
+            this.startPolling();
+
+            return;
+        }
+
         connectionStatusSelector(getStore()) !== Closed && commonActions.connection.setStatus(Connecting);
 
         const socket = new WebSocket(`ws://127.0.0.1:${obsWebSocketPortSelector(getStore())}`, OBS_WEBSOCKET_PROTOCOL);
@@ -136,6 +155,8 @@ class ObsConnectionService {
 
     private disconnect = () => {
         this.clearReconnectTimer();
+
+        this.simulator = null;
 
         const {socket} = this;
 
@@ -256,6 +277,14 @@ class ObsConnectionService {
 
     private poll = () => {
         const now = performance.now();
+
+        if (this.simulator) {
+            const requests = buildRequests(statsTargetsSelector(getStore()), this.pollIndex++ % DISCOVERY_EVERY_POLLS === 0);
+
+            this.onBatchResults(requests, this.simulator.answer(requests));
+
+            return;
+        }
 
         if (!this.socket || (this.inFlight && now - this.inFlight.since < REQUEST_TIMEOUT_MS)) {
             return;

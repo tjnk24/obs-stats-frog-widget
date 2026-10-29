@@ -6,4 +6,5 @@ export type SettingsDto = {
     port: number;
     isShowGeneralCard: boolean;
     language: Nullable<LanguageEnum>;
+    isMockEnabled: boolean;
 };
