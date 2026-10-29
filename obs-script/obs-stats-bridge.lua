@@ -567,11 +567,11 @@ end
 
 function script_description()
     if string.sub(obs.obs_get_locale(), 1, 2) == 'ru' then
-        return 'Сообщает панели obs-stats-frog-widget, на какую площадку стримят выходы плагинов (obs-multi-rtmp и любые другие), ' ..
+        return 'Сообщает панели obs-stats-widget, на какую площадку стримят выходы плагинов (obs-multi-rtmp и любые другие), ' ..
             'загрузку видеокарты и занятую память системы. Передаёт только адрес сервера без пути и ключа.'
     end
 
-    return 'Tells the obs-stats-frog-widget dock which platform plugin outputs stream to (obs-multi-rtmp and any other), ' ..
+    return 'Tells the obs-stats-widget dock which platform plugin outputs stream to (obs-multi-rtmp and any other), ' ..
         'the GPU load and the system memory in use. Only the server address is passed, without the path or the key.'
 end
 

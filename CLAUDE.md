@@ -1,6 +1,6 @@
 # Правила работы в этом репозитории
 
-OBS Custom Browser Dock: React 19, antd 6, Redux Toolkit, react-router 7, CSS-модули, webpack + swc.
+OBS Custom Browser Dock: React 19, antd 6, Redux Toolkit, react-router 8, CSS-модули, webpack + swc.
 Панель открывается с диска (`file:///.../build/index.html`) и ходит в obs-websocket на `127.0.0.1`.
 
 ## Раскладка кода
@@ -69,6 +69,7 @@ OBS Custom Browser Dock: React 19, antd 6, Redux Toolkit, react-router 7, CSS-м
 ## Процесс
 
 - **Перед правкой описать, что собираешься менять.**
+- **README.md - только на английском и всегда актуальный.** Изменение, которое видит пользователь или разработчик (новая функция, настройка, площадка, шаг установки, скрипт `npm`, ограничение), сразу отражается в README в том же изменении.
 - **Коммит и пуш - только по явной просьбе.**
 - **Разработка в браузере - `npm run start:dev`** (`http://localhost:3062`, панель ходит в настоящий OBS и подключается сама, без ввода пароля; если OBS ещё не запущен, подхватит его, как только он поднимется). Компоненты обновляются через React Fast Refresh без перезагрузки; модули-одиночки (`obsConnectionService`, `store`, `routerManager`) отказываются от горячей замены (`import.meta.webpackHot?.decline()`), и правка в них или в том, что они импортируют, перезагружает страницу. Eslint под dev-сервером не запускается: ошибка eslint ломает сборку, и dev-сервер перестаёт применять обновления. Dev-сервер очищает `build`, поэтому после него панель в OBS нужно пересобрать `npm run build:prod`.
 - **Перед каждым коммитом husky запускает `.husky/pre-commit`**: lint-staged прогоняет eslint (`--max-warnings 0`) и stylelint по изменённым файлам, затем `npm run lint:tsc` проверяет типы всего проекта. Коммит с ошибкой не пройдёт; хук не обходим (`--no-verify` не используем). Хуки включаются сами после `npm install` (скрипт `prepare`).
