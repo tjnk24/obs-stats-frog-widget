@@ -1,6 +1,6 @@
 import {Navigate, RouteObject} from 'react-router';
 
-import {routerManager} from '__utils/infrastructure/routing/routeManager';
+import {routerManager} from '__services/routerManager';
 
 const routes: RouteObject[] = [
     {

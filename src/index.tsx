@@ -6,8 +6,8 @@ import {createHashRouter, RouterProvider} from 'react-router';
 
 import '__i18n';
 import Core from '__pages/Core';
+import {routerManager} from '__services/routerManager';
 import store from '__store';
-import {routerManager} from '__utils/infrastructure/routing/routeManager';
 import {THEME, THEME_CSS_VAR_KEY} from '__utils/theme';
 
 import './global.module.scss';

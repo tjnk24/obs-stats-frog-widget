@@ -13,7 +13,7 @@ import {ROUTES} from '__routes';
 import {connectionStatusSelector} from '__selectors/connectionSelectors';
 import {settingsIsMockEnabledSelector} from '__selectors/settingsSelectors';
 import {obsConnectionService} from '__services/obsConnectionService';
-import {routerManager} from '__utils/infrastructure/routing/routeManager';
+import {routerManager} from '__services/routerManager';
 
 import {CONNECTION_BADGES} from './consts';
 

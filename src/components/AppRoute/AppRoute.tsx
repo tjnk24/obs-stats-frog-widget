@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 import {Navigate} from 'react-router';
 
 import {connectionStatusSelector} from '__selectors/connectionSelectors';
-import {routerManager} from '__utils/infrastructure/routing/routeManager';
+import {routerManager} from '__services/routerManager';
 
 import {PASSWORD_STATUSES, PASSWORD_PAGE_STATUSES} from './consts';
 import {Props} from './types';
