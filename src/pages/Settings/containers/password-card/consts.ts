@@ -1,13 +1,6 @@
-import {AlertProps, FormRule} from 'antd';
-
 import {PasswordChangeResultEnum} from '__types/PasswordChangeResultEnum';
 
-export const PASSWORD_RULES: FormRule[] = [
-    {
-        required: true,
-        message: 'Введите пароль',
-    },
-];
+import {ResultAlertDto} from './types';
 
 const {
     Accepted,
@@ -15,17 +8,17 @@ const {
     NoConnection,
 } = PasswordChangeResultEnum;
 
-export const RESULT_ALERTS: Record<PasswordChangeResultEnum, Pick<AlertProps, 'type' | 'title'>> = {
+export const RESULT_ALERTS: Record<PasswordChangeResultEnum, ResultAlertDto> = {
     [Accepted]: {
         type: 'success',
-        title: 'Пароль сменён',
+        titleKey: 'settings.passwordAccepted',
     },
     [Rejected]: {
         type: 'error',
-        title: 'OBS не принял пароль, остался прежний',
+        titleKey: 'settings.passwordRejected',
     },
     [NoConnection]: {
         type: 'warning',
-        title: 'Нет связи с OBS, пароль не сменён',
+        titleKey: 'settings.passwordNoConnection',
     },
 };

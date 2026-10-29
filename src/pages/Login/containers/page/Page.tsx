@@ -8,6 +8,7 @@ import {
     Typography,
 } from 'antd';
 import {useEffect, useRef} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
 import EnhancedButton from '__components/EnhancedButton';
@@ -16,28 +17,26 @@ import {connectionStatusSelector} from '__selectors/connectionSelectors';
 import {settingsPortSelector} from '__selectors/settingsSelectors';
 import {obsConnectionService} from '__services/obsConnectionService';
 
-import {
-    ERROR_STATUSES,
-    LOGIN_MESSAGES,
-    PASSWORD_RULES,
-} from './consts';
+import {ERROR_STATUSES, LOGIN_MESSAGES} from './consts';
 import {LoginFormDto} from './types';
 
 import style from './style.module.scss';
 
 const Page = () => {
+    const {t} = useTranslation();
+
     const status = useSelector(connectionStatusSelector);
     const port = useSelector(settingsPortSelector);
 
     const [form] = Form.useForm<LoginFormDto>();
 
-    const message = LOGIN_MESSAGES[status];
+    const messageKey = LOGIN_MESSAGES[status];
 
     const inputRef = useRef<InputRef>(null);
 
     useEffect(() => {
         inputRef.current?.focus();
-    }, [message]);
+    }, [messageKey]);
 
     const onSubmit = async () => {
         const values = await form.validateFields();
@@ -54,13 +53,13 @@ const Page = () => {
             <Card
                 className={style.card}
                 size="small"
-                title="Подключение к OBS"
+                title={t('login.title')}
             >
-                {message && (
+                {messageKey && (
                     <Alert
                         className={style.message}
                         type={ERROR_STATUSES.includes(status) ? 'error' : 'info'}
-                        title={message}
+                        title={t(messageKey)}
                         showIcon
                     />
                 )}
@@ -74,8 +73,8 @@ const Page = () => {
 
                     <Form.Item
                         name="password"
-                        label="Пароль obs-websocket"
-                        rules={PASSWORD_RULES}
+                        label={t('login.passwordLabel')}
+                        rules={[{required: true, message: t('login.passwordRequired')}]}
                     >
                         <Input.Password
                             ref={inputRef}
@@ -91,7 +90,7 @@ const Page = () => {
                             onClick: onSubmit,
                         }}
                     >
-                        Подключиться
+                        {t('login.connect')}
                     </EnhancedButton>
                 </Form>
 
@@ -99,7 +98,7 @@ const Page = () => {
                     className={style.hint}
                     type="secondary"
                 >
-                    Порт и пароль: Tools → WebSocket Server Settings → Show Connect Info.
+                    {t('login.hint')}
                 </Typography.Paragraph>
             </Card>
         </Flex>

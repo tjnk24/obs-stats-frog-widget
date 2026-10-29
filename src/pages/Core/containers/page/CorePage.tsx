@@ -1,5 +1,19 @@
+import {ConfigProvider} from 'antd';
+import {useTranslation} from 'react-i18next';
 import {Outlet} from 'react-router';
 
-const CorePage = () => <Outlet/>;
+import {LanguageEnum} from '__types/LanguageEnum';
+
+import {ANTD_LOCALES} from './consts';
+
+const CorePage = () => {
+    const {i18n} = useTranslation();
+
+    return (
+        <ConfigProvider locale={ANTD_LOCALES[i18n.language as LanguageEnum]}>
+            <Outlet/>
+        </ConfigProvider>
+    );
+};
 
 export default CorePage;

@@ -6,7 +6,6 @@
         "noImplicitReturns": false,
         "removeComments": false,
         "resolveJsonModule": true,
-        "strictNullChecks": false,
         "skipLibCheck": true,
         "lib": ["dom", "es2022"],
         "strict": true,
@@ -21,6 +20,7 @@
         "paths": {
             "__actions": ["./src/actions.ts"],
             "__components/*": ["./src/components/*"],
+            "__i18n": ["./src/i18n"],
             "__pages/*": ["./src/pages/*"],
             "__reducers": ["./src/reducers"],
             "__reducers/*": ["./src/reducers/*"],

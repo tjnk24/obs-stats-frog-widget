@@ -1,5 +1,6 @@
 import {ArrowLeftOutlined, SettingOutlined} from '@ant-design/icons';
 import {Badge, Flex} from 'antd';
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {Outlet, useMatch} from 'react-router';
 
@@ -13,10 +14,12 @@ import {CONNECTION_BADGES} from './consts';
 import style from './style.module.scss';
 
 const MainLayout = () => {
+    const {t} = useTranslation();
+
     const status = useSelector(connectionStatusSelector);
     const isSettingsPage = Boolean(useMatch(ROUTES.SETTINGS.INDEX));
 
-    const {status: badgeStatus, text} = CONNECTION_BADGES[status];
+    const {status: badgeStatus, textKey} = CONNECTION_BADGES[status];
 
     return (
         <Flex
@@ -32,7 +35,7 @@ const MainLayout = () => {
             >
                 <Badge
                     status={badgeStatus}
-                    text={text}
+                    text={t(textKey)}
                 />
 
                 <EnhancedButton
@@ -41,14 +44,14 @@ const MainLayout = () => {
                             type: 'text',
                             size: 'small',
                             icon: <ArrowLeftOutlined/>,
-                            'aria-label': 'К статистике',
+                            'aria-label': t('header.toStats'),
                             onClick: () => routerManager.goToStats(),
                         }
                         : {
                             type: 'text',
                             size: 'small',
                             icon: <SettingOutlined/>,
-                            'aria-label': 'Настройки',
+                            'aria-label': t('header.toSettings'),
                             onClick: () => routerManager.goToSettings(),
                         }}
                     withSpinner={false}

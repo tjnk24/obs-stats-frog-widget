@@ -1,4 +1,6 @@
 import {HealthLevelEnum} from '__types/HealthLevelEnum';
+import {LanguageEnum} from '__types/LanguageEnum';
+import {ObsLanguagePrefixDto} from '__types/ObsLanguagePrefixDto';
 import {OutputViewDto} from '__types/OutputViewDto';
 import {PlatformRuleDto} from '__types/PlatformRuleDto';
 import {SettingsDto} from '__types/SettingsDto';
@@ -17,15 +19,23 @@ export const DISCOVERY_EVERY_POLLS = 5;
 
 export const BAD_DROP_SHARE = 0.01;
 
+export const DEV_OBS_CONNECTION_URL = '/dev/obs-connection';
+
 export const PASSWORD_STORAGE_KEY = 'obs-stats-dock.password';
 export const SETTINGS_STORAGE_KEY = 'obs-stats-dock.settings';
 
 export const DEFAULT_SETTINGS: SettingsDto = {
     port: DEFAULT_OBS_WEBSOCKET_PORT,
     isShowGeneralCard: true,
+    language: null,
 };
 
-export const CONNECTING_WORDING = 'Подключение к OBS...';
+export const OBS_LANGUAGE_PREFIXES: ObsLanguagePrefixDto[] = [
+    {prefix: 'ru', language: LanguageEnum.Ru},
+    {prefix: 'es', language: LanguageEnum.Es},
+    {prefix: 'de', language: LanguageEnum.De},
+    {prefix: 'pt', language: LanguageEnum.PtBr},
+];
 
 export const MAIN_TARGET_KEY = 'main';
 export const MAIN_OUTPUT_NAMES = ['adv_stream', 'simple_stream'];
@@ -41,8 +51,6 @@ export const BRIDGE_PARAMETER = {
 export const BRIDGE_STALE_SEC = 15;
 
 export const UNKNOWN_PLATFORM_COLOR = '#9aa0ae';
-export const MAIN_FALLBACK_TITLE = 'Трансляция';
-export const UNKNOWN_PLATFORM_TITLE = 'Неизвестная площадка';
 
 export const PLATFORM_RULES: PlatformRuleDto[] = [
     {

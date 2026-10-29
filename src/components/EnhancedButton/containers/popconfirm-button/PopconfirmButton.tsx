@@ -1,13 +1,9 @@
 import {Popconfirm, PopconfirmProps} from 'antd';
+import {useTranslation} from 'react-i18next';
 
 import {useAsyncButtonClick} from '../../hooks/useAsyncButtonClick';
 import TooltipButton from '../tooltip-button';
 
-import {
-    DEFAULT_CANCEL_TEXT,
-    DEFAULT_OK_TEXT,
-    DEFAULT_TITLE,
-} from './consts';
 import {Props} from './types';
 
 const PopconfirmButton = ({
@@ -17,14 +13,16 @@ const PopconfirmButton = ({
     tooltipProps,
     withSpinner,
 }: Props) => {
+    const {t} = useTranslation();
+
     const {handleClick, isPending} = useAsyncButtonClick(popconfirmProps.onConfirm);
 
     const {
         okButtonProps,
-        title = DEFAULT_TITLE,
+        title = t('popconfirm.title'),
         onConfirm,
-        okText = DEFAULT_OK_TEXT,
-        cancelText = DEFAULT_CANCEL_TEXT,
+        okText = t('popconfirm.ok'),
+        cancelText = t('popconfirm.cancel'),
         disabled = buttonProps.disabled,
         ...popconfirmPropsRest
     } = popconfirmProps;

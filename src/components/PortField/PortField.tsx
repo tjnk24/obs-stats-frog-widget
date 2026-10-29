@@ -3,6 +3,7 @@ import {
     Form,
     InputNumber,
 } from 'antd';
+import {useTranslation} from 'react-i18next';
 
 import {getObsWebSocketPort} from '__utils/getObsWebSocketPort';
 
@@ -12,13 +13,15 @@ import {Props} from './types';
 import style from './style.module.scss';
 
 const PortField = ({extra}: Props) => {
+    const {t} = useTranslation();
+
     const portDevOverride = getObsWebSocketPort();
 
     return (
         <>
             <Form.Item
                 name="port"
-                label="Порт obs-websocket"
+                label={t('portField.label')}
                 extra={extra}
                 rules={PORT_RULES}
                 required
@@ -34,7 +37,7 @@ const PortField = ({extra}: Props) => {
                 <Alert
                     className={style.alert}
                     type="info"
-                    title={`Сейчас порт ${portDevOverride} задан в адресе панели (?port=) и важнее этой настройки.`}
+                    title={t('portField.devOverride', {port: portDevOverride})}
                     showIcon
                 />
             )}

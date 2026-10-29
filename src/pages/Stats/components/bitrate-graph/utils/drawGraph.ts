@@ -19,6 +19,10 @@ export const drawGraph = ({
 
     const context = canvas.getContext('2d');
 
+    if (!context) {
+        return;
+    }
+
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
     context.clearRect(0, 0, width, height);
     context.fillStyle = baselineColor;

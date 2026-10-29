@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
     '__actions': path.resolve(__dirname, '../src/actions.ts'),
+    '__i18n': path.resolve(__dirname, '../src/i18n'),
     '__components': path.resolve(__dirname, '../src/components'),
     '__pages': path.resolve(__dirname, '../src/pages'),
     '__reducers': path.resolve(__dirname, '../src/reducers'),

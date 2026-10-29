@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+import {LanguageEnum} from '__types/LanguageEnum';
 import {SettingsDto} from '__types/SettingsDto';
 import {loadSettings} from '__utils/storage/loadSettings';
 
@@ -16,6 +17,9 @@ const slice = createSlice({
         },
         setIsShowGeneralCard: (state, {payload}: PayloadAction<boolean>) => {
             state.isShowGeneralCard = payload;
+        },
+        setLanguage: (state, {payload}: PayloadAction<LanguageEnum>) => {
+            state.language = payload;
         },
     },
 });

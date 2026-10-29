@@ -1,17 +1,23 @@
+import {t} from 'i18next';
+
 import {OutputOriginEnum} from '__types/OutputOriginEnum';
 import {StreamTargetDto} from '__types/StreamTargetDto';
 
 import {TagDto} from '../../../types';
-import {MAIN_TAG, PLUGIN_TAG} from '../consts';
 
 export const getTargetTag = ({origin, pluginName, outputName}: StreamTargetDto): TagDto => {
     if (origin === OutputOriginEnum.Main) {
-        return MAIN_TAG;
+        return {
+            text: t('stats.mainTag'),
+            hint: t('stats.mainTagHint'),
+            color: 'blue',
+        };
     }
 
+    const pluginTag = t('stats.pluginTag');
+
     return {
-        ...PLUGIN_TAG,
-        text: pluginName ? `${PLUGIN_TAG.text} · ${pluginName}` : PLUGIN_TAG.text,
-        hint: `Выход плагина «${outputName}»`,
+        text: pluginName ? `${pluginTag} · ${pluginName}` : pluginTag,
+        hint: t('stats.pluginTagHint', {name: outputName}),
     };
 };

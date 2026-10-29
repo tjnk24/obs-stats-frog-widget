@@ -10,7 +10,7 @@ const routes: RouteObject[] = [
         path: ROUTES.LOGIN.INDEX,
         element: (
             <AppRoute
-                title="Подключение к OBS"
+                titleKey="pageTitles.login"
                 isLoginPage
             >
                 <Page/>

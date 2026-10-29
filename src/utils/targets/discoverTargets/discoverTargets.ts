@@ -1,3 +1,4 @@
+import {t} from 'i18next';
 import countBy from 'lodash/countBy';
 
 import {NoteDto} from '__types/NoteDto';
@@ -11,11 +12,9 @@ import {StreamTargetDto} from '__types/StreamTargetDto';
 import {parseBridgeData} from '__utils/bridge/parseBridgeData';
 import {
     BRIDGE_SCRIPT_NAME,
-    MAIN_FALLBACK_TITLE,
     MAIN_OUTPUT_NAMES,
     MAIN_TARGET_KEY,
     PLUGIN_OUTPUT_NAMES,
-    UNKNOWN_PLATFORM_TITLE,
 } from '__utils/consts';
 import {findResultData} from '__utils/requests/findResultData';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
@@ -42,7 +41,7 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
         origin: Main,
         outputName: null,
         pluginName: null,
-        platform: detectPlatform(serviceName, server, MAIN_FALLBACK_TITLE),
+        platform: detectPlatform(serviceName ?? null, server ?? null, t('stats.mainFallbackTitle')),
         notes: [],
     };
 
@@ -59,14 +58,14 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
 
         if (!bridge) {
             notes.push({
-                text: `Площадку покажет скрипт ${BRIDGE_SCRIPT_NAME} (Tools → Scripts)`,
+                text: t('stats.noBridge', {script: BRIDGE_SCRIPT_NAME}),
                 type: 'info',
             });
         }
 
         if (counts[outputName] > 1) {
             notes.push({
-                text: `Выходов с именем «${outputName}»: ${counts[outputName]}, статистика только по одному`,
+                text: t('stats.sameOutputName', {name: outputName, count: counts[outputName]}),
                 type: 'warning',
             });
         }
@@ -76,7 +75,7 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
             origin: Plugin,
             outputName,
             pluginName,
-            platform: detectPlatform(null, bridgeServer, UNKNOWN_PLATFORM_TITLE),
+            platform: detectPlatform(null, bridgeServer ?? null, t('stats.unknownPlatform')),
             notes,
         };
     });

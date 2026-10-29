@@ -1,7 +1,8 @@
+import type {ParseKeys} from 'i18next';
 import {ReactNode} from 'react';
 
 interface OwnProps {
-    title: string;
+    titleKey: ParseKeys;
     isAuthRequired?: boolean;
     isLoginPage?: boolean;
     children: ReactNode;

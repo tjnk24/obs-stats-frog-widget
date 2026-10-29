@@ -1,5 +1,6 @@
 import {ReloadOutlined} from '@ant-design/icons';
 import {Card, Flex} from 'antd';
+import {useTranslation} from 'react-i18next';
 
 import EnhancedButton from '__components/EnhancedButton';
 import {obsConnectionService} from '__services/obsConnectionService';
@@ -12,12 +13,14 @@ import {useItems} from './hooks/useItems';
 import style from './style.module.scss';
 
 const GeneralCard = () => {
+    const {t} = useTranslation();
+
     const items = useItems();
 
     return (
         <Card
             size="small"
-            title="OBS"
+            title={t('general.title')}
         >
             <StatList
                 items={items}
@@ -36,7 +39,7 @@ const GeneralCard = () => {
                     }}
                     withSpinner={false}
                 >
-                    Сбросить графики
+                    {t('general.reset')}
                 </EnhancedButton>
             </Flex>
         </Card>

@@ -4,6 +4,8 @@ const EslintWebpackPlugin = require('eslint-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const {DefinePlugin} = require('webpack');
 
@@ -15,6 +17,30 @@ require('dotenv').config();
 const development = process.env.NODE_ENV !== 'production';
 
 const isDevServer = Boolean(process.env.WEBPACK_SERVE);
+
+const obsConfigDirectories = {
+    win32: path.join(process.env.APPDATA || '', 'obs-studio'),
+    darwin: path.join(os.homedir(), 'Library', 'Application Support', 'obs-studio'),
+};
+const obsWebSocketConfigPath = path.join(
+    obsConfigDirectories[process.platform] || path.join(os.homedir(), '.config', 'obs-studio'),
+    'plugin_config',
+    'obs-websocket',
+    'config.json',
+);
+
+const serveObsConnection = (_request, response) => {
+    try {
+        const config = JSON.parse(fs.readFileSync(obsWebSocketConfigPath, 'utf8'));
+
+        response.json({
+            port: config.server_port,
+            password: config.auth_required ? config.server_password : null,
+        });
+    } catch {
+        response.status(404).end();
+    }
+};
 
 const plugins = [
     new DefinePlugin(globals),
@@ -88,8 +114,14 @@ module.exports = {
             directory: 'build',
         },
         liveReload: true,
+        host: 'localhost',
         open: ['/'],
         port: process.env.PORT || 3062,
+        setupMiddlewares: (middlewares, devServer) => {
+            devServer.app.get('/dev/obs-connection', serveObsConnection);
+
+            return middlewares;
+        },
         hot: true,
         client: {
             logging: 'warn',

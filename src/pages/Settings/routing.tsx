@@ -9,7 +9,7 @@ const routes: RouteObject[] = [
     {
         path: ROUTES.SETTINGS.INDEX,
         element: (
-            <AppRoute title="Настройки">
+            <AppRoute titleKey="pageTitles.settings">
                 <Page/>
             </AppRoute>
         ),

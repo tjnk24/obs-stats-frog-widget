@@ -10,7 +10,7 @@ const routes: RouteObject[] = [
         path: ROUTES.STATS.INDEX,
         element: (
             <AppRoute
-                title="Статистика эфира"
+                titleKey="pageTitles.stats"
                 isAuthRequired
             >
                 <Page/>

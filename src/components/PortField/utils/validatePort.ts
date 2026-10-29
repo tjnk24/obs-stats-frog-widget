@@ -1,4 +1,5 @@
 import {RuleObject} from 'antd/es/form';
+import {t} from 'i18next';
 import type {Nullable} from 'infrastructure/common';
 
 import {MAX_PORT, MIN_PORT} from '../consts';
@@ -8,5 +9,5 @@ export const validatePort = (_rule: RuleObject, port: Nullable<number>) => {
         return Promise.resolve();
     }
 
-    return Promise.reject(new Error(`Порт - число от ${MIN_PORT} до ${MAX_PORT}`));
+    return Promise.reject(new Error(t('portField.range', {min: MIN_PORT, max: MAX_PORT})));
 };

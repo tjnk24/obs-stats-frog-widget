@@ -39,5 +39,17 @@ export const THEME: ThemeConfig = {
         },
         Input: FIELD_COLORS,
         InputNumber: FIELD_COLORS,
+        Mentions: FIELD_COLORS,
+        DatePicker: FIELD_COLORS,
+        Select: {
+            colorBgContainer: FIELD_COLORS.colorBgContainer,
+            selectorBg: FIELD_COLORS.colorBgContainer,
+        },
+        Cascader: {
+            colorBgContainer: FIELD_COLORS.colorBgContainer,
+        },
+        TreeSelect: {
+            colorBgContainer: FIELD_COLORS.colorBgContainer,
+        },
     },
 };

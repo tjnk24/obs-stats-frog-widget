@@ -1,9 +1,8 @@
 import {TagProps} from 'antd';
 
 import {HealthLevelEnum} from '__types/HealthLevelEnum';
-import {RECENT_WINDOW_SEC} from '__utils/consts';
 
-import {TagDto} from '../../types';
+import {PlatformMarkDto} from './types';
 
 const {
     Ok,
@@ -12,38 +11,11 @@ const {
     Off,
 } = HealthLevelEnum;
 
-export const STATUS_WORDINGS = {
-    [Ok]: 'В эфире',
-    [Warn]: 'Есть потери',
-    [Bad]: 'Теряет кадры',
-    [Off]: 'Не в эфире',
-};
-
-export const RECONNECTING_WORDING = 'Переподключение';
-
-export const HINTS = {
-    dropped: 'Кадры, которые OBS выбросил, потому что сеть не успевала их отправить (Dropped Frames (Network) в окне Stats)',
-    recent: `Сколько кадров потеряно за последние ${RECENT_WINDOW_SEC} с`,
-    congestion: 'Насколько забит буфер отправки: 0% — всё уходит сразу, чем выше, тем хуже сеть успевает',
-};
-
-export const GROUP_SEPARATOR = ' ';
-
-export const MAIN_TAG: TagDto = {
-    text: 'Основной',
-    hint: 'Площадка из Settings → Stream',
-    color: 'blue',
-};
-
-export const PLATFORM_MARKS: Partial<Record<string, TagDto>> = {
+export const PLATFORM_MARKS: Partial<Record<string, PlatformMarkDto>> = {
     'VK Video Live': {
-        text: '💩',
-        hint: 'Платформа гавна',
+        emoji: '💩',
+        hintKey: 'stats.crappyPlatform',
     },
-};
-
-export const PLUGIN_TAG: TagDto = {
-    text: 'Плагин',
 };
 
 export const HEALTH_TAGS: Record<HealthLevelEnum, Pick<TagProps, 'color' | 'variant'>> = {

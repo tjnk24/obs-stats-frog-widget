@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {createHashRouter, RouterProvider} from 'react-router';
 
+import '__i18n';
 import Core from '__pages/Core';
 import store from '__store';
 import {routerManager} from '__utils/infrastructure/routing/routeManager';
@@ -17,7 +18,7 @@ routerManager.init(router.navigate);
 
 document.documentElement.classList.add(THEME_CSS_VAR_KEY);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
     <Provider store={store}>

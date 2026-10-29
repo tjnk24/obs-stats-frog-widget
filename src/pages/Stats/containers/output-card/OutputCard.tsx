@@ -8,11 +8,12 @@ import {
     Tooltip,
 } from 'antd';
 import cn from 'classnames';
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
 import {statsViewSelector} from '__selectors/statsSelectors';
 import {HealthLevelEnum} from '__types/HealthLevelEnum';
-import {OFF_OUTPUT_VIEW} from '__utils/consts';
+import {OFF_OUTPUT_VIEW, RECENT_WINDOW_SEC} from '__utils/consts';
 
 import BitrateGraph from '../../components/bitrate-graph';
 import CongestionProgress from '../../components/congestion-progress';
@@ -21,15 +22,8 @@ import {formatNumber} from '../../utils/formatNumber';
 import {formatPercent} from '../../utils/formatPercent';
 import {formatTimecode} from '../../utils/formatTimecode';
 
-import {
-    HEALTH_TAGS,
-    PLATFORM_MARKS,
-    GROUP_SEPARATOR,
-    HINTS,
-    RECONNECTING_WORDING,
-    STATUS_WORDINGS,
-} from './consts';
-import {Props} from './types';
+import {HEALTH_TAGS, PLATFORM_MARKS} from './consts';
+import {OutputStatKeyEnum, Props} from './types';
 import {getTargetTag} from './utils/getTargetTag';
 
 import style from './style.module.scss';
@@ -37,6 +31,8 @@ import style from './style.module.scss';
 const {Off, Warn} = HealthLevelEnum;
 
 const OutputCard = ({target}: Props) => {
+    const {t} = useTranslation();
+
     const {outputs, now} = useSelector(statsViewSelector);
 
     const view = outputs[target.key] || OFF_OUTPUT_VIEW;
@@ -61,32 +57,33 @@ const OutputCard = ({target}: Props) => {
     const valueLevel = isActive ? undefined : Off;
     const healthLevel = isReconnecting ? Warn : level;
     const originTag = getTargetTag(target);
+    const platformMark = PLATFORM_MARKS[title];
 
     const items: StatItemDto[] = [
         {
-            key: 'timecode',
-            label: 'В эфире',
+            key: OutputStatKeyEnum.Timecode,
+            label: t('stats.onAir'),
             level: valueLevel,
             value: isActive ? formatTimecode(timecode) : '—',
         },
         {
-            key: 'dropped',
-            label: 'Потеряно (сеть)',
-            hint: HINTS.dropped,
+            key: OutputStatKeyEnum.Dropped,
+            label: t('stats.dropped'),
+            hint: t('stats.hints.dropped'),
             level: valueLevel,
             value: isActive ? `${formatNumber(dropped)} (${formatPercent(dropped, total)})` : '—',
         },
         {
-            key: 'recent',
-            label: 'За минуту',
-            hint: HINTS.recent,
+            key: OutputStatKeyEnum.Recent,
+            label: t('stats.recent'),
+            hint: t('stats.hints.recent', {seconds: RECENT_WINDOW_SEC}),
             level: isActive ? level : Off,
             value: !isActive ? '—' : recentDropped > 0 ? `${formatNumber(recentDropped)} (${formatPercent(recentDropped, recentTotal)})` : '0',
         },
         {
-            key: 'congestion',
-            label: 'Затор в сети',
-            hint: HINTS.congestion,
+            key: OutputStatKeyEnum.Congestion,
+            label: t('stats.congestion'),
+            hint: t('stats.hints.congestion'),
             level: valueLevel,
             value: isActive ? <CongestionProgress value={congestion}/> : '—',
         },
@@ -111,9 +108,9 @@ const OutputCard = ({target}: Props) => {
                         text={title}
                     />
 
-                    {PLATFORM_MARKS[title] && (
-                        <Tooltip title={PLATFORM_MARKS[title].hint}>
-                            <span>{PLATFORM_MARKS[title].text}</span>
+                    {platformMark && (
+                        <Tooltip title={t(platformMark.hintKey)}>
+                            <span>{platformMark.emoji}</span>
                         </Tooltip>
                     )}
 
@@ -132,7 +129,7 @@ const OutputCard = ({target}: Props) => {
                     color={HEALTH_TAGS[healthLevel].color}
                     variant={HEALTH_TAGS[healthLevel].variant}
                 >
-                    {isReconnecting ? RECONNECTING_WORDING : STATUS_WORDINGS[level]}
+                    {isReconnecting ? t('stats.statuses.reconnecting') : t(`stats.statuses.${level}`)}
                 </Tag>
             )}
         >
@@ -144,8 +141,8 @@ const OutputCard = ({target}: Props) => {
                 <Statistic
                     value={isActive && kbps !== null ? Math.round(kbps) : '—'}
                     loading={isActive && kbps === null}
-                    groupSeparator={GROUP_SEPARATOR}
-                    suffix="кбит/с"
+                    formatter={value => (typeof value === 'number' ? formatNumber(value) : value)}
+                    suffix={t('stats.bitrateUnit')}
                     classNames={{
                         root: style.bitrate,
                         content: cn(style.bitrateValue, {[style.inactiveBitrate]: !isActive}),

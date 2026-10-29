@@ -10,6 +10,7 @@ import {
     useRef,
     useState,
 } from 'react';
+import {useTranslation} from 'react-i18next';
 
 import {GRAPH_SPAN_SEC} from '__utils/consts';
 
@@ -24,6 +25,7 @@ const BitrateGraph = ({
     color,
     isActive,
 }: Props) => {
+    const {t} = useTranslation();
     const {token} = theme.useToken();
 
     const containerRef = useRef<HTMLDivElement>(null);
@@ -34,12 +36,18 @@ const BitrateGraph = ({
     const hasLine = points.length >= 2;
 
     useEffect(() => {
+        const container = containerRef.current;
+
+        if (!container) {
+            return undefined;
+        }
+
         const resizeObserver = new ResizeObserver(([{contentRect}]) => setSize({
             width: contentRect.width,
             height: contentRect.height,
         }));
 
-        resizeObserver.observe(containerRef.current);
+        resizeObserver.observe(container);
 
         return () => resizeObserver.disconnect();
     }, []);
@@ -63,7 +71,7 @@ const BitrateGraph = ({
             ref={containerRef}
             className={style.graph}
         >
-            <Tooltip title={hasLine ? `Битрейт за последние ${GRAPH_SPAN_SEC / 60} мин` : null}>
+            <Tooltip title={hasLine ? t('stats.graphTooltip', {minutes: GRAPH_SPAN_SEC / 60}) : null}>
                 <canvas
                     ref={canvasRef}
                     className={style.canvas}
@@ -85,7 +93,7 @@ const BitrateGraph = ({
                         type="secondary"
                         ellipsis
                     >
-                        {isActive ? 'Собираем данные о битрейте…' : 'График появится, когда начнётся эфир'}
+                        {isActive ? t('stats.graphCollecting') : t('stats.graphWaiting')}
                     </Typography.Text>
                 </Flex>
             )}

@@ -46,11 +46,10 @@ export class StatsTracker {
         });
 
         targets.forEach(({key, outputName}) => {
-            if (!this.outputs.has(key)) {
-                this.outputs.set(key, createOutputState());
-            }
+            const output = this.outputs.get(key) ?? createOutputState();
 
-            const output = this.outputs.get(key);
+            this.outputs.set(key, output);
+
             const isStatusRequest = isStatusRequestOf(outputName);
 
             if (pairs.some(({request}) => isStatusRequest(request))) {

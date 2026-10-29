@@ -1,5 +1,4 @@
 import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
-import {CONNECTING_WORDING} from '__utils/consts';
 
 import {ConnectionBadgeDto} from './types';
 
@@ -12,9 +11,9 @@ const {
 } = ConnectionStatusEnum;
 
 export const CONNECTION_BADGES: Record<ConnectionStatusEnum, ConnectionBadgeDto> = {
-    [Connecting]: {status: 'processing', text: CONNECTING_WORDING},
-    [Closed]: {status: 'error', text: 'Нет связи с OBS'},
-    [NeedPassword]: {status: 'warning', text: 'Нужен пароль'},
-    [WrongPassword]: {status: 'warning', text: 'Нужен пароль'},
-    [Identified]: {status: 'success', text: 'OBS подключён'},
+    [Connecting]: {status: 'processing', textKey: 'header.connecting'},
+    [Closed]: {status: 'error', textKey: 'header.closed'},
+    [NeedPassword]: {status: 'warning', textKey: 'header.needPassword'},
+    [WrongPassword]: {status: 'warning', textKey: 'header.needPassword'},
+    [Identified]: {status: 'success', textKey: 'header.connected'},
 };

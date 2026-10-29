@@ -6,17 +6,20 @@ import {
 } from 'antd';
 import type {Nullable} from 'infrastructure/common';
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 
 import EnhancedButton from '__components/EnhancedButton';
 import {obsConnectionService} from '__services/obsConnectionService';
 import {PasswordChangeResultEnum} from '__types/PasswordChangeResultEnum';
 
-import {PASSWORD_RULES, RESULT_ALERTS} from './consts';
+import {RESULT_ALERTS} from './consts';
 import {PasswordFormDto} from './types';
 
 import style from './style.module.scss';
 
 const PasswordCard = () => {
+    const {t} = useTranslation();
+
     const [form] = Form.useForm<PasswordFormDto>();
 
     const [result, setResult] = useState<Nullable<PasswordChangeResultEnum>>(null);
@@ -36,7 +39,7 @@ const PasswordCard = () => {
     return (
         <Card
             size="small"
-            title="Пароль"
+            title={t('settings.passwordTitle')}
         >
             <Form<PasswordFormDto>
                 form={form}
@@ -44,9 +47,9 @@ const PasswordCard = () => {
             >
                 <Form.Item
                     name="password"
-                    label="Пароль obs-websocket"
-                    extra="Tools → WebSocket Server Settings → Server Password"
-                    rules={PASSWORD_RULES}
+                    label={t('settings.passwordLabel')}
+                    extra={t('settings.passwordHint')}
+                    rules={[{required: true, message: t('settings.passwordRequired')}]}
                 >
                     <Input.Password autoComplete="new-password"/>
                 </Form.Item>
@@ -54,7 +57,8 @@ const PasswordCard = () => {
                 {result && (
                     <Alert
                         className={style.alert}
-                        {...RESULT_ALERTS[result]}
+                        type={RESULT_ALERTS[result].type}
+                        title={t(RESULT_ALERTS[result].titleKey)}
                         showIcon
                     />
                 )}
@@ -66,7 +70,7 @@ const PasswordCard = () => {
                         onClick: onSubmit,
                     }}
                 >
-                    Сменить
+                    {t('settings.changePassword')}
                 </EnhancedButton>
             </Form>
         </Card>

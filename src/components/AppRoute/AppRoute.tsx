@@ -1,4 +1,5 @@
 import {useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 import {Navigate} from 'react-router';
 
@@ -9,12 +10,16 @@ import {PASSWORD_STATUSES, PASSWORD_PAGE_STATUSES} from './consts';
 import {Props} from './types';
 
 const AppRoute = ({
-    title,
+    titleKey,
     isAuthRequired,
     isLoginPage,
     children,
 }: Props) => {
+    const {t} = useTranslation();
+
     const status = useSelector(connectionStatusSelector);
+
+    const title = t(titleKey);
 
     useEffect(() => {
         document.title = title;

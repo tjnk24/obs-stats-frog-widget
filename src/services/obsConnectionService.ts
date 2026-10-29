@@ -26,6 +26,7 @@ import {
     RECONNECT_INTERVAL_MS,
     REQUEST_TIMEOUT_MS,
 } from '__utils/consts';
+import {fetchDevObsConnection} from '__utils/dev/fetchDevObsConnection';
 import {buildRequests} from '__utils/requests/buildRequests';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
 import {StatsTracker} from '__utils/stats/StatsTracker';
@@ -67,7 +68,11 @@ class ObsConnectionService {
 
     private readonly tracker = new StatsTracker();
 
-    start = () => {
+    start = async () => {
+        if (process.env.IS_DEV_SERVER) {
+            await this.applyDevConnection();
+        }
+
         this.connect();
     };
 
@@ -96,6 +101,15 @@ class ObsConnectionService {
 
     resetStats = () => {
         commonActions.stats.setView(this.tracker.reset());
+    };
+
+    private applyDevConnection = async () => {
+        const connection = await fetchDevObsConnection();
+
+        if (connection) {
+            commonActions.settings.setPort(connection.port);
+            this.password = connection.password;
+        }
     };
 
     private reconnect = () => {
@@ -211,7 +225,7 @@ class ObsConnectionService {
             case RequestBatchResponse: {
                 const {inFlight} = this;
 
-                if (inFlight?.id === data.requestId) {
+                if (inFlight && inFlight.id === data.requestId) {
                     this.inFlight = null;
                     this.onBatchResults(inFlight.requests, data.results);
                 }

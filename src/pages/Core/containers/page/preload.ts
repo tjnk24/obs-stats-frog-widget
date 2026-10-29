@@ -1,7 +1,7 @@
 import {obsConnectionService} from '__services/obsConnectionService';
 
 export function onLoad() {
-    obsConnectionService.start();
+    void obsConnectionService.start();
 }
 
 export function onDispose() {
