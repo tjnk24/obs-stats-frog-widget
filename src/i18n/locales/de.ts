@@ -46,6 +46,9 @@ export const de: TranslationDto = {
         passwordNoConnection: 'Keine Verbindung zu OBS, das Passwort wurde nicht geändert',
         displayTitle: 'Anzeige',
         generalCard: 'OBS-Karte (FPS, Verzögerungen, CPU)',
+        diagnosticsTitle: 'Diagnose',
+        diagnosticsDescription: 'Versionen, Grafikkarte und die gefundenen Ausgaben. Füge das bei, wenn du ein Problem auf GitHub meldest. Schlüssel und Passwörter sind nicht enthalten.',
+        copyDiagnostics: 'Diagnose kopieren',
         languageLabel: 'Sprache der Oberfläche',
     },
     stats: {
@@ -130,9 +133,11 @@ export const de: TranslationDto = {
         description: 'Im Dock ist ein Fehler aufgetreten. Lade es neu und kopiere den Bericht in ein Issue auf GitHub, falls es erneut passiert.',
         reload: 'Neu laden',
         copyReport: 'Fehlerbericht kopieren',
+        reportLabel: 'Fehlerbericht',
+    },
+    clipboard: {
         copied: 'Kopiert',
         selected: 'Markiert, drücke Strg+C',
-        reportLabel: 'Fehlerbericht',
     },
     popconfirm: {
         title: 'Bist du sicher?',

@@ -46,6 +46,9 @@ export const ru: TranslationDto = {
         passwordNoConnection: 'Нет связи с OBS, пароль не сменён',
         displayTitle: 'Отображение',
         generalCard: 'Карточка OBS (FPS, лаги, CPU)',
+        diagnosticsTitle: 'Диагностика',
+        diagnosticsDescription: 'Версии, видеокарта и найденные выходы. Приложите это, когда пишете о проблеме на GitHub. Ключей и паролей тут нет.',
+        copyDiagnostics: 'Скопировать диагностику',
         languageLabel: 'Язык интерфейса',
     },
     stats: {
@@ -130,9 +133,11 @@ export const ru: TranslationDto = {
         description: 'В панели произошла ошибка. Перезагрузите её, а если ошибка повторится, скопируйте отчёт и приложите его к issue на GitHub.',
         reload: 'Перезагрузить',
         copyReport: 'Скопировать отчёт об ошибке',
-        copied: 'Скопировано',
-        selected: 'Отчёт выделен, нажмите Ctrl+C',
         reportLabel: 'Отчёт об ошибке',
+    },
+    clipboard: {
+        copied: 'Скопировано',
+        selected: 'Выделено, нажмите Ctrl+C',
     },
     popconfirm: {
         title: 'Вы уверены?',

@@ -17,6 +17,8 @@ export const GRAPH_SPAN_SEC = 120;
 export const RECENT_WINDOW_SEC = 60;
 export const DISCOVERY_EVERY_POLLS = 5;
 
+export const BYTES_IN_GIGABYTE = 1024 ** 3;
+
 export const BAD_DROP_SHARE = 0.01;
 
 export const DEV_OBS_CONNECTION_URL = '/dev/obs-connection';

@@ -44,6 +44,9 @@ export const en = {
         passwordNoConnection: 'No connection to OBS, the password was not changed',
         displayTitle: 'Display',
         generalCard: 'OBS card (FPS, lags, CPU)',
+        diagnosticsTitle: 'Diagnostics',
+        diagnosticsDescription: 'Versions, the GPU and the outputs the dock found. Attach this when you report a problem on GitHub. Keys and passwords are not included.',
+        copyDiagnostics: 'Copy diagnostics',
         languageLabel: 'Interface language',
     },
     stats: {
@@ -128,9 +131,11 @@ export const en = {
         description: 'The dock hit an error. Reload it, and if it happens again, copy the report and attach it to an issue on GitHub.',
         reload: 'Reload',
         copyReport: 'Copy error report',
+        reportLabel: 'Error report',
+    },
+    clipboard: {
         copied: 'Copied',
         selected: 'Selected, press Ctrl+C',
-        reportLabel: 'Error report',
     },
     popconfirm: {
         title: 'Are you sure?',

@@ -46,6 +46,9 @@ export const ptBr: TranslationDto = {
         passwordNoConnection: 'Sem conexão com o OBS, a senha não foi alterada',
         displayTitle: 'Exibição',
         generalCard: 'Cartão do OBS (FPS, atrasos, CPU)',
+        diagnosticsTitle: 'Diagnóstico',
+        diagnosticsDescription: 'Versões, placa de vídeo e as saídas que o painel encontrou. Anexe isto ao relatar um problema no GitHub. Chaves e senhas não são incluídas.',
+        copyDiagnostics: 'Copiar diagnóstico',
         languageLabel: 'Idioma da interface',
     },
     stats: {
@@ -130,9 +133,11 @@ export const ptBr: TranslationDto = {
         description: 'O painel encontrou um erro. Recarregue-o e, se acontecer de novo, copie o relatório e anexe-o a uma issue no GitHub.',
         reload: 'Recarregar',
         copyReport: 'Copiar relatório de erro',
+        reportLabel: 'Relatório de erro',
+    },
+    clipboard: {
         copied: 'Copiado',
         selected: 'Selecionado, pressione Ctrl+C',
-        reportLabel: 'Relatório de erro',
     },
     popconfirm: {
         title: 'Tem certeza?',

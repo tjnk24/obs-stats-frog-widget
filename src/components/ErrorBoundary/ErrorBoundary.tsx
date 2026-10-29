@@ -13,10 +13,10 @@ import {
 } from 'react';
 
 import EnhancedButton from '__components/EnhancedButton';
+import {CopyResultEnum} from '__types/CopyResultEnum';
+import {copyText} from '__utils/clipboard/copyText';
 
-import {
-    CopyResultEnum, Props, State,
-} from './types';
+import {Props, State} from './types';
 import {buildErrorReport} from './utils/buildErrorReport';
 
 import style from './style.module.scss';
@@ -39,15 +39,13 @@ class ErrorBoundary extends Component<Props, State> {
     }
 
     private copyReport = async () => {
-        try {
-            await navigator.clipboard.writeText(this.state.report ?? '');
+        const isCopied = await copyText(this.state.report ?? '');
 
-            this.setState({copyResult: CopyResultEnum.Copied});
-        } catch {
+        if (!isCopied) {
             this.reportRef.current?.focus({cursor: 'all'});
-
-            this.setState({copyResult: CopyResultEnum.Selected});
         }
+
+        this.setState({copyResult: isCopied ? CopyResultEnum.Copied : CopyResultEnum.Selected});
     };
 
     public override render() {
@@ -90,7 +88,7 @@ class ErrorBoundary extends Component<Props, State> {
                                     onClick: this.copyReport,
                                 }}
                             >
-                                {copyResult ? t(`errorBoundary.${copyResult}`) : t('errorBoundary.copyReport')}
+                                {copyResult ? t(`clipboard.${copyResult}`) : t('errorBoundary.copyReport')}
                             </EnhancedButton>
                         </Flex>
                     )}

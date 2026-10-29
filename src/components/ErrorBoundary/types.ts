@@ -1,10 +1,7 @@
 import type {Nullable} from 'infrastructure/common';
 import {ReactNode} from 'react';
 
-export enum CopyResultEnum {
-    Copied = 'copied',
-    Selected = 'selected',
-}
+import {CopyResultEnum} from '__types/CopyResultEnum';
 
 interface OwnProps {
     children: ReactNode;

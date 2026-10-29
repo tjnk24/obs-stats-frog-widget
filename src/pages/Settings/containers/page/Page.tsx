@@ -23,6 +23,7 @@ import {obsConnectionService} from '__services/obsConnectionService';
 import {LanguageEnum} from '__types/LanguageEnum';
 import {resolveLanguage} from '__utils/i18n/resolveLanguage';
 
+import DiagnosticsCard from '../diagnostics-card';
 import PasswordCard from '../password-card';
 
 import {LANGUAGE_OPTIONS} from './consts';
@@ -125,6 +126,8 @@ const Page = () => {
                     </Flex>
                 </Flex>
             </Card>
+
+            <DiagnosticsCard/>
         </Flex>
     );
 };

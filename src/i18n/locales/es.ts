@@ -46,6 +46,9 @@ export const es: TranslationDto = {
         passwordNoConnection: 'Sin conexión con OBS, la contraseña no se ha cambiado',
         displayTitle: 'Visualización',
         generalCard: 'Tarjeta de OBS (FPS, retrasos, CPU)',
+        diagnosticsTitle: 'Diagnóstico',
+        diagnosticsDescription: 'Versiones, la tarjeta gráfica y las salidas que encontró el panel. Adjúntalo al informar de un problema en GitHub. No incluye claves ni contraseñas.',
+        copyDiagnostics: 'Copiar diagnóstico',
         languageLabel: 'Idioma de la interfaz',
     },
     stats: {
@@ -130,9 +133,11 @@ export const es: TranslationDto = {
         description: 'El panel ha tenido un error. Recárgalo y, si vuelve a ocurrir, copia el informe y adjúntalo a un issue en GitHub.',
         reload: 'Recargar',
         copyReport: 'Copiar informe de error',
+        reportLabel: 'Informe de error',
+    },
+    clipboard: {
         copied: 'Copiado',
         selected: 'Seleccionado, pulsa Ctrl+C',
-        reportLabel: 'Informe de error',
     },
     popconfirm: {
         title: '¿Seguro?',
