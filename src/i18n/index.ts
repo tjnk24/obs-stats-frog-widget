@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
+import {storageService} from '__services/storageService';
 import {LanguageEnum} from '__types/LanguageEnum';
 import {resolveLanguage} from '__utils/i18n/resolveLanguage';
-import {loadSettings} from '__utils/storage/loadSettings';
 
 import {de} from './locales/de';
 import {en} from './locales/en';
@@ -21,7 +21,7 @@ void i18n.use(initReactI18next).init({
         [LanguageEnum.PtBr]: {translation: ptBr},
         [LanguageEnum.Frog]: {translation: frog},
     },
-    lng: resolveLanguage(loadSettings().language),
+    lng: resolveLanguage(storageService.loadSettings().language),
     fallbackLng: LanguageEnum.En,
     interpolation: {escapeValue: false},
     initAsync: false,

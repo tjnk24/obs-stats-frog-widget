@@ -2,13 +2,13 @@ import {configureStore, createListenerMiddleware} from '@reduxjs/toolkit';
 
 import {BaseStore, reducers} from '__reducers';
 import {SETTINGS_SLICE_NAME} from '__reducers/consts';
-import {saveSettings} from '__utils/storage/saveSettings';
+import {storageService} from '__services/storageService';
 
 const settingsListener = createListenerMiddleware();
 
 settingsListener.startListening({
     predicate: ({type}) => type.startsWith(`${SETTINGS_SLICE_NAME}/`),
-    effect: (_action, {getState}) => saveSettings((getState() as BaseStore).settings),
+    effect: (_action, {getState}) => storageService.saveSettings((getState() as BaseStore).settings),
 });
 
 const store = configureStore({

@@ -32,9 +32,9 @@ import {buildRequests} from '__utils/requests/buildRequests';
 import {getObsVersion} from '__utils/requests/getObsVersion';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
 import {StatsTracker} from '__utils/stats/StatsTracker';
-import {loadPassword} from '__utils/storage/loadPassword';
-import {savePassword} from '__utils/storage/savePassword';
 import {discoverTargets} from '__utils/targets/discoverTargets';
+
+import {storageService} from './storageService';
 
 const {
     Hello,
@@ -64,7 +64,7 @@ class ObsConnectionService {
 
     private pollIndex = 0;
 
-    private password = loadPassword();
+    private password = storageService.loadPassword();
 
     private passwordChange: Nullable<PasswordChangeDto> = null;
 
@@ -196,7 +196,7 @@ class ObsConnectionService {
         this.passwordChange && this.finishPasswordChange(PasswordChangeResultEnum.NoConnection);
 
         if (code === AUTHENTICATION_FAILED_CLOSE_CODE) {
-            savePassword(null);
+            storageService.savePassword(null);
             this.password = null;
 
             commonActions.connection.setStatus(WrongPassword);
@@ -237,7 +237,7 @@ class ObsConnectionService {
 
             case Identified:
                 this.passwordChange && this.finishPasswordChange(PasswordChangeResultEnum.Accepted);
-                this.password && savePassword(this.password);
+                this.password && storageService.savePassword(this.password);
 
                 commonActions.connection.setStatus(ConnectionStatusEnum.Identified);
 

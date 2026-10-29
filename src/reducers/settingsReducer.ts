@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
+import {storageService} from '__services/storageService';
 import {LanguageEnum} from '__types/LanguageEnum';
 import {SettingsDto} from '__types/SettingsDto';
-import {loadSettings} from '__utils/storage/loadSettings';
 
 import {SETTINGS_SLICE_NAME} from './consts';
 
@@ -10,7 +10,7 @@ export type SettingsReducer = SettingsDto;
 
 const slice = createSlice({
     name: SETTINGS_SLICE_NAME,
-    initialState: loadSettings,
+    initialState: storageService.loadSettings,
     reducers: {
         setPort: (state, {payload}: PayloadAction<number>) => {
             state.port = payload;
