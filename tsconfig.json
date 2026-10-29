@@ -1,22 +1,18 @@
 {
     "compilerOptions": {
         "target": "es2022",
-        "declaration": false,
-        "noImplicitAny": false,
-        "noImplicitReturns": false,
-        "removeComments": false,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
         "lib": ["dom", "es2022"],
-        "strict": true,
-        "outDir": "./build/",
-        "sourceMap": true,
-        "module": "ESNext",
-        "moduleResolution": "node",
+        "module": "esnext",
+        "moduleResolution": "bundler",
         "jsx": "react-jsx",
-        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "skipLibCheck": true,
         "esModuleInterop": true,
-        "baseUrl": ".",
+        "resolveJsonModule": true,
         "paths": {
             "__actions": ["./src/actions.ts"],
             "__components/*": ["./src/components/*"],
@@ -33,12 +29,5 @@
             "infrastructure/*": ["./typings/infrastructure/*"]
         }
     },
-    "include": [
-        "src/**/*.ts",
-        "src/**/*.tsx",
-        "src/typings/**/*.d.ts",
-        "typings/**/*.d.ts"
-    ],
-    "compileOnSave": false,
-    "exclude": ["node_modules", "build"]
+    "include": ["src", "typings"]
 }
