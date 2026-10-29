@@ -2,6 +2,15 @@ import {theme, ThemeConfig} from 'antd';
 
 export const THEME_CSS_VAR_KEY = 'css-var-app';
 
+const DEFAULT_BUTTON_COLORS = {
+    defaultColor: '#65a9f3',
+    defaultBorderColor: '#65a9f3',
+    defaultHoverColor: '#8dc5f8',
+    defaultHoverBorderColor: '#8dc5f8',
+    defaultActiveColor: '#4998e8',
+    defaultActiveBorderColor: '#4998e8',
+};
+
 const FIELD_COLORS = {
     colorBgContainer: '#363a46',
     hoverBg: '#3b404d',
@@ -37,6 +46,7 @@ export const THEME: ThemeConfig = {
         Statistic: {
             contentFontSize: 28,
         },
+        Button: DEFAULT_BUTTON_COLORS,
         Input: FIELD_COLORS,
         InputNumber: FIELD_COLORS,
         Mentions: FIELD_COLORS,
