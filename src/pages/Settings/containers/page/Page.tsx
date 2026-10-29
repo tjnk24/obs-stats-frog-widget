@@ -7,7 +7,6 @@ import {
     Switch,
     Typography,
 } from 'antd';
-import i18n from 'i18next';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
@@ -20,9 +19,9 @@ import {
     settingsLanguageSelector,
     settingsPortSelector,
 } from '__selectors/settingsSelectors';
+import {languageService} from '__services/languageService';
 import {obsConnectionService} from '__services/obsConnectionService';
 import {LanguageEnum} from '__types/LanguageEnum';
-import {resolveLanguage} from '__utils/i18n/resolveLanguage';
 
 import DiagnosticsCard from '../diagnostics-card';
 import PasswordCard from '../password-card';
@@ -46,12 +45,6 @@ const Page = () => {
         const values = await form.validateFields();
 
         obsConnectionService.setPort(values.port);
-    };
-
-    const onLanguageChange = async (value: LanguageEnum) => {
-        commonActions.settings.setLanguage(value);
-
-        await i18n.changeLanguage(value);
     };
 
     return (
@@ -105,10 +98,10 @@ const Page = () => {
 
                         <Select<LanguageEnum>
                             className={style.languageSelect}
-                            value={resolveLanguage(language)}
+                            value={languageService.resolveLanguage(language)}
                             options={LANGUAGE_OPTIONS}
                             aria-label={t('settings.languageLabel')}
-                            onChange={onLanguageChange}
+                            onChange={languageService.setLanguage}
                         />
                     </Flex>
 
