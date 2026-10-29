@@ -46,9 +46,7 @@ export const ru: TranslationDto = {
         passwordNoConnection: 'Нет связи с OBS, пароль не сменён',
         displayTitle: 'Отображение',
         generalCard: 'Карточка OBS (FPS, лаги, CPU)',
-        languageTitle: 'Язык',
         languageLabel: 'Язык интерфейса',
-        apply: 'Применить',
     },
     stats: {
         statuses: {

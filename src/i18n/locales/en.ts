@@ -44,9 +44,7 @@ export const en = {
         passwordNoConnection: 'No connection to OBS, the password was not changed',
         displayTitle: 'Display',
         generalCard: 'OBS card (FPS, lags, CPU)',
-        languageTitle: 'Language',
         languageLabel: 'Interface language',
-        apply: 'Apply',
     },
     stats: {
         statuses: {

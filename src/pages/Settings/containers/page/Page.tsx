@@ -1,29 +1,41 @@
+import {GlobalOutlined} from '@ant-design/icons';
 import {
     Card,
     Flex,
     Form,
+    Select,
     Switch,
     Typography,
 } from 'antd';
+import i18n from 'i18next';
 import {useTranslation} from 'react-i18next';
 import {useSelector} from 'react-redux';
 
 import {commonActions} from '__actions';
 import EnhancedButton from '__components/EnhancedButton';
 import PortField from '__components/PortField';
-import {settingsIsShowGeneralCardSelector, settingsPortSelector} from '__selectors/settingsSelectors';
+import {
+    settingsIsShowGeneralCardSelector,
+    settingsLanguageSelector,
+    settingsPortSelector,
+} from '__selectors/settingsSelectors';
 import {obsConnectionService} from '__services/obsConnectionService';
+import {LanguageEnum} from '__types/LanguageEnum';
+import {resolveLanguage} from '__utils/i18n/resolveLanguage';
 
-import LanguageCard from '../language-card';
 import PasswordCard from '../password-card';
 
+import {LANGUAGE_OPTIONS} from './consts';
 import {PortFormDto} from './types';
+
+import style from './style.module.scss';
 
 const Page = () => {
     const {t} = useTranslation();
 
     const port = useSelector(settingsPortSelector);
     const isShowGeneralCard = useSelector(settingsIsShowGeneralCardSelector);
+    const language = useSelector(settingsLanguageSelector);
 
     const [form] = Form.useForm<PortFormDto>();
 
@@ -31,6 +43,12 @@ const Page = () => {
         const values = await form.validateFields();
 
         obsConnectionService.setPort(values.port);
+    };
+
+    const onLanguageChange = async (value: LanguageEnum) => {
+        commonActions.settings.setLanguage(value);
+
+        await i18n.changeLanguage(value);
     };
 
     return (
@@ -63,25 +81,48 @@ const Page = () => {
 
             <PasswordCard/>
 
-            <LanguageCard/>
-
             <Card
                 size="small"
                 title={t('settings.displayTitle')}
             >
                 <Flex
-                    align="center"
-                    justify="space-between"
-                    gap="small"
+                    gap={14}
+                    vertical
                 >
-                    <Typography.Text>
-                        {t('settings.generalCard')}
-                    </Typography.Text>
+                    <Flex
+                        align="center"
+                        justify="space-between"
+                        gap="small"
+                    >
+                        <Typography.Text>
+                            <GlobalOutlined/>
 
-                    <Switch
-                        checked={isShowGeneralCard}
-                        onChange={commonActions.settings.setIsShowGeneralCard}
-                    />
+                            {` ${t('settings.languageLabel')}`}
+                        </Typography.Text>
+
+                        <Select<LanguageEnum>
+                            className={style.languageSelect}
+                            value={resolveLanguage(language)}
+                            options={LANGUAGE_OPTIONS}
+                            aria-label={t('settings.languageLabel')}
+                            onChange={onLanguageChange}
+                        />
+                    </Flex>
+
+                    <Flex
+                        align="center"
+                        justify="space-between"
+                        gap="small"
+                    >
+                        <Typography.Text>
+                            {t('settings.generalCard')}
+                        </Typography.Text>
+
+                        <Switch
+                            checked={isShowGeneralCard}
+                            onChange={commonActions.settings.setIsShowGeneralCard}
+                        />
+                    </Flex>
                 </Flex>
             </Card>
         </Flex>

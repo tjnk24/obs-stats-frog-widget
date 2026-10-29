@@ -46,9 +46,7 @@ export const ptBr: TranslationDto = {
         passwordNoConnection: 'Sem conexão com o OBS, a senha não foi alterada',
         displayTitle: 'Exibição',
         generalCard: 'Cartão do OBS (FPS, atrasos, CPU)',
-        languageTitle: 'Idioma',
         languageLabel: 'Idioma da interface',
-        apply: 'Aplicar',
     },
     stats: {
         statuses: {

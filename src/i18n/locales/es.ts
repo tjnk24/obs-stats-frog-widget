@@ -46,9 +46,7 @@ export const es: TranslationDto = {
         passwordNoConnection: 'Sin conexión con OBS, la contraseña no se ha cambiado',
         displayTitle: 'Visualización',
         generalCard: 'Tarjeta de OBS (FPS, retrasos, CPU)',
-        languageTitle: 'Idioma',
         languageLabel: 'Idioma de la interfaz',
-        apply: 'Aplicar',
     },
     stats: {
         statuses: {
