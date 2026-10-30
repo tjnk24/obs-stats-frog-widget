@@ -1,5 +1,6 @@
 obs = obslua
 
+local BRIDGE_VERSION = 1
 local SECTION = 'ObsStatsDock'
 local PARAM = 'PluginOutputs'
 local OUTPUT_NAMES = {'multi-output'}
@@ -533,7 +534,7 @@ local function collect()
         end
     end
 
-    return '{"updated":' .. os.time() .. ',"outputs":[' .. table.concat(items, ',') .. ']' .. collect_hardware() .. '}'
+    return '{"bridgeVersion":' .. BRIDGE_VERSION .. ',"updated":' .. os.time() .. ',"outputs":[' .. table.concat(items, ',') .. ']' .. collect_hardware() .. '}'
 end
 
 local function publish()

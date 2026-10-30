@@ -159,6 +159,7 @@ export class MockObsSimulator {
     };
 
     private buildBridgeData = (): BridgeDataDto => ({
+        bridgeVersion: 1,
         updated: Math.floor(Date.now() / 1000),
         outputs: [
             ...(this.twitchOutput ? [{name: MOCK_TWITCH_OUTPUT_NAME, server: MOCK_TWITCH_SERVER}] : []),

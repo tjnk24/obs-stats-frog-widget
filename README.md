@@ -33,7 +33,7 @@ An optional Lua script adds the platform of plugin outputs, GPU load and system 
 
 Ready-made builds are not published yet, so for now the dock is built from source.
 
-1. **Build the dock.** You need [Node.js](https://nodejs.org/) 22.22 or newer.
+1. **Build the dock.** You need [Node.js](https://nodejs.org/) 24 or newer (see `.nvmrc`); Node 25 is not supported by the dev server.
 
    ```bash
    git clone https://github.com/tjnk24/obs-stats-widget.git
@@ -130,6 +130,7 @@ Scripts:
 | --- | --- |
 | `npm run start:dev` | Dev server with hot reload on port 3062 (`PORT` in `.env` changes it) |
 | `npm run build:prod` | Production build into `build` |
+| `npm run package:release` | Production build plus the release folder and `compatibility.json` in `release` |
 | `npm run lint` | TypeScript, ESLint, Stylelint and Knip |
 
 A pre-commit hook (husky and lint-staged) lints the changed files and type-checks the project.
@@ -138,6 +139,26 @@ The dev server clears the `build` folder, so run `npm run build:prod` again befo
 Tech stack: React 19, antd 6, Redux Toolkit, React Router 8, i18next, CSS modules, webpack and swc.
 Code conventions are described in [CLAUDE.md](CLAUDE.md).
 
+## Releases
+
+Versions follow [semantic versioning](https://semver.org/). While the version is 0.x, a minor release may still
+change settings or setup steps; this is always written in the release notes.
+
+A release is built by GitHub Actions when a `v*` tag is pushed. Each release has:
+
+- `obs-stats-widget-<version>.zip` with the dock (`dock/index.html`), the bridge script, `compatibility.json`
+  and a short `README.txt`;
+- `compatibility.json`: the minimum OBS version, the obs-websocket RPC version, the minimum Chromium version
+  of the OBS browser, the minimum bridge script version and the obs-websocket requests the dock uses;
+- [minisign](https://jedisct1.github.io/minisign/) signatures (`.minisig`) of the archive and `compatibility.json`,
+  and a SHA-256 checksum of the archive.
+
+To check a download, use the public key [minisign.pub](minisign.pub):
+
+```bash
+minisign -Vm obs-stats-widget-0.1.0.zip -p minisign.pub
+```
+
 ## License
 
-MIT
+[MIT](LICENSE)

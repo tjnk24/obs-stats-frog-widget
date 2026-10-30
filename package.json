@@ -1,6 +1,6 @@
 {
   "name": "obs-stats-widget",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "OBS dock with live stream stats for the main output and obs-multi-rtmp targets, via obs-websocket",
   "main": "src/index.tsx",
   "license": "MIT",
@@ -16,10 +16,11 @@
     "lint:style": "npx stylelint src/**/*.scss",
     "test": "npm-run-all lint",
     "lint:unused": "knip",
-    "prepare": "husky"
+    "prepare": "husky",
+    "package:release": "npm run build:prod && node scripts/package-release.js"
   },
   "engines": {
-    "node": "22"
+    "node": "^24 || >=26"
   },
   "dependencies": {
     "@ant-design/icons": "6.3.4",

@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Check that the tag matches package.json
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "${GITHUB_REF_NAME#v}" != "$VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match package.json version $VERSION"
+            exit 1
+          fi
+          if [ ! -f "docs/release-notes/$VERSION.md" ]; then
+            echo "docs/release-notes/$VERSION.md is missing"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - run: npm ci
+
+      - run: npm test
+
+      - run: npm run package:release
+
+      - name: Create the archive
+        working-directory: release
+        run: zip -r -q "obs-stats-widget-$VERSION.zip" "obs-stats-widget-$VERSION"
+
+      - name: Sign the archive and compatibility.json
+        working-directory: release
+        env:
+          MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
+        run: |
+          if [ -z "$MINISIGN_SECRET_KEY" ]; then
+            echo "The MINISIGN_SECRET_KEY secret is not set"
+            exit 1
+          fi
+          sudo apt-get update -q
+          sudo apt-get install -y -q minisign
+          KEY_FILE="$RUNNER_TEMP/minisign.key"
+          printf '%s\n' "$MINISIGN_SECRET_KEY" > "$KEY_FILE"
+          for FILE in "obs-stats-widget-$VERSION.zip" compatibility.json; do
+            minisign -S -s "$KEY_FILE" -m "$FILE" -t "obs-stats-widget $VERSION"
+            minisign -V -p ../minisign.pub -m "$FILE"
+          done
+          rm -f "$KEY_FILE"
+          sha256sum "obs-stats-widget-$VERSION.zip" > "obs-stats-widget-$VERSION.zip.sha256"
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "obs-stats-widget $VERSION" \
+            --notes-file "docs/release-notes/$VERSION.md" \
+            "release/obs-stats-widget-$VERSION.zip" \
+            "release/obs-stats-widget-$VERSION.zip.minisig" \
+            "release/obs-stats-widget-$VERSION.zip.sha256" \
+            release/compatibility.json \
+            release/compatibility.json.minisig

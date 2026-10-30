@@ -18,6 +18,8 @@ const development = process.env.NODE_ENV !== 'production';
 
 const isDevServer = Boolean(process.env.WEBPACK_SERVE);
 
+const contentHash = development ? '' : '.[contenthash:8]';
+
 const obsConfigDirectories = {
     win32: path.join(process.env.APPDATA || '', 'obs-studio'),
     darwin: path.join(os.homedir(), 'Library', 'Application Support', 'obs-studio'),
@@ -49,8 +51,8 @@ const plugins = [
         template: './src/index.html',
     }),
     new MiniCssExtractPlugin({
-        chunkFilename: '[name].css',
-        filename: '[name].css',
+        chunkFilename: `[name]${contentHash}.css`,
+        filename: `[name]${contentHash}.css`,
         ignoreOrder: true,
     }),
 ];
@@ -133,8 +135,8 @@ module.exports = {
     },
     mode: development ? 'development' : 'production',
     output: {
-        filename: '[name].bundle.js',
-        chunkFilename: '[name].chunk.js',
+        filename: `[name]${contentHash}.bundle.js`,
+        chunkFilename: `[name]${contentHash}.chunk.js`,
         path: path.resolve(__dirname, 'build'),
         publicPath: '',
         pathinfo: false,
@@ -182,7 +184,7 @@ module.exports = {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'images/[name][ext]',
+                    filename: `images/[name]${contentHash}[ext]`,
                 },
             },
         ],
