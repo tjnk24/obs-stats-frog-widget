@@ -32,9 +32,9 @@ export default [
     {
         ignores: [
             'build',
+            'release',
             'config',
             'eslint.config.mjs',
-            'webpack.config.js',
         ],
     },
     {
@@ -62,7 +62,7 @@ export default [
                 },
 
                 warnOnUnsupportedTypeScriptVersion: false,
-                project: "./tsconfig.json",
+                project: ["./tsconfig.json", "./tsconfig.node.json"],
             },
         },
 
@@ -322,5 +322,12 @@ export default [
             "@typescript-eslint/no-base-to-string": "off",
             "@typescript-eslint/no-unsafe-enum-comparison": 0,
         },
-    }
+    },
+    {
+        files: ["scripts/**/*.ts"],
+
+        rules: {
+            "no-console": 0,
+        },
+    },
 ];
