@@ -1,1 +1,2 @@
 installer/tests/fixtures/** -text
+.husky/** text eol=lf
