@@ -4,45 +4,87 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
 
-      - name: Check that the tag matches package.json
+      - name: Check the version
+        id: version
+        shell: bash
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          if [ "${GITHUB_REF_NAME#v}" != "$VERSION" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match package.json version $VERSION"
-            exit 1
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            if [ "${GITHUB_REF_NAME#v}" != "$VERSION" ]; then
+              echo "Tag $GITHUB_REF_NAME does not match package.json version $VERSION"
+              exit 1
+            fi
+            if [ ! -f "docs/release-notes/$VERSION.md" ]; then
+              echo "docs/release-notes/$VERSION.md is missing"
+              exit 1
+            fi
           fi
-          if [ ! -f "docs/release-notes/$VERSION.md" ]; then
-            echo "docs/release-notes/$VERSION.md is missing"
-            exit 1
-          fi
-          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - run: npm ci
 
       - run: npm test
 
-      - run: npm run package:release
+      - name: Install Pester 5
+        shell: powershell
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -MinimumVersion 5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+
+      - run: npm run test:installer
+
+      - name: Install Inno Setup
+        shell: powershell
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup -y --no-progress
+          }
+
+      - run: npm run package:installer
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: release
+          path: release/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.build.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v5
+        with:
+          name: release
+          path: release
 
       - name: Create the archive
         working-directory: release
         run: zip -r -q "obs-stats-widget-$VERSION.zip" "obs-stats-widget-$VERSION"
 
-      - name: Sign the archive and compatibility.json
+      - name: Sign the release files
         working-directory: release
         env:
           MINISIGN_SECRET_KEY: ${{ secrets.MINISIGN_SECRET_KEY }}
@@ -55,12 +97,12 @@ jobs:
           sudo apt-get install -y -q minisign
           KEY_FILE="$RUNNER_TEMP/minisign.key"
           printf '%s\n' "$MINISIGN_SECRET_KEY" > "$KEY_FILE"
-          for FILE in "obs-stats-widget-$VERSION.zip" compatibility.json; do
+          for FILE in "obs-stats-widget-setup-$VERSION.exe" "obs-stats-widget-$VERSION.zip" compatibility.json; do
             minisign -S -s "$KEY_FILE" -m "$FILE" -t "obs-stats-widget $VERSION"
             minisign -V -p ../minisign.pub -m "$FILE"
           done
           rm -f "$KEY_FILE"
-          sha256sum "obs-stats-widget-$VERSION.zip" > "obs-stats-widget-$VERSION.zip.sha256"
+          sha256sum "obs-stats-widget-setup-$VERSION.exe" "obs-stats-widget-$VERSION.zip" > SHA256SUMS.txt
 
       - name: Publish the GitHub release
         env:
@@ -69,8 +111,10 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             --title "obs-stats-widget $VERSION" \
             --notes-file "docs/release-notes/$VERSION.md" \
+            "release/obs-stats-widget-setup-$VERSION.exe" \
+            "release/obs-stats-widget-setup-$VERSION.exe.minisig" \
             "release/obs-stats-widget-$VERSION.zip" \
             "release/obs-stats-widget-$VERSION.zip.minisig" \
-            "release/obs-stats-widget-$VERSION.zip.sha256" \
             release/compatibility.json \
-            release/compatibility.json.minisig
+            release/compatibility.json.minisig \
+            release/SHA256SUMS.txt

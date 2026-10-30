@@ -149,20 +149,26 @@ Code conventions are described in [CLAUDE.md](CLAUDE.md).
 Versions follow [semantic versioning](https://semver.org/). While the version is 0.x, a minor release may still
 change settings or setup steps; this is always written in the release notes.
 
-A release is built by GitHub Actions when a `v*` tag is pushed. Each release has:
+A release is built by GitHub Actions when a `v*` tag is pushed: the dock, the installer and the tests are built
+and run on Windows, then the files are signed and published. Each release has:
 
-- `obs-stats-widget-<version>.zip` with the dock (`dock/index.html`), the bridge script, `compatibility.json`
-  and a short `README.txt`;
+- `obs-stats-widget-setup-<version>.exe`: the Windows installer;
+- `obs-stats-widget-<version>.zip` with the dock (`dock/index.html`), the bridge script and its folder,
+  `compatibility.json` and a short `README.txt`, for a manual install;
 - `compatibility.json`: the minimum OBS version, the obs-websocket RPC version, the minimum Chromium version
   of the OBS browser, the minimum bridge script version and the obs-websocket requests the dock uses;
-- [minisign](https://jedisct1.github.io/minisign/) signatures (`.minisig`) of the archive and `compatibility.json`,
-  and a SHA-256 checksum of the archive.
+- [minisign](https://jedisct1.github.io/minisign/) signatures (`.minisig`) of all three files
+  and `SHA256SUMS.txt` with the checksums of the installer and the archive.
 
 To check a download, use the public key [minisign.pub](minisign.pub):
 
 ```bash
-minisign -Vm obs-stats-widget-0.1.0.zip -p minisign.pub
+minisign -Vm obs-stats-widget-setup-0.1.0.exe -p minisign.pub
 ```
+
+Every push to `main` and every pull request also runs the lint, the release build and the installer tests (`ci.yml`).
+The release workflow can be started by hand from the Actions tab: it then builds and tests everything on Windows
+without publishing.
 
 ## License
 
