@@ -8,6 +8,11 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+$env:PSModulePath = @(
+    (Join-Path $env:ProgramFiles 'WindowsPowerShell\Modules'),
+    (Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\Modules')
+) -join ';'
+
 Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'ConfigureObs') -Filter '*.ps1' | ForEach-Object { . $_.FullName }
 
 try {
