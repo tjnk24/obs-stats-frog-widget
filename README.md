@@ -76,6 +76,9 @@ obs-websocket reports the stats of plugin outputs but not where they stream to, 
 The script publishes this every three seconds as the profile parameter `[ObsStatsDock] PluginOutputs`,
 which the dock reads through obs-websocket.
 
+`obs-stats-bridge.lua` is only the entry point: its parts live in the `obs-stats-bridge` folder next to it,
+and OBS loads them from there. If you copy the script somewhere else, copy the folder with it.
+
 ## Settings
 
 The gear in the top right corner opens the settings:

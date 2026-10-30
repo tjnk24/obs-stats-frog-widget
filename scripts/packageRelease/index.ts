@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import {buildCompatibility} from './buildCompatibility.ts';
+import {buildCompatibility} from './buildCompatibility/index.ts';
 import {PACKAGE_DIRECTORY, ROOT_DIRECTORY} from './consts.ts';
 import {copyReleaseFiles} from './copyReleaseFiles.ts';
 import {writeCompatibility} from './writeCompatibility.ts';

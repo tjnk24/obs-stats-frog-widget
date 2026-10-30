@@ -4,5 +4,6 @@ obs-stats-widget {{version}}
 2. OBS: Docks -> Custom Browser Docks. Add a dock with the URL file:///<folder>/dock/index.html
 3. OBS: Tools -> WebSocket Server Settings. Enable the server and note the port and password.
 4. OBS: Tools -> Scripts. Add obs-stats-bridge.lua (needed for obs-multi-rtmp outputs, GPU and memory).
+   Keep the obs-stats-bridge folder next to it: the script loads its parts from there.
 
 Full guide: https://github.com/tjnk24/obs-stats-widget#readme
