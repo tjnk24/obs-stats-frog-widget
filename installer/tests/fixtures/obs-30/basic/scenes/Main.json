@@ -1,0 +1,16 @@
+{
+    "current_scene": "Main",
+    "modules": {
+        "scripts-tool": [],
+        "output-timer": {
+            "streamTimerHours": 0
+        }
+    },
+    "name": "Main",
+    "sources": [
+        {
+            "name": "Café \"quoted\" \\ slash \/",
+            "settings": {"text": "line\nbreak\ttab", "opacity": 0.30000000000000004}
+        }
+    ]
+}

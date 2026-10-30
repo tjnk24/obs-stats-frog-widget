@@ -1,0 +1,14 @@
+{
+    "current_scene": "Live",
+    "modules": {
+        "scripts-tool": [
+            {
+                "path": "C:/Program Files/obs-studio/data/obs-plugins/frontend-tools/scripts/clock-source.lua",
+                "settings": {"format": "%H:%M"}
+            }
+        ],
+        "captions": {"enabled": false}
+    },
+    "name": "Stream",
+    "sources": []
+}

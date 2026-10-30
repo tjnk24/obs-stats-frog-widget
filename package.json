@@ -18,7 +18,8 @@
     "test": "npm-run-all lint",
     "lint:unused": "knip",
     "prepare": "husky",
-    "package:release": "npm run build:prod && node scripts/packageRelease/index.ts"
+    "package:release": "npm run build:prod && node scripts/packageRelease/index.ts",
+    "test:installer": "powershell -NoProfile -ExecutionPolicy Bypass -File installer/tests/run-tests.ps1"
   },
   "engines": {
     "node": "^24 || >=26"

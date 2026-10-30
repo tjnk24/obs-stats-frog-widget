@@ -134,6 +134,7 @@ Scripts:
 | `npm run start:dev` | Dev server with hot reload on port 3062 (`PORT` in `.env` changes it) |
 | `npm run build:prod` | Production build into `build` |
 | `npm run package:release` | Production build plus the release folder and `compatibility.json` in `release` |
+| `npm run test:installer` | Pester 5 tests of the script that sets up OBS (`installer/configure-obs.ps1`), Windows only |
 | `npm run lint` | TypeScript, ESLint, Stylelint and Knip |
 
 A pre-commit hook (husky and lint-staged) lints the changed files and type-checks the project.
