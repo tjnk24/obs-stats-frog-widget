@@ -28,40 +28,75 @@ An optional Lua script adds the platform of plugin outputs, GPU load and system 
 - OBS Studio 28 or newer (obs-websocket 5 is built in). Developed and tested on OBS 33 on Windows.
 - GPU and system memory stats come from Windows performance counters, so they are shown on Windows only.
   Everything else does not depend on the operating system.
+- The installer is for Windows 10 and 11 (64-bit). On other systems, install from the zip archive.
 
 ## Installation
 
-Ready-made builds are not published yet, so for now the dock is built from source.
+The first release, 0.1.0, is not published yet. Until it is, use [From source](#from-source).
 
-1. **Build the dock.** You need [Node.js](https://nodejs.org/) 24 or newer (see `.nvmrc`); Node 25 is not supported by the dev server.
+### With the installer (Windows, recommended)
 
-   ```bash
-   git clone https://github.com/tjnk24/obs-stats-widget.git
-   cd obs-stats-widget
-   npm install
-   npm run build:prod
+1. **Download** `obs-stats-widget-setup-<version>.exe` from the
+   [Releases](https://github.com/tjnk24/obs-stats-widget/releases) page.
+2. **Close OBS** and run the installer. It needs no administrator rights.
+   The installer is not code-signed yet, so Windows may show "Windows protected your PC": click More info →
+   Run anyway. To be sure the file is genuine, [check its signature](#releases) first.
+3. **Start OBS.** The dock is in Docks → obs-stats-widget; if it is not visible, turn it on there.
+4. **Connect.** On first launch the dock asks for the obs-websocket port (4455 by default) and password:
+   Tools → WebSocket Server Settings → Show Connect Info. The password is saved in the dock, so this happens once.
+
+What the installer does:
+
+- copies the dock and the bridge script to `%LOCALAPPDATA%\Programs\obs-stats-widget`
+  and adds obs-stats-widget to Settings → Apps;
+- adds the obs-stats-widget dock to OBS, adds the bridge script to every scene collection
+  and turns the obs-websocket server on. Nothing else in OBS is changed;
+- backs up every OBS file before changing it, to `%LOCALAPPDATA%\obs-stats-widget\backups`, and writes
+  what it did to `%LOCALAPPDATA%\obs-stats-widget\configure-obs.log`. If anything fails, it puts the files back.
+
+If OBS has never been started on this computer, start it once, close it and run the installer again.
+If obs-websocket has never been turned on, the installer leaves it to you: Tools → WebSocket Server Settings →
+Enable WebSocket server. For a portable OBS, use the [zip](#from-the-zip-archive).
+
+**Update** by running the installer of the new version: it replaces the files and adds the bridge script to scene
+collections created since the last install; the rest of your OBS settings stays as it is.
+**Uninstall** in Settings → Apps → obs-stats-widget with OBS closed: the dock and the bridge script are removed
+from OBS too. The obs-websocket server stays on, since other programs may use it.
+
+### From the zip archive
+
+For a portable OBS, another operating system or a setup without the installer.
+
+1. Download `obs-stats-widget-<version>.zip` from [Releases](https://github.com/tjnk24/obs-stats-widget/releases)
+   and extract it to a folder that will stay, for example `%LOCALAPPDATA%\obs-stats-widget`.
+2. **Turn on obs-websocket:** Tools → WebSocket Server Settings → Enable WebSocket server.
+3. **Add the dock:** Docks → Custom Browser Docks, any name and this URL, with the real path and forward slashes:
+
+   ```
+   file:///C:/path/to/obs-stats-widget/dock/index.html
    ```
 
-   The dock is now in the `build` folder.
+4. **Add the bridge script (optional, recommended):** Tools → Scripts, press `+` and choose `obs-stats-bridge.lua`.
+   Keep the `obs-stats-bridge` folder next to it. Scripts are added per scene collection,
+   so repeat this in every collection you stream from.
+5. **Connect** as in step 4 of the installer.
 
-2. **Turn on obs-websocket.** In OBS, open Tools → WebSocket Server Settings, enable the server and keep
-   the window open: you will need the port and the password from Show Connect Info.
+To update, extract the new archive over the old folder and press Ctrl+R in the dock.
 
-3. **Add the dock.** Open Docks → Custom Browser Docks, enter any name and this URL:
+### From source
 
-   ```
-   file:///C:/path/to/obs-stats-widget/build/index.html
-   ```
+You need [Node.js](https://nodejs.org/) 24 or newer (see `.nvmrc`); Node 25 is not supported by the dev server.
 
-   Use the real path to the `build` folder, with forward slashes.
+```bash
+git clone https://github.com/tjnk24/obs-stats-widget.git
+cd obs-stats-widget
+npm install
+npm run build:prod
+```
 
-4. **Connect.** On first launch the dock asks for the obs-websocket port (4455 by default) and password.
-   The password is saved in the dock, so this happens once.
-
-5. **Add the bridge script (optional, recommended).** Open Tools → Scripts, press `+` and choose
-   `obs-script/obs-stats-bridge.lua`. See below for what it does.
-
-To update, pull the new code, run `npm run build:prod` again and press Ctrl+R in the dock.
+Then follow the zip steps 2–5 with the dock at `build/index.html` and the bridge script at
+`obs-script/obs-stats-bridge.lua`. To update, pull the new code, run `npm run build:prod` again
+and press Ctrl+R in the dock.
 
 ## The bridge script
 
@@ -105,11 +140,15 @@ The gear in the top right corner opens the settings:
 
 ## Troubleshooting
 
-- **The dock is empty or outdated.** Run `npm run build:prod` again and press Ctrl+R in the dock.
+- **The dock is not visible after installing.** Turn it on in Docks → obs-stats-widget.
+- **The installer says OBS was not set up.** The reason is on its last page; the details are in
+  `%LOCALAPPDATA%\obs-stats-widget\configure-obs.log`. Nothing in OBS was changed, so you can close OBS
+  and run the installer again or follow the [zip steps](#from-the-zip-archive).
+- **The dock is empty or outdated** (built from source). Run `npm run build:prod` again and press Ctrl+R in the dock.
 - **"No connection to OBS".** Check that the WebSocket server is enabled in OBS and that the port matches.
   The dock retries every few seconds and connects as soon as OBS answers.
 - **"Wrong password".** Copy the password from Tools → WebSocket Server Settings → Show Connect Info.
-- **Plugin cards say "Unknown platform".** Add the bridge script in Tools → Scripts.
+- **Plugin cards say "Unknown platform".** The bridge script is missing in this scene collection: add it in Tools → Scripts, or run the installer again to add it to every collection.
 - **No GPU or system memory rows.** These need the bridge script and Windows.
 
 If something else goes wrong, open an issue and attach the text from Settings → Diagnostics → Copy diagnostics,
