@@ -134,6 +134,7 @@ Scripts:
 | `npm run start:dev` | Dev server with hot reload on port 3062 (`PORT` in `.env` changes it) |
 | `npm run build:prod` | Production build into `build` |
 | `npm run package:release` | Production build plus the release folder and `compatibility.json` in `release` |
+| `npm run package:installer` | `package:release` plus the Windows installer `release/obs-stats-widget-setup-<version>.exe` (needs [Inno Setup 6](https://jrsoftware.org/isinfo.php); `ISCC_PATH` points to `ISCC.exe` if it is not in the default folder) |
 | `npm run test:installer` | Pester 5 tests of the script that sets up OBS (`installer/configure-obs.ps1`), Windows only |
 | `npm run lint` | TypeScript, ESLint, Stylelint and Knip |
 

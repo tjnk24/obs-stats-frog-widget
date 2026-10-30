@@ -19,6 +19,7 @@
     "lint:unused": "knip",
     "prepare": "husky",
     "package:release": "npm run build:prod && node scripts/packageRelease/index.ts",
+    "package:installer": "npm run package:release && node scripts/buildInstaller/index.ts",
     "test:installer": "powershell -NoProfile -ExecutionPolicy Bypass -File installer/tests/run-tests.ps1"
   },
   "engines": {
