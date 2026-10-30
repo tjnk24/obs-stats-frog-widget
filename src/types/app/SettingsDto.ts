@@ -1,6 +1,6 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {LanguageEnum} from './LanguageEnum';
+import {LanguageEnum} from '../i18n/LanguageEnum';
 
 export type SettingsDto = {
     port: number;

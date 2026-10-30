@@ -1,13 +1,11 @@
+import {BridgeOutputDto} from './BridgeOutputDto';
 import {GpuStatsDto} from './GpuStatsDto';
 import {SystemMemoryDto} from './SystemMemoryDto';
 
 export type BridgeDataDto = {
     bridgeVersion?: number;
     updated: number;
-    outputs: {
-        name: string;
-        server: string;
-    }[];
+    outputs: BridgeOutputDto[];
     gpu?: GpuStatsDto;
     systemMemory?: SystemMemoryDto;
 };
