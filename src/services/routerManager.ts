@@ -1,7 +1,7 @@
 import type {Nullable} from 'infrastructure/common';
 
 import {ROUTES} from '__routes';
-import {NavigateDto} from '__types/NavigateDto';
+import {NavigateDto} from '__types/app/NavigateDto';
 
 class RouterManager {
     private navigate: Nullable<NavigateDto> = null;

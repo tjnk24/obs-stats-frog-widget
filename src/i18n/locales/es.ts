@@ -1,4 +1,4 @@
-import {TranslationDto} from '__types/TranslationDto';
+import {TranslationDto} from '__types/i18n/TranslationDto';
 
 export const es: TranslationDto = {
     pageTitles: {

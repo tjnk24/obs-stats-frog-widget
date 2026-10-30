@@ -1,4 +1,4 @@
-import {OutputStateDto} from '__types/OutputStateDto';
+import {OutputStateDto} from '__types/stats/tracking/OutputStateDto';
 import {OFF_OUTPUT_VIEW, RECENT_WINDOW_SEC} from '__utils/consts';
 
 import {RecentCounter} from '../RecentCounter';

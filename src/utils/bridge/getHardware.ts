@@ -1,7 +1,7 @@
-import {HardwareDto} from '__types/HardwareDto';
-import {ObsProfileParameterDto} from '__types/ObsProfileParameterDto';
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
-import {RequestResultPairDto} from '__types/RequestResultPairDto';
+import {HardwareDto} from '__types/bridge/HardwareDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
+import {RequestResultPairDto} from '__types/obs/requests/RequestResultPairDto';
+import {ObsProfileParameterDto} from '__types/obs/responses/ObsProfileParameterDto';
 import {findResultData} from '__utils/requests/findResultData';
 import {isRequestOfType} from '__utils/requests/isRequestOfType';
 

@@ -1,6 +1,5 @@
-import packageJson from '../package.json' with {type: 'json'};
-
-import {IS_DEV_SERVER} from './consts.ts';
+import packageJson from '../../package.json' with {type: 'json'};
+import {IS_DEV_SERVER} from '../consts.ts';
 
 export const defineGlobals = () => ({
     'process.env': {

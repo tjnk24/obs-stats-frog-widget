@@ -1,8 +1,8 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
-import {ObsVersionDto} from '__types/ObsVersionDto';
-import {RequestResultPairDto} from '__types/RequestResultPairDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
+import {RequestResultPairDto} from '__types/obs/requests/RequestResultPairDto';
+import {ObsVersionDto} from '__types/obs/responses/ObsVersionDto';
 
 import {findResultData} from './findResultData';
 import {isRequestOfType} from './isRequestOfType';

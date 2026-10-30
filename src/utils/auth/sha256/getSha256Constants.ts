@@ -1,4 +1,4 @@
-import {Sha256ConstantsDto} from '__types/Sha256ConstantsDto';
+import {Sha256ConstantsDto} from '__types/connection/Sha256ConstantsDto';
 
 import {
     HASH_WORD_COUNT,

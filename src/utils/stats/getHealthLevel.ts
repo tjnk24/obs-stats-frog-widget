@@ -1,4 +1,4 @@
-import {HealthLevelEnum} from '__types/HealthLevelEnum';
+import {HealthLevelEnum} from '__types/stats/views/HealthLevelEnum';
 import {BAD_DROP_SHARE} from '__utils/consts';
 
 const {Ok, Warn, Bad} = HealthLevelEnum;

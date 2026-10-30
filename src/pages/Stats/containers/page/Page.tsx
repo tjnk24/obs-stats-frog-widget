@@ -6,7 +6,7 @@ import {useSelector} from 'react-redux';
 import {connectionStatusSelector} from '__selectors/connectionSelectors';
 import {obsWebSocketPortSelector, settingsIsShowGeneralCardSelector} from '__selectors/settingsSelectors';
 import {statsTargetsSelector} from '__selectors/statsSelectors';
-import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
+import {ConnectionStatusEnum} from '__types/connection/ConnectionStatusEnum';
 import {RECONNECT_INTERVAL_MS} from '__utils/consts';
 
 import GeneralCard from '../general-card';

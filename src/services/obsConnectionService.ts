@@ -6,15 +6,15 @@ import {connectionObsVersionSelector, connectionStatusSelector} from '__selector
 import {obsWebSocketPortSelector, settingsIsMockEnabledSelector} from '__selectors/settingsSelectors';
 import {statsTargetsSelector} from '__selectors/statsSelectors';
 import {getStore} from '__store';
-import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
-import {InFlightBatchDto} from '__types/InFlightBatchDto';
-import {ObsMessageDto} from '__types/ObsMessageDto';
-import {ObsOpCodeEnum} from '__types/ObsOpCodeEnum';
-import {ObsRequestDto} from '__types/ObsRequestDto';
-import {ObsRequestResultDto} from '__types/ObsRequestResultDto';
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
-import {PasswordChangeDto} from '__types/PasswordChangeDto';
-import {PasswordChangeResultEnum} from '__types/PasswordChangeResultEnum';
+import {ConnectionStatusEnum} from '__types/connection/ConnectionStatusEnum';
+import {PasswordChangeDto} from '__types/connection/PasswordChangeDto';
+import {PasswordChangeResultEnum} from '__types/connection/PasswordChangeResultEnum';
+import {InFlightBatchDto} from '__types/obs/messages/InFlightBatchDto';
+import {ObsMessageDto} from '__types/obs/messages/ObsMessageDto';
+import {ObsOpCodeEnum} from '__types/obs/messages/ObsOpCodeEnum';
+import {ObsRequestDto} from '__types/obs/requests/ObsRequestDto';
+import {ObsRequestResultDto} from '__types/obs/requests/ObsRequestResultDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
 import {getAuthString} from '__utils/auth/getAuthString';
 import {getHardware} from '__utils/bridge/getHardware';
 import {

@@ -53,7 +53,7 @@ Type: filesandordirs; Name: "{app}\ConfigureObs"
 [Files]
 Source: "{#PackageDir}\*"; DestDir: "{app}"; Excludes: "README.txt"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "configure-obs.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ConfigureObs\*.ps1"; DestDir: "{app}\ConfigureObs"; Flags: ignoreversion
+Source: "ConfigureObs\*.ps1"; DestDir: "{app}\ConfigureObs"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [UninstallDelete]
 Type: files; Name: "{app}\install-manifest.json"

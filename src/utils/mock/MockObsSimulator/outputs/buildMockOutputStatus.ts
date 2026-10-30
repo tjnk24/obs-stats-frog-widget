@@ -1,5 +1,5 @@
-import {MockOutputStateDto} from '__types/MockOutputStateDto';
-import {ObsOutputStatusDto} from '__types/ObsOutputStatusDto';
+import {MockOutputStateDto} from '__types/mock/MockOutputStateDto';
+import {ObsOutputStatusDto} from '__types/obs/responses/outputs/ObsOutputStatusDto';
 
 import {formatMockTimecode} from './formatMockTimecode';
 

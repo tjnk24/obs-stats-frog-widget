@@ -1,6 +1,6 @@
 import {SelectProps} from 'antd';
 
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 export const LANGUAGE_OPTIONS: NonNullable<SelectProps<LanguageEnum>['options']> = [
     {value: LanguageEnum.En, label: 'English'},

@@ -1,6 +1,6 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {PlatformDto} from '__types/PlatformDto';
+import {PlatformDto} from '__types/targets/PlatformDto';
 import {PLATFORM_RULES, UNKNOWN_PLATFORM_COLOR} from '__utils/consts';
 
 import {getServerHost} from './getServerHost';

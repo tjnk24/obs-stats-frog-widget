@@ -1,7 +1,7 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {BridgeDataDto} from '__types/BridgeDataDto';
-import {ObsProfileParameterDto} from '__types/ObsProfileParameterDto';
+import {BridgeDataDto} from '__types/bridge/BridgeDataDto';
+import {ObsProfileParameterDto} from '__types/obs/responses/ObsProfileParameterDto';
 import {BRIDGE_STALE_SEC} from '__utils/consts';
 
 export const parseBridgeData = (parameter: Nullable<ObsProfileParameterDto>): Nullable<BridgeDataDto> => {

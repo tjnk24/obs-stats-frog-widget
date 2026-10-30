@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 import {storageService} from '__services/storageService';
-import {LanguageEnum} from '__types/LanguageEnum';
-import {SettingsDto} from '__types/SettingsDto';
+import {SettingsDto} from '__types/app/SettingsDto';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 import {SETTINGS_SLICE_NAME} from './consts';
 

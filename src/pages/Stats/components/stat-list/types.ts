@@ -1,7 +1,7 @@
 import {DescriptionsProps} from 'antd';
 import {ReactNode} from 'react';
 
-import {HealthLevelEnum} from '__types/HealthLevelEnum';
+import {HealthLevelEnum} from '__types/stats/views/HealthLevelEnum';
 
 export type StatItemDto = {
     key: string;

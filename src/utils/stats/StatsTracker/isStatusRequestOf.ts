@@ -1,7 +1,7 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {ObsRequestDto} from '__types/ObsRequestDto';
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
+import {ObsRequestDto} from '__types/obs/requests/ObsRequestDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
 
 const {GetStreamStatus, GetOutputStatus} = ObsRequestTypeEnum;
 

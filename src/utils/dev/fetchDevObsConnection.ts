@@ -1,6 +1,6 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {DevObsConnectionDto} from '__types/DevObsConnectionDto';
+import {DevObsConnectionDto} from '__types/connection/DevObsConnectionDto';
 import {DEV_OBS_CONNECTION_URL} from '__utils/consts';
 
 export const fetchDevObsConnection = async (): Promise<Nullable<DevObsConnectionDto>> => {

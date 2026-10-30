@@ -1,4 +1,4 @@
-import {GraphPointDto} from '__types/GraphPointDto';
+import {GraphPointDto} from '__types/stats/views/GraphPointDto';
 
 interface OwnProps {
     points: GraphPointDto[];

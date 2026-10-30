@@ -4,16 +4,18 @@ import EslintWebpackPlugin from 'eslint-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'node:path';
-import webpack, {type Configuration, type EntryObject} from 'webpack';
+import webpack, {type Configuration} from 'webpack';
 
 import {
     CONTENT_HASH,
     IS_DEV_SERVER,
     IS_DEVELOPMENT,
-} from './consts.ts';
+} from '../consts.ts';
+import type {InitClientConfigOptions} from '../types/InitClientConfigOptions.ts';
+
 import {defineGlobals} from './defineGlobals.ts';
 
-export const initClientConfig = ({entry}: {entry: EntryObject}) => (webpackConfig: Configuration): Configuration => {
+export const initClientConfig = ({entry}: InitClientConfigOptions) => (webpackConfig: Configuration): Configuration => {
     Object.assign(webpackConfig, {
         target: 'web',
         devtool: IS_DEVELOPMENT && 'source-map',

@@ -1,6 +1,6 @@
 import type {ParseKeys} from 'i18next';
 
-import {StreamTargetDto} from '__types/StreamTargetDto';
+import {StreamTargetDto} from '__types/targets/StreamTargetDto';
 
 export enum OutputStatKeyEnum {
     Timecode = 'timecode',

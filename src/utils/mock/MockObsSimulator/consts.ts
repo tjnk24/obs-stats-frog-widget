@@ -1,4 +1,4 @@
-import {MockTargetDto} from '__types/MockTargetDto';
+import {MockTargetDto} from '__types/mock/MockTargetDto';
 import {BYTES_IN_GIGABYTE} from '__utils/consts';
 
 export const MOCK_FPS = 60;

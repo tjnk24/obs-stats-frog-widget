@@ -21,7 +21,7 @@ import {
 } from '__selectors/settingsSelectors';
 import {languageService} from '__services/languageService';
 import {obsConnectionService} from '__services/obsConnectionService';
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 import DiagnosticsCard from '../diagnostics-card';
 import PasswordCard from '../password-card';

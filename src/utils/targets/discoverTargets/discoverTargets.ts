@@ -1,14 +1,14 @@
 import {t} from 'i18next';
 import countBy from 'lodash/countBy';
 
-import {NoteDto} from '__types/NoteDto';
-import {ObsOutputListItemDto} from '__types/ObsOutputListItemDto';
-import {ObsProfileParameterDto} from '__types/ObsProfileParameterDto';
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
-import {ObsStreamServiceDto} from '__types/ObsStreamServiceDto';
-import {OutputOriginEnum} from '__types/OutputOriginEnum';
-import {RequestResultPairDto} from '__types/RequestResultPairDto';
-import {StreamTargetDto} from '__types/StreamTargetDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
+import {RequestResultPairDto} from '__types/obs/requests/RequestResultPairDto';
+import {ObsProfileParameterDto} from '__types/obs/responses/ObsProfileParameterDto';
+import {ObsStreamServiceDto} from '__types/obs/responses/ObsStreamServiceDto';
+import {ObsOutputListDto} from '__types/obs/responses/outputs/ObsOutputListDto';
+import {NoteDto} from '__types/targets/NoteDto';
+import {OutputOriginEnum} from '__types/targets/OutputOriginEnum';
+import {StreamTargetDto} from '__types/targets/StreamTargetDto';
 import {parseBridgeData} from '__utils/bridge/parseBridgeData';
 import {
     BRIDGE_SCRIPT_NAME,
@@ -30,7 +30,7 @@ export const discoverTargets = (pairs: RequestResultPairDto[]): StreamTargetDto[
     }
 
     const service = findResultData<ObsStreamServiceDto>(pairs, isRequestOfType(GetStreamServiceSettings));
-    const outputs = findResultData<{outputs: ObsOutputListItemDto[]}>(pairs, isRequestOfType(GetOutputList))?.outputs || [];
+    const outputs = findResultData<ObsOutputListDto>(pairs, isRequestOfType(GetOutputList))?.outputs || [];
     const bridgeData = parseBridgeData(findResultData<ObsProfileParameterDto>(pairs, isRequestOfType(GetProfileParameter)));
     const bridge = bridgeData && new Map(bridgeData.outputs.map(({name, server}) => [name, server]));
 

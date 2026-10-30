@@ -1,6 +1,6 @@
 import type {DeepPartial} from 'infrastructure/common';
 
-import {TranslationDto} from '__types/TranslationDto';
+import {TranslationDto} from '__types/i18n/TranslationDto';
 
 export const frog: DeepPartial<TranslationDto> = {
     pageTitles: {

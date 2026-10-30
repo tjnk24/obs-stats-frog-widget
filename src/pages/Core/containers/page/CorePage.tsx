@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next';
 import {Outlet} from 'react-router';
 
 import ErrorBoundary from '__components/ErrorBoundary';
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 import {ANTD_LOCALES} from './consts';
 

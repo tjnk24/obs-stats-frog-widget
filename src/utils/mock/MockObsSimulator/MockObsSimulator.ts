@@ -1,13 +1,11 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {BridgeDataDto} from '__types/BridgeDataDto';
-import {MockOutputStateDto} from '__types/MockOutputStateDto';
-import {ObsRequestDto} from '__types/ObsRequestDto';
-import {ObsRequestResultDto} from '__types/ObsRequestResultDto';
-import {ObsRequestTypeEnum} from '__types/ObsRequestTypeEnum';
+import {BridgeDataDto} from '__types/bridge/BridgeDataDto';
+import {MockOutputStateDto} from '__types/mock/MockOutputStateDto';
+import {ObsRequestDto} from '__types/obs/requests/ObsRequestDto';
+import {ObsRequestResultDto} from '__types/obs/requests/ObsRequestResultDto';
+import {ObsRequestTypeEnum} from '__types/obs/requests/ObsRequestTypeEnum';
 
-import {buildMockOutputListItem} from './buildMockOutputListItem';
-import {buildMockOutputStatus} from './buildMockOutputStatus';
 import {
     MOCK_EXTRA_TARGETS,
     MOCK_FPS,
@@ -18,11 +16,13 @@ import {
     MOCK_TWITCH_OUTPUT_NAME,
     MOCK_TWITCH_SERVER,
 } from './consts';
-import {createMockOutput} from './createMockOutput';
-import {failureResult} from './failureResult';
-import {growMockOutput} from './growMockOutput';
+import {buildMockOutputListItem} from './outputs/buildMockOutputListItem';
+import {buildMockOutputStatus} from './outputs/buildMockOutputStatus';
+import {createMockOutput} from './outputs/createMockOutput';
+import {growMockOutput} from './outputs/growMockOutput';
 import {randomBetween} from './randomBetween';
-import {successResult} from './successResult';
+import {failureResult} from './results/failureResult';
+import {successResult} from './results/successResult';
 
 const OBS_OUTPUT_NOT_FOUND_CODE = 600;
 const OBS_UNKNOWN_REQUEST_CODE = 204;

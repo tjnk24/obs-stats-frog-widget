@@ -3,7 +3,7 @@ import {initReactI18next} from 'react-i18next';
 
 import {languageService} from '__services/languageService';
 import {storageService} from '__services/storageService';
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 import {de} from './locales/de';
 import {en} from './locales/en';

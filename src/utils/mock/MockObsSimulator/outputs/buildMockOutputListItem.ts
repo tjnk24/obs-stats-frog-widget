@@ -1,4 +1,4 @@
-import {ObsOutputListItemDto} from '__types/ObsOutputListItemDto';
+import {ObsOutputListItemDto} from '__types/obs/responses/outputs/ObsOutputListItemDto';
 
 export const buildMockOutputListItem = (outputName: string, isActive: boolean): ObsOutputListItemDto => ({
     outputName,

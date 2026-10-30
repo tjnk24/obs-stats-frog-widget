@@ -5,7 +5,7 @@ import esES from 'antd/locale/es_ES';
 import ptBR from 'antd/locale/pt_BR';
 import ruRU from 'antd/locale/ru_RU';
 
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 
 export const ANTD_LOCALES: Record<LanguageEnum, Locale> = {
     [LanguageEnum.En]: enUS,

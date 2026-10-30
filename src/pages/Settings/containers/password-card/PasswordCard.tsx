@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 
 import EnhancedButton from '__components/EnhancedButton';
 import {obsConnectionService} from '__services/obsConnectionService';
-import {PasswordChangeResultEnum} from '__types/PasswordChangeResultEnum';
+import {PasswordChangeResultEnum} from '__types/connection/PasswordChangeResultEnum';
 
 import {RESULT_ALERTS} from './consts';
 import {PasswordFormDto} from './types';

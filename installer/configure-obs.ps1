@@ -13,7 +13,7 @@ $env:PSModulePath = @(
     (Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\Modules')
 ) -join ';'
 
-Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'ConfigureObs') -Filter '*.ps1' | ForEach-Object { . $_.FullName }
+Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot 'ConfigureObs') -Filter '*.ps1' -Recurse | ForEach-Object { . $_.FullName }
 
 try {
     $result = Invoke-ConfigureObs -Mode $Mode -InstallDirectory $InstallDirectory -ObsDirectory $ObsDirectory -ConfigDirectory $ConfigDirectory -DataDirectory $DataDirectory

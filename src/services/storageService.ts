@@ -1,6 +1,6 @@
 import type {Nullable} from 'infrastructure/common';
 
-import {SettingsDto} from '__types/SettingsDto';
+import {SettingsDto} from '__types/app/SettingsDto';
 import {
     DEFAULT_SETTINGS,
     PASSWORD_STORAGE_KEY,

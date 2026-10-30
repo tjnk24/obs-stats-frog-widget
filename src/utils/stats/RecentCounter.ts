@@ -1,4 +1,4 @@
-import {RecentSampleDto} from '__types/RecentSampleDto';
+import {RecentSampleDto} from '__types/stats/tracking/RecentSampleDto';
 
 export class RecentCounter {
     private samples: RecentSampleDto[] = [];

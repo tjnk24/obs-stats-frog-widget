@@ -1,6 +1,6 @@
 import type {Configuration} from 'webpack';
 
-import {IS_DEV_SERVER, IS_DEVELOPMENT} from './consts.ts';
+import {IS_DEV_SERVER, IS_DEVELOPMENT} from '../consts.ts';
 
 export const loadScripts = () => (webpackConfig: Configuration): Configuration => {
     webpackConfig.module?.rules?.push({

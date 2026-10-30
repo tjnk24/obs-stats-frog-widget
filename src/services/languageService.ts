@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import type {Nullable} from 'infrastructure/common';
 
 import {commonActions} from '__actions';
-import {LanguageEnum} from '__types/LanguageEnum';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
 import {OBS_LANGUAGE_PREFIXES} from '__utils/consts';
 
 class LanguageService {

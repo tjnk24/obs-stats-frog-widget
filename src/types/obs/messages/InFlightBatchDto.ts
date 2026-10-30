@@ -1,4 +1,4 @@
-import {ObsRequestDto} from './ObsRequestDto';
+import {ObsRequestDto} from '../requests/ObsRequestDto';
 
 export type InFlightBatchDto = {
     id: string;

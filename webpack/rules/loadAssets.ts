@@ -1,6 +1,6 @@
 import type {Configuration} from 'webpack';
 
-import {CONTENT_HASH} from './consts.ts';
+import {CONTENT_HASH} from '../consts.ts';
 
 export const loadAssets = () => (webpackConfig: Configuration): Configuration => {
     webpackConfig.module?.rules?.push({

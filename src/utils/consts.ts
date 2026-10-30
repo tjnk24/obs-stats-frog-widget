@@ -1,9 +1,9 @@
-import {HealthLevelEnum} from '__types/HealthLevelEnum';
-import {LanguageEnum} from '__types/LanguageEnum';
-import {ObsLanguagePrefixDto} from '__types/ObsLanguagePrefixDto';
-import {OutputViewDto} from '__types/OutputViewDto';
-import {PlatformRuleDto} from '__types/PlatformRuleDto';
-import {SettingsDto} from '__types/SettingsDto';
+import {SettingsDto} from '__types/app/SettingsDto';
+import {LanguageEnum} from '__types/i18n/LanguageEnum';
+import {ObsLanguagePrefixDto} from '__types/i18n/ObsLanguagePrefixDto';
+import {HealthLevelEnum} from '__types/stats/views/HealthLevelEnum';
+import {OutputViewDto} from '__types/stats/views/OutputViewDto';
+import {PlatformRuleDto} from '__types/targets/PlatformRuleDto';
 
 const DEFAULT_OBS_WEBSOCKET_PORT = 4455;
 export const OBS_WEBSOCKET_PROTOCOL = 'obswebsocket.json';

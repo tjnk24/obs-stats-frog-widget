@@ -1,4 +1,4 @@
-import {ConnectionStatusEnum} from '__types/ConnectionStatusEnum';
+import {ConnectionStatusEnum} from '__types/connection/ConnectionStatusEnum';
 
 const {
     Connecting,

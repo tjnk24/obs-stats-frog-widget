@@ -1,7 +1,7 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type {Configuration} from 'webpack';
 
-import {CONTENT_HASH, IS_DEVELOPMENT} from './consts.ts';
+import {CONTENT_HASH, IS_DEVELOPMENT} from '../consts.ts';
 
 export const loadStyles = () => (webpackConfig: Configuration): Configuration => {
     webpackConfig.plugins?.push(

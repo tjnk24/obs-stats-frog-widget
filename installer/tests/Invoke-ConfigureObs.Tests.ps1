@@ -1,5 +1,5 @@
 BeforeAll {
-    Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '..\ConfigureObs') -Filter '*.ps1' | ForEach-Object { . $_.FullName }
+    Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '..\ConfigureObs') -Filter '*.ps1' -Recurse | ForEach-Object { . $_.FullName }
 
     $script:fixtures = Join-Path $PSScriptRoot 'fixtures'
     $script:cyrillicFolder = -join [char[]](0x041F, 0x0440, 0x043E, 0x0433, 0x0440, 0x0430, 0x043C, 0x043C, 0x044B)
